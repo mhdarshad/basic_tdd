@@ -46,6 +46,7 @@ dependencies:
   velocity_x:
   go_router: ^3.1.0
 
+  easy_debounce: 2.0.1
 
 dev_dependencies:
   flutter_test:
