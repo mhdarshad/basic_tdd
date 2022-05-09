@@ -116,7 +116,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                                   autofocus: true,
                                   obscureText: false,
                                   decoration: const InputDecoration(
-                                    hintText: 'ENter Phone Number',
+                                    hintText: 'Enter Phone Number',
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
@@ -210,7 +210,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                                   Brightness.dark) ??
                                   true)
                                 Image.asset(
-                                  'assets/images/uiLogo_robinDark@3x.png',
+                                  'assets/images/wellcome_workers.png',
                                   width: 240,
                                   height: 60,
                                   fit: BoxFit.fitWidth,

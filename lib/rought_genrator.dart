@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/util/presentation/constants/ic_constants.dart';
 import 'injection_container.dart';
+import 'tdd/presentaion/screens/phone_auth.dart';
 enum Routename{
   Home,Login,CheckoutMobile,EditVendorProduct
 }
@@ -48,7 +49,7 @@ class PageControler extends GoNavigations  {
 
   get routs =>[
     GoRoute(path: '/',builder: (context,state){
-      return Container();
+      return const PhoneAuth();
     },routes: [
   //     GoRoute(name:nUri(Routename.Login).name ,path: nUri(Routename.Login).path,builder: (context,state){
   //       // print("Intilaizes ${state.params["branch"]}");
