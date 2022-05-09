@@ -1,7 +1,12 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'core/util/presentation/constants/ic_constants.dart';
+import 'injection_container.dart';
 enum Routename{
   Home,Login,CheckoutMobile,EditVendorProduct
 }
@@ -10,7 +15,33 @@ enum NavigatoreTyp{
   push,pop,pushReplacment,popUntill,homenav
 }
 
-
+final router = GoRouter(
+  // errorPageBuilder: (context,state)=>MaterialPage(child: Scaffold(body: Center(
+  //  child:  Text(state.error.toString()),
+  // ),)
+  // ),
+  redirect: (state){
+    print("path redirect:${state.location}");
+    if(state.location == "/admin/home") {
+      return (sl<SharedPreferences>().containsKey(Prefrence.LOGEDIN) && sl<SharedPreferences>().getBool(Prefrence.LOGEDIN)! )? null:"/admin";
+    }else if(state.location == "/admin"){
+      print("login redirect request");
+      return (sl<SharedPreferences>().containsKey(Prefrence.LOGEDIN) && sl<SharedPreferences>().getBool(Prefrence.LOGEDIN)! )? "/admin/home":null;
+    }
+    // print("redirect subloc: ${state.subloc}");
+    // if(Features.isOnBoarding&&state.path==nUri(Routename.Home).path) {
+    //   if ( PrefUtils.prefs!.containsKey('introduction')&& PrefUtils.prefs!.getBool('introduction')==false) {
+    //   return nUri(Routename.Introduction).path;
+    //   }
+    // }
+    return null;
+  },
+  // refreshListenable: loadinginfo,
+  // urlPathStrategy: UrlPathStrategy.path,
+  initialLocation:"/",
+  debugLogDiagnostics:kDebugMode,
+  routes: PageControler().routs,
+);
 class PageControler extends GoNavigations  {
   PageControler() {
   }
@@ -108,7 +139,6 @@ class PageControler extends GoNavigations  {
   //   */
   // ])
     ]),
-
   ];
 }
 class CUri{
