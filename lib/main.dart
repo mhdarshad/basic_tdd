@@ -1,9 +1,24 @@
+import 'package:country_code_picker/country_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_sizer/flutter_sizer.dart';
+import 'package:velocity_x/velocity_x.dart';
+import 'core/util/presentation/constants/ic_constants.dart';
+import 'injection_container.dart' as di;
 
 import 'rought_genrator.dart';
+import 'tdd/domain/entities/vx_store.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(apiKey: "AIzaSyD2VSxQ77bxHFLMHIdzNY3lbY23uPoTrgA", appId: "1:772276630637:web:ab958a8e34fb22c369fb64", messagingSenderId: "772276630637", projectId: "asfa-mantanance-works"),
+  );
+  await di.init();
+  runApp(VxState(store: ProjectStore(),
+  child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,22 +27,33 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Asfa',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      routerDelegate:  router.routerDelegate,
-      routeInformationParser: router.routeInformationParser,
+    return FlutterSizer(builder: (context , oriantation , type ) {
+      // print("theme changed ${(states.props.first as ThemesData?)?.name.name}");
+      return MaterialApp.router(
+          title: 'Asfa',
+          theme: ThemeData(
+            // This is the theme of your application.
+            //
+            // Try running your application with "flutter run". You'll see the
+            // application has a blue toolbar. Then, without quitting the app, try
+            // changing the primarySwatch below to Colors.green and then invoke
+            // "hot reload" (press "r" in the console where you ran "flutter run",
+            // or simply save your changes to "hot reload" in a Flutter IDE).
+            // Notice that the counter didn't reset back to zero; the application
+            // is not restarted.
+            primarySwatch: Colors.blue,
+          ),
+          supportedLocales: languages.map((language) => Locale(language.languageCode!, language.countryCode)),
+          localizationsDelegates: const [
+            CountryLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          routerDelegate:  router.routerDelegate,
+          routeInformationParser: router.routeInformationParser,
+        );
+      }
     );
   }
 }

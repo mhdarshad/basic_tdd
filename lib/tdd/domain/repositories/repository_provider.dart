@@ -11,7 +11,7 @@ abstract class DependencyRepostProvider<Entities>{
 class Params{
    Uri uri;
    Map<String,dynamic>? data;
-   Methed methed;
+   String methed;
 
   Params({required this.uri, this.data, required this.methed});
 }

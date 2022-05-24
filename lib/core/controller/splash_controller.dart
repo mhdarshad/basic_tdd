@@ -9,7 +9,7 @@ class SplashController extends GoNavigations implements StateController{
   @override
   initialState(BuildContext context) {
     // Navigator.of(context).pushReplacementNamed(RoutName.login, arguments: 2);
-    Navigation(context, type: NavigatoreTyp.homenav);
+    GNavigation(context, type: NavigatoreTyp.logedout);
     // Future.delayed(const Duration(seconds: 3),(){
     // if (kDebugMode) {
     //   print("nextpage Exicuted");

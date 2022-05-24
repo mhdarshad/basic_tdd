@@ -1,5 +1,7 @@
 
+import 'package:asspa/tdd/presentaion/events/phoneauth/get_user_mutation.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart' if (dart.library.html) "core/network/data_connection_checker_web.dart";
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +15,14 @@ import 'tdd/data/datasource/local_data_source.dart';
 import 'tdd/data/datasource/remote_data_sources.dart';
 import 'tdd/data/models/modle_entities.dart';
 import 'tdd/data/repository/data_layer_repo_impl.dart';
+import 'tdd/domain/usecase/phoneauth/login_usecase.dart';
+import 'tdd/domain/usecase/refer_friend_usecase.dart';
+import 'tdd/presentaion/events/dashboard/ReferFriend.dart';
+import 'tdd/presentaion/events/phoneauth/logout_mutation.dart';
+import 'tdd/presentaion/events/phoneauth/phone_login_mutation.dart';
+import 'tdd/presentaion/events/phoneauth/phone_otp_mutation.dart';
+import 'tdd/presentaion/events/phoneauth/phone_register_mutation.dart';
+import 'tdd/presentaion/events/phoneauth/setuser_store.dart';
 final sl = GetIt.instance;
 
  init() async{
@@ -23,7 +33,13 @@ final sl = GetIt.instance;
 }
 _bloc(){
   //Bloc
-  // sl.registerFactory(() => LoginBloc(LoginUseCase(sll()),));
+  sl.registerFactory(() => PhoneLoginBloc(PhoneLoginUseCase(sll()),));
+  sl.registerFactory(() => ReferfriendBloc(ReferfriendUseCase(),));
+  sl.registerFactory(() => PhoneOtpBloc(PhoneLoginUseCase(sll()),));
+  sl.registerFactory(() => LogoutBloc(PhoneLoginUseCase(sll()),));
+  sl.registerFactory(() => SetUserBloc(PhoneLoginUseCase(sll()),));
+  sl.registerFactory(() => GetUserBloc(PhoneLoginUseCase(sll()),));
+  sl.registerFactory(() => PhoneRegisterBloc(PhoneLoginUseCase(sll()),));
 
   // sl.registerFactory(() => RegisterEvent(RegisterUseCase(sll()),));
   // sl.registerFactory(() => RegisterBloc(customerRegisterUsecase: CustomerRegisterUsecase(repo: sll()), checkEmailUsecase: CheckEmailUsecase(repo: sll()), checkMobileUsecase: CheckMobileUsecase(repo: sll()),

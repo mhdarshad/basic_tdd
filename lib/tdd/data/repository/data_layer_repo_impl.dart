@@ -27,9 +27,13 @@ class DataLayerRepositoryImpl implements DependencyRepostProvider<Map<String, dy
         localDataSource.cachedData(key:key,value: remoteTrivia,table: DBTable.DataFetchHistory);
         // final localTrivia = await localDataSource.getCachedData(key: key, table: DBTable.DataFetchHistory);
         return Right(jsonDecode(remoteTrivia.data));
-      } on ServerExceptions {
+      } on ServerExceptions catch(e){
         print("server exception");
-        return Left(ServerFailure());
+        // ServerExceptions? exceptions ;
+        if(e.code == 401){
+          return Left(ClintFailure(e.messege!));
+        }
+        return Left(ServerFailure(e.messege!));
       }
     } else {
       try {

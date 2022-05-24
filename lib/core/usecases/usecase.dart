@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import '../error/failuers.dart';
 
 abstract class UseCase<type,Params>{
-  Future<Either<Failure, type>> call({Params data});
+  Future<Either<Failure, type>> call({required Params data});
 }
 class NoPrams extends Equatable{
 
@@ -20,6 +20,10 @@ class Param extends Equatable{
   // TODO: implement props
   List<Object?> get props => [data];
 }
-enum Methed {
-  Get,Post,PostJson,
+class Methed {
+  static String Get = 'GET';
+  static String Post = 'POST';
+  static String Put = 'PUT';
+  static String Delete = 'DELETE';
+
 }
