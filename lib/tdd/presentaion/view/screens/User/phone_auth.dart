@@ -1,32 +1,15 @@
 import 'package:asspa/injection_container.dart';
-import 'package:asspa/tdd/data/models/exception_modle.dart';
-import 'package:asspa/tdd/domain/entities/user/login_user.dart';
-import 'package:asspa/tdd/domain/entities/vx_store.dart';
-import 'package:asspa/tdd/presentaion/events/phoneauth/phone_register_mutation.dart';
-import 'package:country_code_picker/country_code.dart';
-import 'package:dartz/dartz.dart' as e;
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../core/cripto_algo.dart';
-import '../../../../core/error/failuers.dart';
-import '../../../../core/util/presentation/constants/ic_constants.dart';
-import '../../../../rought_genrator.dart';
-import '../../../domain/usecase/phoneauth/login_usecase.dart';
-import '../../events/phoneauth/logout_mutation.dart';
-import '../../events/phoneauth/phone_login_mutation.dart';
-import '../../events/phoneauth/phone_otp_mutation.dart';
-import '../../events/phoneauth/setuser_store.dart';
-import '../components/auth/auth_otp.dart';
-import '../components/auth/auth_regiester.dart';
-import '../components/auth/phone_auth.dart';
+import '../../../../../rought_genrator.dart';
+import '../../../../domain/usecase/phoneauth/login_usecase.dart';
+import '../../../events/auth/phone_register_mutation.dart';
+import '../../../events/auth/set_admin.dart';
+import '../../../events/auth/setuser_store.dart';
 
 class PhoneAuth extends StatefulWidget {
   final String? ref;
@@ -70,26 +53,6 @@ class _PhoneAuthState extends State<PhoneAuth> with GoNavigations{
               ),
               alignment: const AlignmentDirectional(0, 0),
               child: VxNotifier(mutations: {
-                // PhoneLoginEvents : (ctx,mut){
-                //   if(mut.status == VxStatus.success){
-                //     // setState(() => confirm = (mut as PhoneLoginEvents ).request);
-                //     // _pageviewcontroller.nextPage(duration: const Duration(seconds: 1), curve: Curves.ease);
-                //   }else if(mut.status == VxStatus.error){
-                //
-                //   }
-                // },
-                // PhoneOtpEvents : (ctx,mut){
-                //   if(mut.status == VxStatus.success){
-                //     setState(() =>credential = (mut as PhoneOtpEvents ).request);
-                //     if(credential?.additionalUserInfo?.isNewUser??true){
-                //       _pageviewcontroller.nextPage(duration: const Duration(seconds: 1), curve: Curves.ease);
-                //     }else{
-                //       GNavigation(context, type: NavigatoreTyp.push,name:Routename.Home );
-                //     }
-                //   }else if(mut.status == VxStatus.error){
-                //     VxToast.show(context, msg: "Invalid OTP");
-                //   }
-                // },
                 PhoneRegisterEvents : (ctx,mut){
                   if(mut.status == VxStatus.success){
                     GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home);
@@ -169,7 +132,7 @@ class _PhoneAuthState extends State<PhoneAuth> with GoNavigations{
                         onConfirmSignup: (otp,logindata) async{
                           try {
                             final userdata = await PhoneLoginUseCase(sll()).otp(conformation!, otp:otp );
-                            final  modle =  PhoneRegisterModle(email: email??"", phone:userdata.user!.phoneNumber!,ip: "",ftocken: userdata.user?.refreshToken??"",lname: lname??"",fname: fname??"", uid: userdata.user?.uid??"", password: logindata.password);
+                            final  modle =  PhoneRegisterModle(email: email??"", phone:userdata.user!.phoneNumber!,ip: "",ftocken: userdata.user?.refreshToken??"",lname: lname??"",fname: fname??"", uid: userdata.user?.uid??"", password: logindata.password,ref: widget.ref);
                             sl<PhoneRegisterBloc>()(data: modle);
                             VxToast.show(context, msg: "confirmed to signup");
                           } catch (e) {
@@ -188,7 +151,7 @@ class _PhoneAuthState extends State<PhoneAuth> with GoNavigations{
                           final userdata = await PhoneLoginUseCase(sll()).login(data: PhoneLoginModle("+91"+logindata.name,logindata.password));
                           return userdata.fold((l) => 'Invalid Credentials', (r) {
                             sl<SetUserBloc>()(data: r);
-                            GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home,parms: {'index':'dashboard'});
+                            GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home,parms: {'index':'dashboard','user':'user'});
                             return null;
                           });
                           // Future.value('n');
@@ -211,7 +174,7 @@ class _PhoneAuthState extends State<PhoneAuth> with GoNavigations{
                           return null;
                         },
                         onSubmitAnimationCompleted: () {
-                          GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home,parms: {'index':'dashboard'});
+                          GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home,parms: {'index':'dashboard','user':'user'});
                           // Navigator.of(context).pushNamedAndRemoveUntil(RoutName.dashboard, (route) => false);
                         },
                         onRecoverPassword: (val){

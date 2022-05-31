@@ -32,15 +32,20 @@ class GetUserEvents extends EventMutations<NoPrams> {
 
   @override
   perform() async {
-    final request = await usecase.repo.getLocalDBRequest(LDBParams(methed: DB.GET,table: DBTable.UserProfile, key: 'user'));
-    request.fold((l) => throw CacheFailure(), (r) {
-      print(" user data: $r");
-      final UsersData userData = UsersData.fromJson(r);
-      // sl<SharedPreferences>().setBool(SFkeys.LOGEDIN,true);
-      // sl<SharedPreferences>().setString(SFkeys.token,Cripto().encript(userData.tocken??""));
-      // sl<SharedPreferences>().setString(SFkeys.UType,'user');
-      // sl<SharedPreferences>().setString(SFkeys.UID,userData.user?.uid??"");
-      store?.UserData = userData;
-    });
+    try {
+      final request = await usecase.repo.getLocalDBRequest(LDBParams(methed: DB.GET,table: DBTable.UserProfile, key: 'user'));
+      request.fold((l) => throw CacheFailure(), (r) {
+        print(" user data: $r");
+        final UsersData userData = UsersData.fromJson(r);
+        // sl<SharedPreferences>().setBool(SFkeys.LOGEDIN,true);
+        // sl<SharedPreferences>().setString(SFkeys.token,Cripto().encript(userData.tocken??""));
+        // sl<SharedPreferences>().setString(SFkeys.UType,'user');
+        // sl<SharedPreferences>().setString(SFkeys.UID,userData.user?.uid??"");
+        store?.UserData = userData;
+      });
+    } on Exception catch (e) {
+      // TODO
+      throw CacheFailure();
+    }
   }
 }

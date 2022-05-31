@@ -65,7 +65,9 @@ dependencies:
   flutter_login:
 #  Firebse
   firebase_dynamic_links: ^4.2.4
-
+#html web
+  flutter_html: ^2.2.1
+  number_pagination: ^0.0.3+2
 dev_dependencies:
   flutter_test:
     sdk: flutter

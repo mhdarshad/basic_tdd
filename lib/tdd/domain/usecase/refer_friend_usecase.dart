@@ -18,7 +18,7 @@ class ReferfriendUseCase extends UseCase<Uri,String>{
       }
       final DynamicLinkParameters parameters = DynamicLinkParameters(
             uriPrefix: 'https://asspa.page.link/refer', // uri prefix used for Dynamic Links in Firebase Console
-            link: Uri.parse('https://asfa.cosmostechnosolutions.com/#/refer/'+data),
+            link: Uri.parse('https://asfahbm.com/#/refer/'+data),
             androidParameters: const AndroidParameters(
               packageName: 'com.ar.cts.asspa', // package name for your app
               minimumVersion: 0,

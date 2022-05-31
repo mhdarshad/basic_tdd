@@ -1,5 +1,4 @@
 
-import 'package:asspa/tdd/presentaion/events/phoneauth/get_user_mutation.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart' if (dart.library.html) "core/network/data_connection_checker_web.dart";
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
@@ -15,14 +14,21 @@ import 'tdd/data/datasource/local_data_source.dart';
 import 'tdd/data/datasource/remote_data_sources.dart';
 import 'tdd/data/models/modle_entities.dart';
 import 'tdd/data/repository/data_layer_repo_impl.dart';
+import 'tdd/domain/usecase/get_dash_data.dart';
 import 'tdd/domain/usecase/phoneauth/login_usecase.dart';
 import 'tdd/domain/usecase/refer_friend_usecase.dart';
+import 'tdd/domain/usecase/update_membership_status.dart';
+import 'tdd/presentaion/events/auth/get_user_mutation.dart';
+import 'tdd/presentaion/events/auth/logout_mutation.dart';
+import 'tdd/presentaion/events/auth/phone_login_mutation.dart';
+import 'tdd/presentaion/events/auth/phone_otp_mutation.dart';
+import 'tdd/presentaion/events/auth/phone_register_mutation.dart';
+import 'tdd/presentaion/events/auth/set_admin.dart';
+import 'tdd/presentaion/events/auth/setuser_store.dart';
 import 'tdd/presentaion/events/dashboard/ReferFriend.dart';
-import 'tdd/presentaion/events/phoneauth/logout_mutation.dart';
-import 'tdd/presentaion/events/phoneauth/phone_login_mutation.dart';
-import 'tdd/presentaion/events/phoneauth/phone_otp_mutation.dart';
-import 'tdd/presentaion/events/phoneauth/phone_register_mutation.dart';
-import 'tdd/presentaion/events/phoneauth/setuser_store.dart';
+import 'tdd/presentaion/events/dashboard/get_user_data.dart';
+import 'tdd/presentaion/events/dashboard/update_status.dart';
+import 'tdd/presentaion/events/dashboard/update_wallet.dart';
 final sl = GetIt.instance;
 
  init() async{
@@ -40,6 +46,10 @@ _bloc(){
   sl.registerFactory(() => SetUserBloc(PhoneLoginUseCase(sll()),));
   sl.registerFactory(() => GetUserBloc(PhoneLoginUseCase(sll()),));
   sl.registerFactory(() => PhoneRegisterBloc(PhoneLoginUseCase(sll()),));
+  sl.registerFactory(() => SetAdminBloc(PhoneLoginUseCase(sll()),));
+  sl.registerFactory(() => GetUserDataBloc(GetUserDataUsecase(sll()),));
+  sl.registerFactory(() => UpdateStatusBloc(UpdateStatusUseCase(sll()),));
+  sl.registerFactory(() => UpdateWalletBloc(UpdateStatusUseCase(sll()),));
 
   // sl.registerFactory(() => RegisterEvent(RegisterUseCase(sll()),));
   // sl.registerFactory(() => RegisterBloc(customerRegisterUsecase: CustomerRegisterUsecase(repo: sll()), checkEmailUsecase: CheckEmailUsecase(repo: sll()), checkMobileUsecase: CheckMobileUsecase(repo: sll()),

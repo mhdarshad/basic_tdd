@@ -1,19 +1,25 @@
+
 class UserData {
   int? status;
-  UsersData? data;
+  List<UsersData>? data;
 
   UserData({this.status, this.data});
 
   UserData.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null ? new UsersData.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      data = <UsersData>[];
+      json['data'].forEach((v) {
+        data!.add(new UsersData.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
     if (this.data != null) {
-      data['data'] = this.data!.toJson();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -23,7 +29,6 @@ class UsersData {
   User? user;
   Wallet? wallet;
   String? tocken;
-
   UsersData({this.user, this.wallet, this.tocken});
 
   UsersData.fromJson(Map<String, dynamic> json) {
@@ -107,56 +112,48 @@ class User {
   }
 }
 
+
 class Wallet {
-  int? id;
-  String? createdAt;
-  String? updatedAt;
-  String? uid;
   String? genw;
   String? genwstatus;
   String? afw;
   String? afwstatus;
   String? iw;
   String? iwstatus;
+  String? ref;
+  String? refstatus;
 
   Wallet(
-      {this.id,
-        this.createdAt,
-        this.updatedAt,
-        this.uid,
-        this.genw,
+      {this.genw,
         this.genwstatus,
         this.afw,
         this.afwstatus,
         this.iw,
-        this.iwstatus});
+        this.iwstatus,
+        this.ref,
+        this.refstatus});
 
   Wallet.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    uid = json['uid'];
     genw = json['genw'];
     genwstatus = json['genwstatus'];
     afw = json['afw'];
     afwstatus = json['afwstatus'];
     iw = json['iw'];
     iwstatus = json['iwstatus'];
+    ref = json['ref'];
+    refstatus = json['refstatus'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['uid'] = this.uid;
     data['genw'] = this.genw;
     data['genwstatus'] = this.genwstatus;
     data['afw'] = this.afw;
     data['afwstatus'] = this.afwstatus;
     data['iw'] = this.iw;
     data['iwstatus'] = this.iwstatus;
+    data['ref'] = this.ref;
+    data['refstatus'] = this.refstatus;
     return data;
   }
 }
-

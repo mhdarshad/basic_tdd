@@ -18,7 +18,7 @@ class SetUserBloc extends LogicHandler<PhoneLoginUseCase, UsersData> {
   SetUserBloc(this.usecase) : super(usecase);
 
   @override
-  call({required UsersData data}) {
+  call({required UsersData data,required}) {
     // TODO: implement call
     return PhoneLoginEvents(usecase, data);
   }

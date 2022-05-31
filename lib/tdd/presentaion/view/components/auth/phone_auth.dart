@@ -1,8 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../injection_container.dart';
-import '../../../events/phoneauth/phone_login_mutation.dart';
 
 class AuthPhone extends StatelessWidget {
   final TextEditingController textController;

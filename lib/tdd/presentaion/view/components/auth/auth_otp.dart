@@ -6,7 +6,7 @@ import 'package:otp_text_field/style.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../injection_container.dart';
-import '../../../events/phoneauth/phone_otp_mutation.dart';
+import '../../../events/auth/phone_otp_mutation.dart';
 
 class AuthOtp extends StatelessWidget {
   final TextEditingController textController;

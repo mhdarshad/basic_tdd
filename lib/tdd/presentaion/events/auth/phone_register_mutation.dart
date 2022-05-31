@@ -54,5 +54,6 @@ class PhoneRegisterModle {
   String ip;
   String ftocken;
   String email;
-  PhoneRegisterModle({required this.fname, required this.uid, required this.password, required this.lname, required this.phone, required this.ip, required this.ftocken, required this.email});
+  String? ref;
+  PhoneRegisterModle({required this.fname, required this.uid, required this.password, required this.lname, required this.phone, required this.ip, required this.ftocken, required this.email,this.ref});
 }

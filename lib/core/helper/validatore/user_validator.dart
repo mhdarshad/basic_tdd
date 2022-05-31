@@ -14,7 +14,13 @@ class UserValidator{
   bool get autofillvalletstatus{
     return ((wallet?.genwstatus??"0")!="0")&&isUserActive;
   }
+  bool get refrervalletstatus{
+    return ((wallet?.refstatus??"0")!="0")&&isUserActive;
+  }
   bool get isUserActive{
     return ((user?.accountstatus??'0')=='1');
+  }
+  bool get anyWalletStatus{
+    return genralvalletstatus||incomevalletstatus||autofillvalletstatus;
   }
 }

@@ -1,8 +1,8 @@
-import 'package:asspa/tdd/presentaion/events/phoneauth/phone_register_mutation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../injection_container.dart';
+import '../../../events/auth/phone_register_mutation.dart';
 
 class AuthRegister extends StatelessWidget {
   final UserCredential? credential;

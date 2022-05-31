@@ -1,4 +1,5 @@
 
+import 'package:asspa/tdd/presentaion/view/screens/Admin/admin_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/util/presentation/constants/ic_constants.dart';
 import 'injection_container.dart';
 import 'tdd/presentaion/view/screens/dash_board.dart';
-import 'tdd/presentaion/view/screens/phone_auth.dart';
+import 'tdd/presentaion/view/screens/User/phone_auth.dart';
 enum Routename{
   Home,Login,CheckoutMobile,EditVendorProduct
 }
@@ -28,18 +29,18 @@ final router = GoRouter(
         onNonMatch: (n) => '') == '/refer'){
       return null;
     }
-    if(state.location != "/") {
-      return (sl<SharedPreferences>().containsKey(SFkeys.LOGEDIN) && sl<SharedPreferences>().getBool(SFkeys.LOGEDIN)! )? null:"/";
-    }else if(state.location.contains('/refer')){
-      // return (sl<SharedPreferences>().containsKey(SFkeys.LOGEDIN) && sl<SharedPreferences>().getBool(SFkeys.LOGEDIN)! )? null:"/:ref";
-      return null;
-    }else if(state.location == "/"){
-      print("login redirect request");
-      return (sl<SharedPreferences>().containsKey(SFkeys.LOGEDIN) && sl<SharedPreferences>().getBool(SFkeys.LOGEDIN)! )?
-      (sl<SharedPreferences>().containsKey(SFkeys.UType))?
-      "/${sl<SharedPreferences>().getString(SFkeys.UType)}/home":
-      null:null;
-    }
+    // if(state.location != "/") {
+    //   return (sl<SharedPreferences>().containsKey(SFkeys.LOGEDIN) && sl<SharedPreferences>().getBool(SFkeys.LOGEDIN)! )? null:'/';
+    // }else if(state.location.contains('/refer')){
+    //   // return (sl<SharedPreferences>().containsKey(SFkeys.LOGEDIN) && sl<SharedPreferences>().getBool(SFkeys.LOGEDIN)! )? null:"/:ref";
+    //   return null;
+    // }else if(state.location == "/"){
+    //   print("login redirect request");
+    //   return (sl<SharedPreferences>().containsKey(SFkeys.LOGEDIN) && sl<SharedPreferences>().getBool(SFkeys.LOGEDIN)! )?
+    //   (sl<SharedPreferences>().containsKey(SFkeys.UType))?
+    //   "/${sl<SharedPreferences>().getString(SFkeys.UType)}/home":
+    //   null:null;
+    // }
     return null;
   },
   initialLocation:"/",
@@ -50,17 +51,33 @@ class PageControler extends GoNavigations  {
   PageControler();
 
   get routs =>[
-    GoRoute(path: '/',builder: (context,state){
-      return const PhoneAuth();
-    }),
+    GoRoute(path: '/', redirect: (_) {
+  return '/user';
+  }),
+    // GoRoute(path: '/admin',redirect: (_) =>"/admin/login/"),
     GoRoute(path: '/refer/:ref',builder: (context,state){
       return  PhoneAuth(ref:state.params['ref']);
     }),
-    GoRoute(path: '/user/${nUri(Routename.Home).path}',redirect: (_) =>'/user/'+nUri(Routename.Home).path+'/dashboard'),
-    GoRoute(path: '/user', redirect: (_) =>'/user/'+nUri(Routename.Home).path+'/dashboard',routes: [
-      GoRoute(name:nUri(Routename.Home).name ,path: nUri(Routename.Home).path+'/:index',builder: (context,state){
+
+    GoRoute(path: '/:user',
+        redirect: (state) {
+          return (sl<SharedPreferences>().containsKey(SFkeys.LOGEDIN) && sl<SharedPreferences>().getBool(SFkeys.LOGEDIN)! )?
+          '/${sl<SharedPreferences>().getString(SFkeys.UType)??state.params['user']}/'+nUri(Routename.Home).path+'/dashboard':
+          '/${state.params['user']}/login';
+        },
+        routes: [
+          GoRoute(path: 'login',builder: (context,state){
+            if(state.params['user'] == 'admin'){
+              return  AdminLogin();
+            }else{
+              return const PhoneAuth();
+            }
+          }),
+          GoRoute(path: ':user/'+nUri(Routename.Home).path, redirect: (state) =>(sl<SharedPreferences>().containsKey(SFkeys.LOGEDIN) && sl<SharedPreferences>().getBool(SFkeys.LOGEDIN)! )?'/${state.params['user']}/'+nUri(Routename.Home).path+'/dashboard':'/${state.params['user']}/login'),
+          GoRoute(name:nUri(Routename.Home).name ,path: nUri(Routename.Home).path+'/:index',builder: (context,state){
         print("Intilaizes ${state.params["index"]}");
-        return  DashBoard(state.params["index"]!);
+        print("routefrom ${state.params["user"]}");
+        return  DashBoard(state.params["index"]!,usertype:state.params["user"]);
       })
       //       return  Login();
       //     },routes: [
