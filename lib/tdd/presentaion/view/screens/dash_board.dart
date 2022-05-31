@@ -161,6 +161,7 @@ class _DashBoardState extends State<DashBoard> with GoNavigations{
                 body: PageView(controller: pageViewController,
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: LayoutView(context).isMobile?Axis.horizontal:Axis.vertical,
+
                   onPageChanged: (index){
                     if (kDebugMode) {
                       print("page changes to : $index");
