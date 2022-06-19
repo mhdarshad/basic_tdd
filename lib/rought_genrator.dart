@@ -1,5 +1,6 @@
 
 import 'package:asspa/tdd/presentaion/view/screens/Admin/admin_login.dart';
+import 'package:asspa/tdd/presentaion/view/screens/User/profile/k_y_c.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import 'injection_container.dart';
 import 'tdd/presentaion/view/screens/dash_board.dart';
 import 'tdd/presentaion/view/screens/User/phone_auth.dart';
 enum Routename{
-  Home,Login,CheckoutMobile,EditVendorProduct
+  Home,Login,CheckoutMobile,EditVendorProduct,kyc
 }
 
 enum NavigatoreTyp{
@@ -73,6 +74,7 @@ class PageControler extends GoNavigations  {
               return const PhoneAuth();
             }
           }),
+          GoRoute(path: nUri(Routename.kyc).path,name: nUri(Routename.kyc).name ,builder: (ctx,state)=>KYC()),
           GoRoute(path: ':user/'+nUri(Routename.Home).path, redirect: (state) =>(sl<SharedPreferences>().containsKey(SFkeys.LOGEDIN) && sl<SharedPreferences>().getBool(SFkeys.LOGEDIN)! )?'/${state.params['user']}/'+nUri(Routename.Home).path+'/dashboard':'/${state.params['user']}/login'),
           GoRoute(name:nUri(Routename.Home).name ,path: nUri(Routename.Home).path+'/:index',builder: (context,state){
         print("Intilaizes ${state.params["index"]}");
@@ -186,6 +188,7 @@ abstract class GoNavigations {
       case Routename.EditVendorProduct:
       // TODO: Handle this case.
         return  CUri("EditVendorProduct");
+      case Routename.kyc:  return  CUri("kyc");
     }
   };
 
@@ -235,8 +238,8 @@ abstract class GoNavigations {
       case NavigatoreTyp.pushReplacment:
       // GoRouter.of(context).pop();
         parms!=null?
-        context.goNamed(nUri(name!).name,params: parms):
-        context.goNamed(nUri(name!).name/*,params: {"branch":"999"}*/);
+        context.pushNamed(nUri(name!).name,params: parms):
+        context.pushNamed(nUri(name!).name/*,params: {"branch":"999"}*/);
         // TODO: Handle this case.
         break;
       case NavigatoreTyp.popUntill:

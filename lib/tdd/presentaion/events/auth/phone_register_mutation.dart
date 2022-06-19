@@ -33,9 +33,9 @@ class PhoneRegisterEvents extends EventMutations<PhoneRegisterModle> {
   perform() async {
     final request = await usecase.regester(data: data!);
     request.fold((l) => Left(l), (r) {
-      print("data: ${r.toJson()}");
+      print("register data: ${r.toJson()}");
       store?.UserData = r;
-      next(() => PhoneLoginEvents(usecase,r));
+      next(() => SetUserEvents(usecase,r));
       // sl<SharedPreferences>().setBool(SFkeys.LOGEDIN,true);
       // sl<SharedPreferences>().setString(SFkeys.token,Cripto().encript(r.tocken!));
       // sl<SharedPreferences>().setString(SFkeys.UType,'user');

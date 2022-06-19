@@ -8,7 +8,7 @@ class CountCalculation{
     return double.tryParse(s) != null;
   }
   String? total(Wallet wallet){
-    return  (double.parse(wallet.ref??'0')+double.parse(wallet.afw ??'0')+double.parse(wallet.iw??'0')+double.parse(wallet.genw??'0')).toString();
+    return  (double.parse(wallet.ref??'0')+double.parse(wallet.afw ??'0')+double.parse(wallet.iw??'0')+double.parse(wallet.genw??'0')+double.parse(wallet.rw??'0')).toString();
 
   }
 

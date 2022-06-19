@@ -5,14 +5,18 @@ class ProductTextForm extends StatefulWidget {
   String labelText;
   TextEditingController controller;
   TextInputType? keytype;
+  double? textsize;
+  String? prfix;
+  int? maxlines;
 
-  ProductTextForm({Key? key, required this.labelText, required this.controller ,this.keytype}) : super(key: key);
+  ProductTextForm({Key? key, required this.labelText, required this.controller ,this.keytype,this.textsize,this.prfix,this.maxlines}) : super(key: key);
 
   @override
   _ProductTextFormState createState() => _ProductTextFormState();
 }
 
 class _ProductTextFormState extends State<ProductTextForm> {
+
   // final TextEditingController userInput = TextEditingController();
   // Variation variationsobj = new Variation();
 
@@ -28,9 +32,10 @@ class _ProductTextFormState extends State<ProductTextForm> {
       padding: const EdgeInsets.all(6.0),
       child: TextFormField(
         controller: widget.controller,
+        maxLines: widget.maxlines??1,
         keyboardType:widget.keytype,
-        style: const TextStyle(
-          fontSize: 18,
+        style:  TextStyle(
+          fontSize: widget.textsize??0+2,
           color: Colors.green,
           fontWeight: FontWeight.w600,
         ),
@@ -136,17 +141,13 @@ class _ProductTextFormState extends State<ProductTextForm> {
           focusColor: Colors.white,
           suffixIcon: widget.controller.text.isEmpty
               ? null // Show nothing if the text field is empty
-              : const Padding(
+              :  Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text("AP",style: TextStyle(color: Colors.green,fontSize: 20)),
+                child: Text(widget.prfix??'',style: TextStyle(color: Colors.green,fontSize: 20)),
               ),
-
-
-
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
-
           focusedBorder: OutlineInputBorder(
             borderSide:
             const BorderSide(color: Colors.grey, width: 1.0),
@@ -157,18 +158,18 @@ class _ProductTextFormState extends State<ProductTextForm> {
           hintText: this.widget.labelText.toString(),
 
           //make hint text
-          hintStyle: const TextStyle(
+          hintStyle:  TextStyle(
             color: Colors.grey,
-            fontSize: 16,
+            fontSize: widget.textsize,
             fontWeight: FontWeight.w400,
           ),
 
           //create lable
           labelText: this.widget.labelText.toString(),
           //lable style
-          labelStyle: const TextStyle(
+          labelStyle:  TextStyle(
             color: Colors.grey,
-            fontSize: 16,
+            fontSize: widget.textsize,
             fontWeight: FontWeight.w400,
           ),
         ),

@@ -18,18 +18,19 @@ class LogoutBloc extends LogicHandler<PhoneLoginUseCase, NoPrams> {
     // TODO: implement call
     return LogoutEvents(usecase, data);
   }
-
 }
 
 class LogoutEvents extends EventMutations<NoPrams> {
   PhoneLoginUseCase usecase;
-
   LogoutEvents(this.usecase, NoPrams data) : super(data);
 
   @override
   perform() async {
     final request = await usecase.logout();
-    request.fold((l) => throw ServerFailure(ExceptiomModle(message: "Something went Wrong")), (r) {
+    request.fold((l) {
+      sl<SharedPreferences>().clear();
+      throw ServerFailure(ExceptiomModle(message: "Something went Wrong"));
+    }, (r) {
       sl<SharedPreferences>().clear();
     });
   }

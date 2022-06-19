@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:asspa/tdd/data/models/exception_modle.dart';
 import 'package:dartz/dartz.dart';
 import '../../../core/data/hive_db.dart';
 import '../../../core/error/exceptions.dart';
@@ -31,9 +32,9 @@ class DataLayerRepositoryImpl implements DependencyRepostProvider<Map<String, dy
         print("server exception");
         // ServerExceptions? exceptions ;
         if(e.code == 401){
-          return Left(ClintFailure(e.messege!));
+          return Left(ClintFailure(ExceptiomModle(message: e.messege!.message,errors: e.messege!.errors)));
         }
-        return Left(ServerFailure(e.messege!));
+        return Left(ServerFailure(ExceptiomModle(message: e.messege!.message,errors: e.messege!.errors)));
       }
     } else {
       try {

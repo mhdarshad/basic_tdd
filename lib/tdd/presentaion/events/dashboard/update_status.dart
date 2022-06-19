@@ -28,6 +28,6 @@ class UpdateStatusEvents extends EventMutations<ActivateParam> {
   perform() async {
     final request = await usecase(data: data!);
     request.fold((l) => throw Error, (r) => store?.usersData.replaceFirstWhere((currentValue) => currentValue.user?.uid == r.user?.uid, r) );
-    next(() => GetUserDataEvents(GetUserDataUsecase(sll()),NoPrams()));
+    next(() => GetUserDataEvents(GetUserDataUsecase(sll()),Param({'pageno':store?.pagination?.currentPage})));
   }
 }

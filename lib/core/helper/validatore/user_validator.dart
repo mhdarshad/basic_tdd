@@ -15,7 +15,7 @@ class UserValidator{
     return ((wallet?.genwstatus??"0")!="0")&&isUserActive;
   }
   bool get refrervalletstatus{
-    return ((wallet?.refstatus??"0")!="0")&&isUserActive;
+    return/* ((wallet?.refstatus??"0")!="0")&&*/isUserActive;
   }
   bool get isUserActive{
     return ((user?.accountstatus??'0')=='1');

@@ -113,7 +113,7 @@ class RemoteDataSourceImpl implements RemoteDataSource{
         }
       }
       debugPrint("Json Value");
-      late Map<String,String> headers ={};
+      late Map<String,String> headers = {};
       headers['Content-Type'] = "application/x-www-form-urlencoded";
       headers['Accept'] = "application/json";
       if(authtocken!=null)headers['Authorization'] = 'Bearer $authtocken';
@@ -142,15 +142,17 @@ class RemoteDataSourceImpl implements RemoteDataSource{
       http.StreamedResponse responses = await request.send();
       debugPrint("status code ${responses.statusCode }");
       debugPrint("$baseurl${param.uri} parms${param.data.toString()}");*/
-      print("status: ${responsejs.statusCode} data/error: ${responsejs.body}");
       if (responsejs.statusCode == 200) {
+        debugPrint("status: ${responsejs.statusCode} data: ${responsejs.body}");
         final response = responsejs.body;
         debugPrint(json.decode(response).toString());
         if(json.decode(response)[0]!=null){
           ///if Response is writern [{}]
+          debugPrint("resp type: []");
           return RepositoryModel(json.decode(response)[0]);
         }else if(json.decode(response)["data"]!=null) {
           ///if Response is written {'data':[]}
+          debugPrint("resp type: {'data':[]}");
           if (json.decode(response)["status"].toString() == "200") {
             return RepositoryModel(json.decode(response));
           }else if(json.decode(response)["status"].toString() == "400"){
@@ -166,6 +168,7 @@ class RemoteDataSourceImpl implements RemoteDataSource{
           return RepositoryModel(json.decode(response));
         }
       } else {
+        print("status: ${responsejs.statusCode} error: ${responsejs.body}");
         // print(await responses.stream.bytesToString());
         throw ServerExceptions(responsejs.statusCode,ExceptiomModle(message: json.decode(responsejs.body)['messege'],errors: json.decode(responsejs.body)['errors']));
       }

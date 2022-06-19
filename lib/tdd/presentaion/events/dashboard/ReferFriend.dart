@@ -12,7 +12,7 @@ class ReferfriendBloc
   ReferfriendBloc(this.usecase) : super(usecase);
 
   @override
-  call({required String data}) {
+  call({ String? data}) {
     // TODO: implement call
     return ReferfriendEvents(usecase, data);
   }
@@ -21,22 +21,24 @@ class ReferfriendBloc
 
 class ReferfriendEvents extends EventMutations<String> {
   ReferfriendUseCase usecase;
-
-  ReferfriendEvents(this.usecase, String data) : super(data);
+late String link;
+  ReferfriendEvents(this.usecase, String? data) : super(data);
 
   @override
   perform() async {
-    final request = await usecase(data: data!);
+    final request = await usecase(data: data);
     request.fold((l) {
       if (kDebugMode) {
         print('link error:${l.props}');
       }
+      link = '/';
       return l;
     }, (r) {
       if (kDebugMode) {
         print('link genrated:${r}');
       }
-      return store?.referlink = r;
+      link = r.toString();
+       store?.referlink = r;
     });
   }
 }

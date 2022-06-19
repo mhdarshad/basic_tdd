@@ -31,6 +31,6 @@ class UpdateWalletEvents extends EventMutations<WalletParams> {
   perform() async {
     final request = await usecase.updateWallet(data: data!);
     request.fold((l) => throw ServerFailure(ExceptiomModle(message: "Server Exception")), (r) => store?.UserData = r);
-    next(() => GetUserDataEvents(GetUserDataUsecase(sll()),NoPrams()));
+    next(() => GetUserDataEvents(GetUserDataUsecase(sll()),Param({'pageno':store?.pagination?.currentPage})));
   }
 }

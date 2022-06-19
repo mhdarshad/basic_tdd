@@ -18,6 +18,6 @@ class KeyConstants{
   static String google_api_key = "AIzaSyCGox2ktjpxx-Bzh6RrrDTtATIdvDanNh4";
 }
  List<LanguageModel> get languages => [
-                                                                           LanguageModel(imageUrl: "", languageName: 'English', countryCode: 'US', languageCode: 'en'),
+  LanguageModel(imageUrl: "", languageName: 'English', countryCode: 'US', languageCode: 'en'),
   LanguageModel(imageUrl: "", languageName: 'Arabic', countryCode: 'SA', languageCode: 'ar'),
 ];

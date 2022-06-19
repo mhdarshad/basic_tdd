@@ -69,12 +69,12 @@ class AdminLogin extends StatelessWidget with GoNavigations{
                     ),
                     // height: MediaQuery.of(context).size.height/3,
                     child: FlutterLogin(
-                      theme: LoginTheme(accentColor: Colors.amber,primaryColor: Colors.amber,cardTheme: const CardTheme(elevation: 18)),
+                      theme: LoginTheme(accentColor:Theme.of(context).accentColor,primaryColor: Theme.of(context).primaryColor,cardTheme: const CardTheme(elevation: 18)),
                       // title: 'Asfa',
                       // logo: AssetImage('assets/icon/logo.jpeg'),
                       hideForgotPasswordButton: true,
                       loginAfterSignUp: true,
-                      userType: LoginUserType.phone,
+                      userType: LoginUserType.email,
                       showDebugButtons: true,
                       messages: LoginMessages(
                         userHint: 'Email Address',
@@ -110,7 +110,7 @@ class AdminLogin extends StatelessWidget with GoNavigations{
                         // Future.value('n');
                       },
                       onSubmitAnimationCompleted: () {
-                        GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home,parms: {'index':'dashboard'});
+                        GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home,parms: {'index':'dashboard','user':'admin'});
                         // Navigator.of(context).pushNamedAndRemoveUntil(RoutName.dashboard, (route) => false);
                       }, onRecoverPassword: (String ) {
 

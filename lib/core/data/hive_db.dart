@@ -3,24 +3,23 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 enum DBTable{
-   UserProfile,CartData,DataFetchHistory,PaymentData,customerdata
+  UserProfile,CartData,DataFetchHistory,PaymentData,customerdata
 }
 
 class HiveDB<T> extends HiveState<T>{
   HiveDB({required DBTable database}) : super(_getBox(database));
-
   static init()async {
 
-   if(!kIsWeb) {
-     final document = await getApplicationDocumentsDirectory();
+    if(!kIsWeb) {
+      final document = await getApplicationDocumentsDirectory();
       Hive.init(document.path);
     }
   }
-  // static HiveState db({
-  //  required DBTable database
-  // }){
-  //   return HiveState<T>(_getBox(database));
-  // }
+// static HiveState db({
+//  required DBTable database
+// }){
+//   return HiveState<T>(_getBox(database));
+// }
 }
 
 String _getBox(DBTable database) {
@@ -37,13 +36,14 @@ abstract class HiveState <T>{
   late Box box;
   String database;
   HiveState(this.database);
-  add({dynamic key,required T value}) async {
+  Future<T> add({dynamic key,required T value}) async {
     box = await Hive.openBox<T>(database);
     if(key!=null) {
       box.put(key, value);
     } else {
       box.add(value);
     }
+    return value;
     // await box.close();
   }
   remove({dynamic key}) async {
@@ -61,22 +61,23 @@ abstract class HiveState <T>{
     // if(!box.isOpen)
     box = await Hive.openBox<T>(database);
     if(key is int){
-     val = box.getAt(key);
+      return await box.getAt(key);
     }else{
-     val =  box.get(key);
+      return  await box.get(key);
     }
     // Future.delayed(Duration(microseconds: 200,()=>));
-    await box.close();
+    // await box.close();
     return val;
   }
-  update({required dynamic key,required T value}) async{
+  Future<T> update({required dynamic key,required T value}) async{
     box = await Hive.openBox<T>(database);
     if(key is int){
-      box.putAt(key,value);
+      await box.putAt(key,value);
     }else{
-      box.put(key,value);
+      await box.put(key,value);
     }
-    await box.close();
+    return value;
+    // await box.close();
   }
   cleare() async {
     box = await Hive.openBox(database);
@@ -87,8 +88,3 @@ abstract class HiveState <T>{
     return  Hive.box(database).listenable();
   }
 }
-
-
-
-
-

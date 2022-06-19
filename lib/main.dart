@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp.router(
           title: 'Asfa',
           theme: ThemeData(
+            backgroundColor: const Color(0xFF6739B7),
             // This is the theme of your application.
             //
             // Try running your application with "flutter run". You'll see the
@@ -41,7 +42,18 @@ class MyApp extends StatelessWidget {
             // or simply save your changes to "hot reload" in a Flutter IDE).
             // Notice that the counter didn't reset back to zero; the application
             // is not restarted.
-            primarySwatch: Colors.blue,
+            primarySwatch: const MaterialColor(0xFF6739B7, {
+              50: Color(0xFF6739B7),
+              100: Color(0xFF6739B7),
+              200: Color(0xFF6739B7),
+              300: Color(0xFF6739B7),
+              400: Color(0xFF6739B7),
+              500: Color(0xFF6739B7),
+              600: Color(0xFF6739B7),
+              700: Color(0xFF6739B7),
+              800: Color(0xFF6739B7),
+              900: Color(0xFF6739B7),
+          }),
           ),
           supportedLocales: languages.map((language) => Locale(language.languageCode!, language.countryCode)),
           localizationsDelegates: const [

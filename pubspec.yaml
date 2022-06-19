@@ -68,6 +68,10 @@ dependencies:
 #html web
   flutter_html: ^2.2.1
   number_pagination: ^0.0.3+2
+  share_plus: ^4.0.5
+  flutter_launcher_icons:
+  shimmer: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -78,7 +82,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
-
+  flutter_svg:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

@@ -53,9 +53,9 @@ class _PhoneAuthState extends State<PhoneAuth> with GoNavigations{
               ),
               alignment: const AlignmentDirectional(0, 0),
               child: VxNotifier(mutations: {
-                PhoneRegisterEvents : (ctx,mut){
+                PhoneRegisterEvents : (ctx,mut, {status}){
                   if(mut.status == VxStatus.success){
-                    GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home);
+                    GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home,parms: {'index':'dashboard','user':'user'});
                   }
                 },
 
@@ -95,7 +95,7 @@ class _PhoneAuthState extends State<PhoneAuth> with GoNavigations{
                       ),
                       // height: MediaQuery.of(context).size.height/3,
                       child: FlutterLogin(
-                        theme: LoginTheme(accentColor: Colors.amber,primaryColor: Colors.amber,cardTheme: CardTheme(elevation: 18)),
+                        theme:  LoginTheme(accentColor:Theme.of(context).accentColor,primaryColor: Theme.of(context).primaryColor,cardTheme: CardTheme(elevation: 18)),
                         // title: 'Asfa',
                         // logo: AssetImage('assets/icon/logo.jpeg'),
                         hideForgotPasswordButton: true,
@@ -120,8 +120,7 @@ class _PhoneAuthState extends State<PhoneAuth> with GoNavigations{
                           signupButton: 'REGISTER',
                         ),
                         userValidator: (value){
-                          var phoneRegExp = RegExp(
-                              '^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}\$');
+                          var phoneRegExp = RegExp('^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}\$');
                           if (value != null &&
                               value.length < 7 &&
                               !phoneRegExp.hasMatch(value)) {
@@ -174,7 +173,7 @@ class _PhoneAuthState extends State<PhoneAuth> with GoNavigations{
                           return null;
                         },
                         onSubmitAnimationCompleted: () {
-                          GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home,parms: {'index':'dashboard','user':'user'});
+                          // GNavigation(context, type: NavigatoreTyp.pushReplacment,name: Routename.Home,parms: {'index':'dashboard','user':'user'});
                           // Navigator.of(context).pushNamedAndRemoveUntil(RoutName.dashboard, (route) => false);
                         },
                         onRecoverPassword: (val){

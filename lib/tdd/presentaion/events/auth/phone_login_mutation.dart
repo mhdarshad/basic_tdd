@@ -3,6 +3,7 @@ import 'package:asspa/core/error/failuers.dart';
 import 'package:asspa/core/util/presentation/Events/logic_event_handler.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/cripto_algo.dart';
 import '../../../../core/util/presentation/constants/ic_constants.dart';
@@ -33,15 +34,20 @@ class PhoneLoginEvents extends EventMutations<PhoneLoginModle> {
   PhoneLoginEvents(this.usecase, PhoneLoginModle data) : super(data);
 
   @override
-  Future <Either<Failure, UsersData>> perform() async {
+ perform() async {
      Either<Failure, UsersData> request = await usecase.login(data: data!);
-   return request.fold((l) => Left(l), (r) {
-      print("data: ${r.toJson()}");
-      store?.UserData = r;
-      sl<SharedPreferences>().setBool(SFkeys.LOGEDIN,true);
-      sl<SharedPreferences>().setString(SFkeys.token,Cripto().encript(r.tocken!));
-      return Right(r);
+     UsersData datas = UsersData();
+     request.fold((l) => Left(l), (r) {
+      if (kDebugMode) {
+        print("logedin data: ${r.toJson()}");
+      }
+      datas = r;
+      // sl<SharedPreferences>().setBool(SFkeys.LOGEDIN,true);
+      // if(r.tocken!=null) {
+      //   sl<SharedPreferences>().setString(SFkeys.token,Cripto().encript(r.tocken!));
+      // }
     });
-     // return Future.value(store?.UserData);
+     next(() => SetUserEvents(usecase,datas));
+    // return Future.value(store?.UserData);
   }
 }

@@ -15,8 +15,10 @@ import 'tdd/data/datasource/remote_data_sources.dart';
 import 'tdd/data/models/modle_entities.dart';
 import 'tdd/data/repository/data_layer_repo_impl.dart';
 import 'tdd/domain/usecase/get_dash_data.dart';
+import 'tdd/domain/usecase/kyc/kyc_update_usecase.dart';
 import 'tdd/domain/usecase/phoneauth/login_usecase.dart';
 import 'tdd/domain/usecase/refer_friend_usecase.dart';
+import 'tdd/domain/usecase/transaction/payment_transation.dart';
 import 'tdd/domain/usecase/update_membership_status.dart';
 import 'tdd/presentaion/events/auth/get_user_mutation.dart';
 import 'tdd/presentaion/events/auth/logout_mutation.dart';
@@ -29,6 +31,9 @@ import 'tdd/presentaion/events/dashboard/ReferFriend.dart';
 import 'tdd/presentaion/events/dashboard/get_user_data.dart';
 import 'tdd/presentaion/events/dashboard/update_status.dart';
 import 'tdd/presentaion/events/dashboard/update_wallet.dart';
+import 'tdd/presentaion/events/transaction/payment_transaction.dart';
+import 'tdd/presentaion/events/user_update/check_kyc.dart';
+import 'tdd/presentaion/events/user_update/kyc_update.dart';
 final sl = GetIt.instance;
 
  init() async{
@@ -50,7 +55,9 @@ _bloc(){
   sl.registerFactory(() => GetUserDataBloc(GetUserDataUsecase(sll()),));
   sl.registerFactory(() => UpdateStatusBloc(UpdateStatusUseCase(sll()),));
   sl.registerFactory(() => UpdateWalletBloc(UpdateStatusUseCase(sll()),));
-
+  sl.registerFactory(() => KycUpdateBloc(KycUpdateUseCase(sll()),));
+  sl.registerFactory(() => CheckKycBloc(KycUpdateUseCase(sll()),));
+  sl.registerFactory(() => PaymentTransactionBloc(PaymentTransactionUseCase(sll()),));
   // sl.registerFactory(() => RegisterEvent(RegisterUseCase(sll()),));
   // sl.registerFactory(() => RegisterBloc(customerRegisterUsecase: CustomerRegisterUsecase(repo: sll()), checkEmailUsecase: CheckEmailUsecase(repo: sll()), checkMobileUsecase: CheckMobileUsecase(repo: sll()),
   // ));
@@ -71,7 +78,6 @@ _bloc(){
   // sl.registerFactory(() => UserProfileBloc(profileUserUsecase:GetProfileCustomerUcase(repo:  sll()),),);
   // sl.registerFactory(() => SearchBloc(searchUserrUsecase:SearchUserUsecase(repo:  sll()), searchProductUsecase: SearchProductUsecase(repo:  sll()),),);//Bloc/Bloc
 }
-
 // _repo(){
 //   sl.registerLazySingleton<DependencyRepostProvider<Map<String,dynamic>>>(
 //         () => DataLayerRepositoryImpl(
