@@ -268,73 +268,7 @@ class _WithdrawerLsitWidgetState extends State<WithdrawerLsitWidget> with GoNavi
                               size: 20,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
-                              final selecteduser =  userData.firstWhere((element) => element.user?.uid == e.user?.uid);
-                              final  _othertextcontroller = TextEditingController(text: selecteduser.wallet?.genw??'0');
-                              final  _businesstextcontroller = TextEditingController(text: selecteduser.wallet?.iw??'0');
-                              final  _autofilltextcontroller = TextEditingController(text: selecteduser.wallet?.afw??'0');
-                              final  _refrencetextcontroller = TextEditingController(text: selecteduser.wallet?.ref??'0');
-                              final  _reoyalitytextcontroller = TextEditingController(text: selecteduser.wallet?.rw??'0');
-                              showCustomDialog(context,
-                                height: 300,
-                                width: 400,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Text("Update Wallet",style: TextStyle(fontSize: 25,color: Colors.green,fontWeight: FontWeight.bold)),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(children:  [
-                                          Expanded(child: ProductTextForm(labelText: 'Other', prfix: 'AP',textsize: 16,controller: _othertextcontroller,keytype: TextInputType.number,)),
-                                          Expanded(child: ProductTextForm(labelText: 'Business', prfix: 'AP', textsize: 16, controller: _businesstextcontroller,keytype: TextInputType.number,)),
-                                          Expanded(child: ProductTextForm(labelText: 'Auto Fill', prfix: 'AP', textsize: 16, controller: _autofilltextcontroller,keytype: TextInputType.number,)),
-                                        ]),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(children:  [
-                                          Expanded(child: ProductTextForm(labelText: 'Referer', prfix: 'AP', textsize: 16, controller: _refrencetextcontroller,keytype: TextInputType.number,), ),
-                                          Expanded(child: ProductTextForm(labelText: 'Royalty', prfix: 'AP', textsize: 16, controller: _reoyalitytextcontroller,keytype: TextInputType.number,), )
-                                        ]),
-                                      ),
-                                      MaterialButton(
-                                        onPressed: () {
-                                          debugPrint("updated: ot ${_othertextcontroller.text} , bus ${_businesstextcontroller.text} , af ${_autofilltextcontroller.text}");
-                                          sl<UpdateWalletBloc>()(data: WalletParams(selecteduser.user?.uid??'',autofill_wallet: _autofilltextcontroller.text,gendral_wallet: _othertextcontroller.text,income_wallet: _businesstextcontroller.text,refrence_wallet: _refrencetextcontroller.text));
-                                        },
-                                        child: Card(
-                                          color: Colors.green,
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                          child: Container(
-                                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                                            padding: const EdgeInsets.all(6.0),
-                                            child: VxConsumer(
-                                              builder: (BuildContext context, store, VxStatus? status) {
-                                                return (status == VxStatus.loading) ?const CircularProgressIndicator():
-                                                Row  (
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: const [
-                                                    Text("Update",style: TextStyle(color: Colors.white,fontSize: 12)),
-                                                    Icon(Icons.update,color: Colors.white,size: 20),
-                                                  ],
-                                                );
-                                              },
-                                              mutations: const {UpdateWalletEvents}, notifications: {
-                                              UpdateWalletEvents:(ctx,mut, {status}){
-                                                if(mut.status == VxStatus.success){
-                                                  context.pop();
-                                                }
-                                              }
-                                            },
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),);
+
                             },
                           ),
                         ])),
