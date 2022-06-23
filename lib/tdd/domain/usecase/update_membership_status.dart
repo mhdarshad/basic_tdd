@@ -12,6 +12,7 @@ class UpdateStatusUseCase  extends UseCase<UsersData,ActivateParam>{
 
   @override
   Future<Either<Failure, UsersData>> call({required ActivateParam data}) async {
+    print('data.status : ${ data.status?'1':'0'}');
     final  value = await repo.getRequest(Params(uri: Uri.parse("user/active/${data.uid}"),
         methed: Methed.Put,
         data: {'status': data.status?'1':'0'}));

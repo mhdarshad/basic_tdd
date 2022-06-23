@@ -6,9 +6,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:velocity_x/velocity_x.dart';
 
+import 'core/usecases/usecase.dart';
 import 'core/util/presentation/constants/ic_constants.dart';
 import 'injection_container.dart';
+import 'tdd/presentaion/events/user_update/check_kyc.dart';
 import 'tdd/presentaion/view/screens/dash_board.dart';
 import 'tdd/presentaion/view/screens/User/phone_auth.dart';
 enum Routename{
@@ -74,7 +77,14 @@ class PageControler extends GoNavigations  {
               return const PhoneAuth();
             }
           }),
-          GoRoute(path: nUri(Routename.kyc).path,name: nUri(Routename.kyc).name ,builder: (ctx,state)=>KYC()),
+          GoRoute(path: nUri(Routename.kyc).path,name: nUri(Routename.kyc).name ,builder: (ctx,state) {
+            sl<CheckKycBloc>()(data: NoPrams());
+            return VxBuilder(
+            builder: (ctx,store,state) {
+              return const KYC();
+            }, mutations: const {CheckKycEvents},
+          );
+          }),
           GoRoute(path: ':user/'+nUri(Routename.Home).path, redirect: (state) =>(sl<SharedPreferences>().containsKey(SFkeys.LOGEDIN) && sl<SharedPreferences>().getBool(SFkeys.LOGEDIN)! )?'/${state.params['user']}/'+nUri(Routename.Home).path+'/dashboard':'/${state.params['user']}/login'),
           GoRoute(name:nUri(Routename.Home).name ,path: nUri(Routename.Home).path+'/:index',builder: (context,state){
         print("Intilaizes ${state.params["index"]}");

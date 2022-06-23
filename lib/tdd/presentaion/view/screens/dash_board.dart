@@ -1,5 +1,6 @@
 import 'package:asspa/core/usecases/usecase.dart';
 import 'package:asspa/tdd/domain/entities/vx_store.dart';
+import 'package:asspa/tdd/presentaion/view/widgets/drawer/end_drawer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -38,6 +39,7 @@ class _DashBoardState extends State<DashBoard> with GoNavigations{
   void initState() {
     pageViewController = PageController(initialPage: widget.index);
     sl<GetUserBloc>()(data: NoPrams());
+    (VxState.store as ProjectStore).user_type = widget.usertype;
 
   }
   @override
@@ -66,7 +68,7 @@ class _DashBoardState extends State<DashBoard> with GoNavigations{
             padding: const EdgeInsets.all(8.0),
             child: Text("Ac No: ${user?.acountno??""}",style:  TextStyle(color: Theme.of(context).primaryColor,fontWeight: FontWeight.bold,fontSize: 12),),
           ),
-          if(LayoutView(context).isWeb)
+          if(LayoutView(context).isWeb&&user?.accountstatus == '1')
             ReferButton(refid: user?.refid),
           if(!LayoutView(context).isWeb)
             GestureDetector(
@@ -135,60 +137,8 @@ class _DashBoardState extends State<DashBoard> with GoNavigations{
         ]:[];
         return Scaffold(
           backgroundColor: Colors.white,
-          endDrawer: Container(
-            color: Colors.white,
-            width: !LayoutView(context).isWeb?250:MediaQuery.of(context).size.width/4,
-            child: Column(children: [
-              SizedBox(height: 120,child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Image.asset("assets/icon/profile.png",height: 40,width: 40),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 8.0),
-                        child: Center(
-                          child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                            "Mohammed Arshad".text.bold.make(),
-                            "000000000011100".text.size(12).make(),
-                          ],),
-                        ),
-                      )
-                    ],
-                  ).p12(),
-                  "mohammedarshadsheikh76@gmail.com".text.size(12).textStyle(const TextStyle(overflow: TextOverflow.fade)).normal.make(),
-                  "7760421364".text.normal.size(12).make(),
-                ],
-              )),
-              const Divider(thickness: 2,height: 2,),
-              VxNotifier(
-                mutations: {
-                  LogoutEvents:(ctx,mut,{status}){
-                    if(mut.status == VxStatus.success){
-                      GNavigation(context, type: NavigatoreTyp.logedout,);
-                    }
-                  }
-                },
-                child:  ListTile(leading: const Icon(Icons.logout),selected: true,title: "Logout".text.make(),onTap: (){
-                  MeterialBanners (context,text: 'Please Active Your Id to get the Benefit', actions: [
-                    TextButton(
-                      onPressed: () {},
-                      child:  Text(
-                        'Activate',
-                        style: TextStyle(color:  Theme.of(context).primaryColor),
-                      ),
-                    ),
-                  ], leading: const Icon(Icons.error),).dispos();
-                  // sl<SharedPreferences>().clear();
-                  sl<LogoutBloc>()(data: NoPrams());
-                }),
-              ),
-              const Divider(thickness: 2,height: 2,),
-              ListTile(leading: const Icon(Icons.file_copy),selected: false,title: "KYC".text.make(),),
-              ListTile(leading: const Icon(Icons.edit_note),selected: false,title: "Edit Profile".text.make(),),
-            ]).p20(),
-          ),
-          floatingActionButton: !LayoutView(context).isWeb?  ReferButton(refid: user?.refid,):null,
+          endDrawer:     EndDrawer(),
+          floatingActionButton: !LayoutView(context).isWeb&&user?.accountstatus == '1'?  ReferButton(refid: user?.refid,):null,
           // appBar: ,
           body:   WebBody(
               body: Scaffold(
@@ -244,7 +194,8 @@ class _DashBoardState extends State<DashBoard> with GoNavigations{
                                     // Text("${state.data.userType}",style: const TextStyle(color : Colors.white,fontSize: 8,fontWeight: FontWeight.bold)),
                                     Text(user?.fname??"",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 8)),
                                   ],
-                                )]),
+                                )
+                              ]),
                             ),
                           ),
                         ),

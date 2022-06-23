@@ -21,3 +21,6 @@ class KeyConstants{
   LanguageModel(imageUrl: "", languageName: 'English', countryCode: 'US', languageCode: 'en'),
   LanguageModel(imageUrl: "", languageName: 'Arabic', countryCode: 'SA', languageCode: 'ar'),
 ];
+enum USTatus{
+  all,active,inactive
+}

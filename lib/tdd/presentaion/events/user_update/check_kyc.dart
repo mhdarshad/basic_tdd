@@ -26,6 +26,7 @@ class CheckKycEvents extends EventMutations<NoPrams> {
 
   @override
   perform() async {
+    print("getkyc");
     final request = await usecase.check();
     request.fold((l) => throw ServerFailure(ExceptiomModle()), (r) => store?.kyc_data = r);
   }

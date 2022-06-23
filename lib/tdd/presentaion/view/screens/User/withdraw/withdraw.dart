@@ -115,6 +115,9 @@ class _WithdrawState extends State<Withdraw> {
             return const CompleateKYCDailog();
           }
         }
+        if(status == VxStatus.error) {
+          return const CompleateKYCDailog();
+        }
         return const SizedBox.shrink();
       }, mutations: const {CheckKycEvents},
     );

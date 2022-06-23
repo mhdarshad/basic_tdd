@@ -104,7 +104,7 @@ class User {
     phone = json['phone'];
     refid = json['refid'];
     email = json['email'];
-    acountno = json['acountno'];
+    acountno = json['acountno'].toString();
     emailVerifiedAt = json['email_verified_at'];
     accountstatus = json['accountstatus'];
     createdAt = json['created_at'];

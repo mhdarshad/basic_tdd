@@ -7,10 +7,12 @@ import 'package:number_pagination/number_pagination.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../../core/usecases/usecase.dart';
+import '../../../../../../core/util/presentation/constants/ic_constants.dart';
 import '../../../../../domain/entities/user/login_user.dart';
 import '../../../../events/dashboard/get_user_data.dart';
 import '../../../../events/dashboard/update_status.dart';
 import '../../../../events/dashboard/update_wallet.dart';
+import '../../../components/dashboard/list_component/user_lsit_component.dart';
 import '../../../widgets/cards/counter_card.dart';
 import '../../../widgets/dailog/custome_dailog1.dart';
 import '../../../widgets/textForm/ProductTextForm.dart';
@@ -86,7 +88,7 @@ class _AdminHomeDashBoardState extends State<AdminHomeDashBoard> {
                       onPageChanged: (int pageNumber) {
                         //do somthing for selected page
                         selectedPageNumber.value = pageNumber;
-                        sl<GetUserDataBloc>()(data: Param({'pageno':pageNumber.toString()}));
+                        sl<GetUserDataBloc>()(data: Param({'pageno':pageNumber.toString(),'':USTatus.all.name}));
                       },
                       pageTotal: store.pagination?.lastPage??1,
                       pageInit: store.pagination?.currentPage??1,
@@ -203,7 +205,7 @@ class _AdminHomeDashBoardState extends State<AdminHomeDashBoard> {
 
   @override
   void initState() {
-    sl<GetUserDataBloc>()(data: Param({'pageno':(VxState.store as ProjectStore).pagination?.currentPage??'1'}));
+    sl<GetUserDataBloc>()(data: Param({'pageno':(VxState.store as ProjectStore).pagination?.currentPage??'1','u_status':USTatus.all.name}));
   }
 }
 

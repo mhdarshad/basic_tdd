@@ -2,6 +2,7 @@ import 'package:asspa/core/error/failuers.dart';
 import 'package:asspa/core/util/presentation/constants/ic_constants.dart';
 import 'package:asspa/injection_container.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../data/models/exception_modle.dart';
@@ -31,8 +32,26 @@ class KycUpdateUseCase extends UseCase<KycUpdateModel,KycUpdateModle>{
   Future<Either<Failure, KycUpdateModel>> check() async{
     final  request = await repo.getRequest(Params(uri: Uri.parse('kyc/${sl<SharedPreferences>().getString(SFkeys.UID)}'),methed: Methed.Get,));
     return request.fold((l) => Left(l), (r) {
-      print(r);
-      return Right(KycUpdateModel.fromJson(r['data']));
+      if (kDebugMode) {
+        print(r);
+      }
+      return Right(KycUpdateModel.fromJson(r['data'][0]));
+    });
+  }
+  Future<Either<Failure, List<KycUpdateModel>>> fetchkyc() async{
+    List<KycUpdateModel> data = [];
+    final  request = await repo.getRequest(Params(uri: Uri.parse('kyc'),methed: Methed.Get,));
+    return request.fold((l) => Left(l), (r) {
+      if (kDebugMode) {
+        print(r);
+      }
+      if (r['data'] != null) {
+        data = <KycUpdateModel>[];
+        r['data'].forEach((v) {
+          data.add(KycUpdateModel.fromJson(v));
+        });
+      }
+      return Right(data);
     });
   }
 }
@@ -69,7 +88,7 @@ class KycUpdateModle {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['uid'] = this.uid;
     data['holder_name'] = this.holderName;
     data['branch_name'] = this.branchName;

@@ -163,7 +163,8 @@ class _KYCState extends State<KYC> with GoNavigations{
                   "Address verification".text.make().p12(),
                   SizedBox(child: ProductTextForm(labelText: "Address",keytype: TextInputType.streetAddress,maxlines: 4,controller: _text_address_controller,textsize: 10,)),
                 ],),
-              ),VxConsumer(
+              ),
+              VxConsumer(
                 notifications: {
                   KycUpdateEvents:(ctx,mut, {status}){
                     if(status==VxStatus.error){

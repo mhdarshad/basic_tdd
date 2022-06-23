@@ -103,7 +103,7 @@ class RemoteDataSourceImpl implements RemoteDataSource{
           if(!meadiater.substring(meadiater.length - 1).contains("?")) {
             meadiater = meadiater+"&";
           }
-          meadiater = meadiater+key+"="+value;
+          meadiater = meadiater+key+"="+'$value';
         });
         debugPrint("$baseurl${param.uri}$meadiater");
         // final String url = "https://manage.grocbay.com/api/app-manager/get-functionality/${param.uri}";

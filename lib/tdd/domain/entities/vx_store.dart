@@ -16,7 +16,9 @@ class ProjectStore extends VxStore{
  List<WalletData> wallet_log = [];
  late UpdatedFrom updatedFrom ;
   KycUpdateModel kyc_data =KycUpdateModel();
+  List<KycUpdateModel> users_kyc =[];
  PaymentTransactionModel payment_transaction =PaymentTransactionModel();
+  String? user_type ;
 }
 enum UpdatedFrom{
  map,search,current

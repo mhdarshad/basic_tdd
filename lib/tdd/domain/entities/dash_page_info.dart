@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../presentaion/view/components/dashboard/list_component/widrawel_lsit_component.dart';
 import '../../presentaion/view/screens/Admin/home/admin_home_dash_board.dart';
 import '../../presentaion/view/screens/User/home/dash_board_home.dart';
 import '../../presentaion/view/screens/User/home/downline.dart';
 import '../../presentaion/view/screens/User/withdraw/withdraw.dart';
+import '../../presentaion/view/components/dashboard/list_component/user_lsit_component.dart';
 
 class DashBoardPageInfo{
    Function(int)? ontapNavigat;
@@ -11,7 +13,7 @@ class DashBoardPageInfo{
   DashBoardPageInfo([this.ontapNavigat]);
   List<DashBoardPageModle>get  userpage => [
     DashBoardPageModle(title: "DASHBOARD", icon:  Icons.home,vstatus: true,widget: const HomeDash(), key: 'dashboard'),
-    DashBoardPageModle(title: "DOWNLINE", icon:  Icons.arrow_downward_sharp,vstatus: false,widget: const Downline(), key: 'downline'),
+    DashBoardPageModle(title: "DOWNLINE", icon:  Icons.arrow_downward_sharp,vstatus: true,widget: const Downline(), key: 'downline'),
     DashBoardPageModle(title: "LEVEL", icon:  Icons.home,vstatus: false,widget: const HomeDash(), key: 'level'),
     DashBoardPageModle(title: "FUND", icon:  Icons.home,vstatus: false,widget: const HomeDash(), key: 'fund'),
     DashBoardPageModle(title: "WITHDRAW", icon:  Icons.home,vstatus: true,widget:  const Withdraw(), key: 'withdrew'),
@@ -19,8 +21,8 @@ class DashBoardPageInfo{
   ];
   List<DashBoardPageModle>get  adminpage => [
     DashBoardPageModle(title: "DASHBOARD", icon:  Icons.home,vstatus: true,widget:  const AdminHomeDashBoard(), key: 'dashboard'),
-    DashBoardPageModle(title: "DOWNLINE", icon:  Icons.home,vstatus: false,widget: const Downline(), key: 'downline'),
-    DashBoardPageModle(title: "LEVEL", icon:  Icons.home,vstatus: false,widget: const HomeDash(), key: 'level'),
+    DashBoardPageModle(title: "DOWNLINE", icon:  Icons.home,vstatus: true,widget: const UserLsitWidget(), key: 'downline'),
+    DashBoardPageModle(title: "WITHDRAW", icon:  Icons.home,vstatus: true,widget: const WithdrawerLsitWidget(), key: 'level'),
     DashBoardPageModle(title: "FUND", icon:  Icons.home,vstatus: false,widget: const HomeDash(), key: 'fund'),
     // DashBoardPageModle(title: "WITHDRAW", icon:  Icons.home,vstatus: true,widget: const HomeDash(), key: 'withdrew'),
     DashBoardPageModle(title: "TRANSACTION", icon:  Icons.home,vstatus: false,widget: const HomeDash(), key: 'transaction'),

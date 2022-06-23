@@ -66,11 +66,11 @@ class _NavigatorTabState extends State<NavigatorTab> {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Column(children: [
               if(tab.icon is IconData)
-                Icon(tab.icon as IconData,color: !tab.active?Colors.grey:widget.tabs[currentindex].ic_name == tab.ic_name?Theme.of(context).primaryColor:Colors.white),
+                Icon(tab.icon as IconData,color: !tab.active?Colors.grey.shade300:widget.tabs[currentindex].ic_name == tab.ic_name?Theme.of(context).primaryColor:Colors.black54),
               if(tab.icon is Image)
                 (tab.icon as Image),
               if(tab.ic_name!=null)
-                Text(tab.ic_name!,style: TextStyle(color:!tab.active?Colors.grey.shade300:widget.tabs[currentindex].ic_name == tab.ic_name?Theme.of(context).primaryColor:Colors.grey,fontSize: 8),)
+                Text(tab.ic_name!,style: TextStyle(color:!tab.active?Colors.grey.shade300:widget.tabs[currentindex].ic_name == tab.ic_name?Theme.of(context).primaryColor:Colors.black54,fontSize: 8),)
             ],),
           ),
         ),

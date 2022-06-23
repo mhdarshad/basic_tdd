@@ -5,6 +5,12 @@ class Downline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.amber,);
+    return Container(color: Theme.of(context).primaryColor.withAlpha(45),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(children: [
+
+      ]),
+    ),);
   }
 }
