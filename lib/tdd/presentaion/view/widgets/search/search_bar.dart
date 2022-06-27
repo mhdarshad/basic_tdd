@@ -277,3 +277,123 @@ enum IconAlign{
 }
 
 */
+import 'package:flutter/material.dart';
+
+import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
+
+class AsfaSearchBar extends StatelessWidget {
+  final TextEditingController textController;
+
+  const AsfaSearchBar({Key? key,required this.textController}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return buildSearchBar(context);
+  }
+  Padding buildSearchBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 50),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 3,
+              color: Color(0x39000000),
+              offset: Offset(0, 1),
+            )
+          ],
+          borderRadius: BorderRadius.circular(40),
+        ),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(4, 4, 0, 4),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      4, 0, 4, 0),
+                  child: TextFormField(
+                    controller: textController,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelText: 'Name, city, state...',
+                      labelStyle: FlutterFlowTheme.of(context)
+                          .bodyText2
+                          .override(
+                        fontFamily: 'Outfit',
+                        color: const Color(0xFF7C8791),
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Color(0x00000000),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Color(0x00000000),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.search_sharp,
+                        color: Color(0xFF57636C),
+                        size: 16,
+                      ),
+                    ),
+                    style: FlutterFlowTheme.of(context)
+                        .bodyText1
+                        .override(
+                      fontFamily: 'Outfit',
+                      color: const Color(0xFF090F13),
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                child: FFButtonWidget(
+                  onPressed: () {
+                    print('Button pressed ...');
+                  },
+                  text: 'Search',
+                  options: FFButtonOptions(
+                    width: 100,
+                    height: 40,
+                    color: Theme.of(context).primaryColor,
+                    textStyle: FlutterFlowTheme.of(context)
+                        .subtitle2
+                        .override(
+                      fontFamily: 'Outfit',
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    elevation: 2,
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
+                    ),
+                    borderRadius: 50,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+

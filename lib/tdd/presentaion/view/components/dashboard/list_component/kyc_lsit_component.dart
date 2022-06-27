@@ -1,38 +1,38 @@
 import 'package:asspa/rought_genrator.dart';
-import 'package:asspa/tdd/domain/entities/user/login_user.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:dartz/dartz.dart' as dz;
 import 'package:number_pagination/number_pagination.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../../../core/error/failuers.dart';
 import '../../../../../../core/usecases/usecase.dart';
 import '../../../../../../core/util/presentation/constants/ic_constants.dart';
 import '../../../../../../injection_container.dart';
+import '../../../../../domain/entities/user/login_user.dart';
 import '../../../../../domain/entities/vx_store.dart';
+import '../../../../../domain/usecase/get_dash_data.dart';
 import '../../../../../domain/usecase/update_membership_status.dart';
 import '../../../../events/dashboard/get_user_data.dart';
-import '../../../../events/dashboard/update_status.dart';
 import '../../../../events/dashboard/update_wallet.dart';
+import '../../../../events/user_update/fetch_kycs.dart';
+import '../../../../events/user_update/kyc_status_update.dart';
 import '../../../widgets/dailog/custome_dailog1.dart';
 import '../../../widgets/flutter_flow/flutter_flow_drop_down.dart';
-import '../../../widgets/flutter_flow/flutter_flow_icon_button.dart';
 import '../../../widgets/flutter_flow/flutter_flow_theme.dart';
 import '../../../widgets/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../../../widgets/textForm/ProductTextForm.dart';
-import '../../../widgets/list/CListView.dart';
 import '../../../widgets/list/pagination_index_controller_widget.dart';
+import '../../../widgets/textForm/ProductTextForm.dart';
 
-class UserLsitWidget extends StatefulWidget {
+class KycLsitWidget extends StatefulWidget {
   final USTatus status;
 
-  const UserLsitWidget({Key? key,this.status = USTatus.all}) : super(key: key);
+  const KycLsitWidget({Key? key,this.status = USTatus.all}) : super(key: key);
 
   @override
-  _UserLsitWidgetState createState() => _UserLsitWidgetState();
+  _KycLsitWidgetState createState() => _KycLsitWidgetState();
 }
-
-class _UserLsitWidgetState extends State<UserLsitWidget> with GoNavigations{
+class _KycLsitWidgetState extends State<KycLsitWidget> with GoNavigations{
   String? dropDownValue;
   TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -41,10 +41,12 @@ class _UserLsitWidgetState extends State<UserLsitWidget> with GoNavigations{
   @override
   void initState() {
     super.initState();
-    sl<GetUserDataBloc>()(data: Param({'pageno':(VxState.store as ProjectStore).pagination?.currentPage??'1','u_status':widget.status.name}));
-    textController = TextEditingController();
-  }
+    // sl<GetUserDataBloc>()(data: Param({'pageno':(VxState.store as ProjectStore).pagination?.currentPage??'1','u_status':widget.status.name}));
 
+    sl<FetchKycsBloc>()(data: Param({'pageno':(VxState.store as ProjectStore).pagination?.currentPage??'1','status':widget.status.name}));
+    textController = TextEditingController();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,91 +77,156 @@ class _UserLsitWidgetState extends State<UserLsitWidget> with GoNavigations{
 
   VxBuilder<dynamic> buildBody() {
     return VxBuilder(
-        mutations: const {GetUserDataEvents,UpdateStatusEvents},
+        mutations: const {FetchKycsEvents},
         builder: (BuildContext context, store, VxStatus? status) {
           if(status == VxStatus.loading) {
-            return Container(height:MediaQuery.of(context).size.height,child: const Center(child: CircularProgressIndicator()));
+            return SizedBox(height:MediaQuery.of(context).size.height,child: const Center(child: CircularProgressIndicator()));
           }
           final userData = (store as ProjectStore).usersData;
-          return (userData.isNotEmpty)?
+          final kycData = (store).users_kyc;
+          return (kycData.isNotEmpty)?
           Column(
-            children:[...userData.map((e) => CListView(title: '${e.user?.fname} ${e.user?.lname}',discription: 'AC No: ${e.user?.acountno} Ref: ${e.user?.refid}',options: [
-              if((VxState.store as ProjectStore).user_type == 'admin')
-                (e.user?.accountstatus??'0')=='1'?
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                  child: FlutterFlowIconButton(
-                    borderColor: const Color(0xFF673AB7),
-                    borderRadius: 8,
-                    borderWidth: 1,
-                    buttonSize: 40,
-                    icon: const FaIcon(
-                      FontAwesomeIcons.userCheck,
-                      color: Color(0xFF673AB7),
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      print('Already Activated');
-                    },
-                  ),
-                ):Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                  child: FlutterFlowIconButton(
-                    borderColor: const Color(0xFF673AB7),
-                    borderRadius: 8,
-                    borderWidth: 1,
-                    buttonSize: 40,
-                    icon:  FaIcon(
-                      FontAwesomeIcons.userNinja,
-                      color: Colors.grey.shade600,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      sl<UpdateStatusBloc>()(data: ActivateParam(userData.firstWhere((element) => element.user?.uid == e.user?.uid).user?.uid??"",true));
-                      print('IconButton pressed ...');
-                    },
-                  ),
-                ), Padding(
-                padding:
-                const EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                child: FlutterFlowIconButton(
-                  borderColor: const Color(0xFFDBE2E7),
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  buttonSize: 40,
-                  icon: const Icon(
-                    Icons.ios_share,
-                    color: const Color(0xFF57636C),
-                    size: 20,
-                  ),
-                  onPressed: () {
-                    print('IconButton pressed ...');
-                  },
-                ),
-              ),
-              if((VxState.store as ProjectStore).user_type == 'admin')
-                FlutterFlowIconButton(
-                  borderColor: const Color(0xFFDBE2E7),
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  buttonSize: 40,
-                  icon: const Icon(
-                    Icons.more_vert,
-                    color: const Color(0xFF57636C),
-                    size: 20,
-                  ),
-                  onPressed: () {
-                    print('IconButton pressed ...');
-                    final selecteduser =  userData.firstWhere((element) => element.user?.uid == e.user?.uid);
-                    final  _othertextcontroller = TextEditingController(text: selecteduser.wallet?.genw??'0');
-                    final  _businesstextcontroller = TextEditingController(text: selecteduser.wallet?.iw??'0');
-                    final  _autofilltextcontroller = TextEditingController(text: selecteduser.wallet?.afw??'0');
-                    final  _refrencetextcontroller = TextEditingController(text: selecteduser.wallet?.ref??'0');
-                    final  _reoyalitytextcontroller = TextEditingController(text: selecteduser.wallet?.rw??'0');
-                    buildCustomDialogEditWallet(context, _othertextcontroller, _businesstextcontroller, _autofilltextcontroller, _refrencetextcontroller, _reoyalitytextcontroller, selecteduser);
-                  },
-                ),
-            ])),
+            children:[...kycData.map((e) {
+              final  variableName = _getUserData(e.uid!);
+              return FutureBuilder<dz.Either<Failure, UserData>>(
+                future: variableName,
+                builder: (BuildContext context, snapshot) {
+                   String username =  '';
+                   String accountnumber =  '';
+                  snapshot.data?.fold((l) {
+                     username = e.holderName!;
+                     accountnumber = e.accountNumber!;
+                  } , (r) {
+                    username = '${r.data?.first.user?.fname} ${r.data?.first.user?.lname} ';
+                    accountnumber = r.data?.first.user?.acountno??'';
+                  });
+                 return Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                              child: Text(
+                                'Fundraiser',
+                                style: FlutterFlowTheme.of(context).bodyText2.override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: const Color(0xFF4B39EF),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        height: 1,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFF1F4F8),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                              child: Text(
+                                '$username ($accountnumber)',
+                                style: FlutterFlowTheme.of(context).subtitle1.override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: Color(0xFF090F13),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '${e.holderName}\n${e.bankName}\n${e.accountNumber}\n${e.ifsc}\n${e.branchName}\n',
+                                style: FlutterFlowTheme.of(context).bodyText2.override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: const Color(0xFF95A1AC),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 12, 8),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            if(e.status??false)
+                              FFButtonWidget(
+                                onPressed: () {
+                                  sl<KycUpdateStatusBloc>()(data: ActivateParam(e.uid??'',true));
+                                },
+                                text: 'Aprove',
+                                options: FFButtonOptions(
+                                  width: 150,
+                                  height: 50,
+                                  color: const Color(0xFF4B39EF),
+                                  textStyle: FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Lexend Deca',
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  elevation: 2,
+                                  borderSide: const BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: 40,
+                                ),
+                              ),
+                            const Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 4),
+                              child: Icon(
+                                Icons.location_on_sharp,
+                                color: const Color(0xFF4B39EF),
+                                size: 20,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                              child: Text(
+                                '76, badagubettu, indiranagar, kukkikatte, udupi,576101',
+                                style: FlutterFlowTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: const Color(0xFF4B39EF),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+            ),
               PaginationIndexControllerWidget(selectedPageNumber: selectedPageNumber,onPageChange: (pageNumber){
                 selectedPageNumber.value = pageNumber;
                 sl<GetUserDataBloc>()(data: Param({'pageno':pageNumber.toString(),'u_status':dropDownValue}));
@@ -232,6 +299,25 @@ class _UserLsitWidgetState extends State<UserLsitWidget> with GoNavigations{
       ),);
   }
 
+  ValueListenableBuilder<int> buildPagination(ProjectStore store) {
+    return ValueListenableBuilder<int>(
+      builder: (BuildContext context, value, Widget? child) {
+        return NumberPagination(
+          onPageChanged: (int pageNumber) {
+            //do somthing for selected page
+
+          },
+          pageTotal: store.pagination?.lastPage??1,
+          pageInit: store.pagination?.currentPage??1,
+          // picked number when init page
+          colorPrimary: Theme.of(context).primaryColor,
+          colorSub: Colors.white,
+        );
+      },
+      valueListenable: selectedPageNumber,
+    );
+  }
+
   Column buildHeader(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -249,7 +335,7 @@ class _UserLsitWidgetState extends State<UserLsitWidget> with GoNavigations{
       options: USTatus.values.map((e) => e.name).toList(),
       onChanged: (val) => setState(() {
         dropDownValue = val;
-        sl<GetUserDataBloc>()(data: Param({'pageno':(VxState.store as ProjectStore).pagination?.currentPage.toString()??'1','u_status':val}));
+        sl<FetchKycsBloc>()(data: Param({'pageno':(VxState.store as ProjectStore).pagination?.currentPage.toString()??'1','status':val}));
 
         // GNavigation(context, type: NavigatoreTyp.push,name: Routename.Home,parms: {'index':'downline','user':'admin'},qparms: {'user_status':val.toLowerCase()});
       }),
@@ -380,4 +466,10 @@ class _UserLsitWidgetState extends State<UserLsitWidget> with GoNavigations{
     );
   }
 }
+
+_getUserData(String uid) {
+  return GetUserDataUsecase(sll()).getuser(uid: uid);
+
+}
+
 

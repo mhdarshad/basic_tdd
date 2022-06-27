@@ -33,6 +33,8 @@ import 'tdd/presentaion/events/dashboard/update_status.dart';
 import 'tdd/presentaion/events/dashboard/update_wallet.dart';
 import 'tdd/presentaion/events/transaction/payment_transaction.dart';
 import 'tdd/presentaion/events/user_update/check_kyc.dart';
+import 'tdd/presentaion/events/user_update/fetch_kycs.dart';
+import 'tdd/presentaion/events/user_update/kyc_status_update.dart';
 import 'tdd/presentaion/events/user_update/kyc_update.dart';
 final sl = GetIt.instance;
 
@@ -57,6 +59,8 @@ _bloc(){
   sl.registerFactory(() => UpdateWalletBloc(UpdateStatusUseCase(sll()),));
   sl.registerFactory(() => KycUpdateBloc(KycUpdateUseCase(sll()),));
   sl.registerFactory(() => CheckKycBloc(KycUpdateUseCase(sll()),));
+  sl.registerFactory(() => FetchKycsBloc(KycUpdateUseCase(sll()),));
+  sl.registerFactory(() => KycUpdateStatusBloc(KycUpdateUseCase(sll()),));
   sl.registerFactory(() => PaymentTransactionBloc(PaymentTransactionUseCase(sll()),));
   // sl.registerFactory(() => RegisterEvent(RegisterUseCase(sll()),));
   // sl.registerFactory(() => RegisterBloc(customerRegisterUsecase: CustomerRegisterUsecase(repo: sll()), checkEmailUsecase: CheckEmailUsecase(repo: sll()), checkMobileUsecase: CheckMobileUsecase(repo: sll()),

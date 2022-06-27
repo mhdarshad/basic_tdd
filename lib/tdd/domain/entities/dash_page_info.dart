@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../presentaion/view/components/dashboard/list_component/kyc_lsit_component.dart';
 import '../../presentaion/view/components/dashboard/list_component/widrawel_lsit_component.dart';
 import '../../presentaion/view/screens/Admin/home/admin_home_dash_board.dart';
 import '../../presentaion/view/screens/User/home/dash_board_home.dart';
@@ -23,7 +24,7 @@ class DashBoardPageInfo{
     DashBoardPageModle(title: "DASHBOARD", icon:  Icons.home,vstatus: true,widget:  const AdminHomeDashBoard(), key: 'dashboard'),
     DashBoardPageModle(title: "DOWNLINE", icon:  Icons.home,vstatus: true,widget: const UserLsitWidget(), key: 'downline'),
     DashBoardPageModle(title: "WITHDRAW", icon:  Icons.home,vstatus: true,widget: const WithdrawerLsitWidget(), key: 'level'),
-    DashBoardPageModle(title: "FUND", icon:  Icons.home,vstatus: false,widget: const HomeDash(), key: 'fund'),
+    DashBoardPageModle(title: "KYC", icon:  Icons.home,vstatus: true,widget: const KycLsitWidget(), key: 'kyc'),
     // DashBoardPageModle(title: "WITHDRAW", icon:  Icons.home,vstatus: true,widget: const HomeDash(), key: 'withdrew'),
     DashBoardPageModle(title: "TRANSACTION", icon:  Icons.home,vstatus: false,widget: const HomeDash(), key: 'transaction'),
   ];

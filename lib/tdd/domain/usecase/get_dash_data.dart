@@ -23,6 +23,11 @@ class GetUserDataUsecase extends UseCase<UserData,Param>{
     final  value = await repo.getRequest(Params(uri: Uri.parse("userdata/${data.data['u_status']!=USTatus.all.name?data.data['u_status']==USTatus.active.name?'1':'0':'2'}"), methed: Methed.Get,data: {'page':data.data['pageno']}));
     return  Future.value(value.fold((l) =>Left(l), (r) =>Right(UserData.fromJson(r))));
   }
+  Future<Either<Failure, UserData>> getuser({required String uid}) async{
+    // TODO: implement call
+    final  value = await repo.getRequest(Params(uri: Uri.parse("user_data/${uid}"), methed: Methed.Get,));
+    return  Future.value(value.fold((l) =>Left(l), (r) =>Right(UserData.fromJson(r))));
+  }
   Future<Either<Failure, Analytics>> getAnalytics() async{
     // TODO: implement call
     final  value = await repo.getRequest(Params(uri: Uri.parse("user/analitics"), methed: Methed.Get,data: {}));

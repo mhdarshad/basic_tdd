@@ -1,3 +1,37 @@
+import 'login_user.dart';
+
+class KycUpdateData {
+  int? status;
+  List<KycUpdateModel>? data;
+  Pagination? pagination;
+  KycUpdateData({this.status, this.data});
+
+  KycUpdateData.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    if (json['data'] != null) {
+      data = <KycUpdateModel>[];
+      json['data'].forEach((v) {
+        data!.add(new KycUpdateModel.fromJson(v));
+      });
+    }
+    pagination = json['pagination'] != null
+        ? new Pagination.fromJson(json['pagination'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    if (this.pagination != null) {
+      data['pagination'] = this.pagination!.toJson();
+    }
+    return data;
+  }
+}
+
 class KycUpdateModel {
   String? uid;
   String? holderName;

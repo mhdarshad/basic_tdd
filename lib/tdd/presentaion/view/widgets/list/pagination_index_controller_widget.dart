@@ -19,11 +19,13 @@ class PaginationIndexControllerWidget extends StatelessWidget {
   var store = (VxState.store as ProjectStore);
   @override
   Widget build(BuildContext context) {
+    return buildPagination(store);
+  }
+  ValueListenableBuilder<int> buildPagination(ProjectStore store) {
     return ValueListenableBuilder<int>(
-      builder:
-          (BuildContext context, value, Widget? child) {
+      builder: (BuildContext context, value, Widget? child) {
         return NumberPagination(
-          onPageChanged: (int pageNumber) => onPageChange(pageNumber),
+          onPageChanged:  onPageChange,
           pageTotal: store.pagination?.lastPage??1,
           pageInit: store.pagination?.currentPage??1,
           // picked number when init page

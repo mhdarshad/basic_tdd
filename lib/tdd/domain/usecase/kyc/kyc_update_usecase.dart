@@ -1,6 +1,7 @@
 import 'package:asspa/core/error/failuers.dart';
 import 'package:asspa/core/util/presentation/constants/ic_constants.dart';
 import 'package:asspa/injection_container.dart';
+import 'package:asspa/tdd/domain/usecase/update_membership_status.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,12 +39,28 @@ class KycUpdateUseCase extends UseCase<KycUpdateModel,KycUpdateModle>{
       return Right(KycUpdateModel.fromJson(r['data'][0]));
     });
   }
-  Future<Either<Failure, List<KycUpdateModel>>> fetchkyc() async{
+  Future<Either<Failure, KycUpdateData>> fetchkyc(Param? param) async{
     List<KycUpdateModel> data = [];
-    final  request = await repo.getRequest(Params(uri: Uri.parse('kyc'),methed: Methed.Get,));
+    final  request = await repo.getRequest(Params(uri: Uri.parse('fetch_kyc/${param?.data['status']!=USTatus.all.name?param?.data['status']==USTatus.active.name?'1':'0':'2'}'),methed: Methed.Get,data: {
+      'page':param?.data['pageno']
+    }));
     return request.fold((l) => Left(l), (r) {
       if (kDebugMode) {
         print(r);
+      }
+      return Right(KycUpdateData.fromJson(r));
+      // return Right(data);
+    });
+  }
+  Future<Either<Failure, List<KycUpdateModel>>> updateStatus(ActivateParam datas) async{
+    List<KycUpdateModel> data = [];
+    final  request = await repo.getRequest(Params(uri: Uri.parse('kyc_update/${datas.uid}'),methed: Methed.Post,data: {
+      'status':datas.status?'1':'0'
+    }));
+    return request.fold((l) => Left(l), (r) {
+      if (kDebugMode) {
+        print(r);
+
       }
       if (r['data'] != null) {
         data = <KycUpdateModel>[];

@@ -1,8 +1,10 @@
 
+import 'package:flutter/foundation.dart';
+
 import '../../../../tdd/domain/entities/language.dart';
 
 class APIConstants {
-  static String BaseUrl = "https://amw.cosmostechnosolutions.com";
+  static String BaseUrl = kDebugMode?'https://amw.cosmostechnosolutions.com':"https://production.cosmostechnosolutions.com";
   static String API_IMAGE = "$BaseUrl/uploads/";
   static String API_URI = "$BaseUrl/api/";
 }
