@@ -49,9 +49,9 @@ class SQLDBFunctions extends DBBaseFunctions{
   String jsonListToConditionString(Map<String,dynamic> conditions,[String intermediate = '=']){
     List<String> contionString = [];
     conditions.forEach((key, value) {
-      if (value != null)
+      if (value != null) {
         contionString.add('$key $intermediate "$value"');
-      else {
+      } else {
         contionString.add('$key is $value');
       }
     });

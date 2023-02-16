@@ -1,5 +1,5 @@
 class Configration{
   String? dbType;
-  var dbData ;
+  Map<String,dynamic>? dbData ;
   String? tocken;
 }

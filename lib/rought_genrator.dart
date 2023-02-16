@@ -13,7 +13,7 @@ import 'core/util/presentation/constants/ic_constants.dart';
 import 'injection_container.dart';
 import 'tdd/presentaion/view/screens/auth/auth.dart';
 import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
-import 'tdd/presentaion/view/screens/dash_board.dart';
+import 'tdd/presentaion/view/screens/home/dash_board.dart';
 enum Routename{
   Home,Login,CheckoutMobile,EditVendorProduct,kyc
 }

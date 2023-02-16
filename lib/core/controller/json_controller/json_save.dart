@@ -48,10 +48,10 @@ class JsonSave {
       final path = await localPath;
       file = File('$path/$name.json');
     }
-    return file.writeAsString('$data');
+    return file.writeAsString(data);
   }
 
-  static getJsonData(String name) async {
+  static Future<String?> getJsonData(String name) async {
     try {
      if(kIsWeb){
     return  sl<SharedPreferences>().getString(name);

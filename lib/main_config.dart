@@ -7,7 +7,7 @@ class EnvConfig {
   static final Map<String, dynamic> _config = API_URL.contains('production') ? Config.prodConstants : Config.stgConstants;
 
 
-  static get DB_TYPE => _config[Config.DB_TYPE];
+  static get DB_TYPE => _config[Config.DB_DATA];
 
   static get APPLICATION_ID => _config[Config.APPLICATION_ID];
 

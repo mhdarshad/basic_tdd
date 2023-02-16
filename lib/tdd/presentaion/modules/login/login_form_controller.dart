@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../domain/repositories/repository_provider.dart';
-import '../../../domain/usecase/auth/db_config_usecase.dart';
+import '../../../domain/usecase/db/db_insert_usecase.dart';
 import '../../../domain/usecase/auth/user_login.dart';
 import '../database_module/do_congig_module.dart';
 
@@ -32,7 +32,7 @@ class GetUserEvents extends EventMutations<LoginData> {
     final request = await usecase(data:data);
    if(!request.isLeft()){
      request.forEach((r) {
-       next(() => DBCongigMutation(DBConfigUseCase(repo: usecase.repo as DependencyRepostProvider<Map<String, dynamic>>),r));
+       next(() => DBCongigMutation(DBInsertUseCase(repo: usecase.repo as DependencyRepostProvider<Map<String, dynamic>>),r));
      });
    }
   }

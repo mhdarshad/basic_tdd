@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../rought_genrator.dart';
-import '../../../domain/entities/vx_store.dart';
+import '../../../../../rought_genrator.dart';
+import '../../../../domain/entities/vx_store.dart';
 
-import '../components/kiosk_container/kiosk_container.dart';
-import '../widgets/drawer/end_drawer.dart';
+import '../../components/kiosk_container/kiosk_container.dart';
+import '../../widgets/drawer/end_drawer.dart';
 
 class DashBoard extends StatefulWidget {
   DashBoard(String param, {Key? key}) :super(key: key);

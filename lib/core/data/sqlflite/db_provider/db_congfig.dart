@@ -6,7 +6,8 @@ import 'package:tekartik_app_flutter_sqflite/sqflite.dart';
 
 import '../../../../injection_container.dart';
 import '../../../../main_config.dart';
-import '../../../../tdd/domain/usecase/auth/db_config_usecase.dart';
+import '../../../../tdd/domain/usecase/db/db_config_usecase.dart';
+import '../../../../tdd/domain/usecase/db/db_insert_usecase.dart';
 import '../../../util/config/user_config.dart';
 import 'sqlf_db_config/my_sql_db.dart';
 import 'sqlf_db_config/sqlf_db.dart';
@@ -36,10 +37,12 @@ class DBProvider extends sqlfDBProvider with MySqlDBProvider{
     }
   }
   Future<List<Map<String, dynamic>>> queryLanguage(query) async {
-    if (EnvConfig.DB_TYPE == DBType.sqlfite.name) {
+    if (sl<Configration>().dbType == DBType.sqlfite.name) {
       return (await db!.rawQuery(query)).map((e) => e.map((key, value) => MapEntry(key, value as dynamic))).toList();
-    } else {
+    } else if (sl<Configration>().dbType == DBType.sqlfite.name){
       return (await conn.query(query)).map((e) => e.fields).toList();
+    }else{
+      throw "DB Not Specified";
     }
   }
 

@@ -13,9 +13,9 @@ class AddonsProduct {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['addonsId'] = this.addonsId;
-    data['productId'] = this.productId;
+    data['id'] = id;
+    data['addonsId'] = addonsId;
+    data['productId'] = productId;
     return data;
   }
 }

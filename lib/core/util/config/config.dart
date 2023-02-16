@@ -1,4 +1,7 @@
-import '../../../tdd/domain/usecase/auth/db_config_usecase.dart';
+import 'dart:convert';
+
+import '../../../tdd/domain/usecase/db/db_config_usecase.dart';
+import '../../../tdd/domain/usecase/db/db_insert_usecase.dart';
 
 class Config {
   static const ENV_NAME = "ENV_NAME";
@@ -19,7 +22,7 @@ class Config {
   static const FB_ID_URL = 'FB_ID_URL';
   static const ENCRYPT_KEY = 'ENCRYPT_KEY';
   static const RECAPTCHA_SITE_KEY = 'RECAPTCHA_SITE_KEY';
-  static const DB_TYPE = 'DB_TYPE';
+  static const DB_DATA = 'DB_DATA';
 
   static Map<String, dynamic> constants = {
     API_URL: const String.fromEnvironment(API_URL),
@@ -39,7 +42,7 @@ class Config {
     FB_ID_URL: const String.fromEnvironment(FB_ID_URL),
     ENCRYPT_KEY: const String.fromEnvironment(ENCRYPT_KEY),
     RECAPTCHA_SITE_KEY: const String.fromEnvironment(RECAPTCHA_SITE_KEY),
-    DB_TYPE:  String.fromEnvironment(DB_TYPE,defaultValue:DBType.sqlfite.name),
+    DB_DATA:  const bool.hasEnvironment(DB_DATA)?jsonDecode(const String.fromEnvironment(DB_DATA)):null,
   };
 
   static Map<String, dynamic> stgConstants = {

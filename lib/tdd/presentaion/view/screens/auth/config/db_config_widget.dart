@@ -84,6 +84,7 @@ class _ConfigurationPageState extends State<DbConfig> {
                 onPressed: () {
                   if (_formKey.currentState?.validate()??false) {
                     // Perform configuration here
+
                   }
                 },
                 child: const Text("Configure"),
