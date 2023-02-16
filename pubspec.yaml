@@ -81,6 +81,7 @@ dependencies:
   sqflite_common_ffi_web: ^0.3.2
   dynamic_themes: ^1.1.0
   build_runner_core: ^7.2.7
+  flutter_local_notifications:
   build_runner:
   #    Dbs
   mysql1: ^0.20.0
@@ -115,6 +116,9 @@ dev_dependencies:
     sdk: flutter
   sqflite_common_ffi: ^2.2.0+1
   sqlite3_flutter_libs: ^0.5.12
+  socket_io_client: ^1.0.1
+  laravel_echo:
+    path: ./echo_laravel
   tekartik_app_lints_flutter:
     git:
       url: https://github.com/tekartik/app_flutter_utils.dart
