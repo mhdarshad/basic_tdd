@@ -4,7 +4,8 @@ class CustomDropdown extends StatefulWidget {
   final DropdownLabel data;
   final List<Widget> droplists;
 
-  const CustomDropdown({Key? key, required this.data, required this.droplists}) : super(key: key);
+  const CustomDropdown({Key? key, required this.data, required this.droplists})
+      : super(key: key);
 
   @override
   _CustomDropdownState createState() => _CustomDropdownState();
@@ -23,8 +24,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
   }
 
   void findDropdownData() {
-    final RenderBox renderBox = actionKey.currentContext!
-        .findRenderObject() as RenderBox;
+    final RenderBox renderBox =
+        actionKey.currentContext!.findRenderObject() as RenderBox;
     height = renderBox.size.height;
     width = renderBox.size.width;
     Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -44,7 +45,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
         top: yPosition + height,
         height: 4 * height + 40,
         child: DropDown(
-          itemHeight: height, dopdownlist: widget.droplists,
+          itemHeight: height,
+          dopdownlist: widget.droplists,
         ),
       );
     });
@@ -61,7 +63,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
           } else {
             findDropdownData();
             floatingDropdown = _createFloatingDropdown();
-            Overlay.of(context)?.insert(floatingDropdown);
+            Overlay.of(context).insert(floatingDropdown);
           }
 
           isDropdownOpened = !isDropdownOpened;
@@ -83,7 +85,9 @@ class DropDown extends StatelessWidget {
   final double itemHeight;
   final List<Widget> dopdownlist;
 
-  const DropDown({Key? key, required this.itemHeight, required this.dopdownlist}) : super(key: key);
+  const DropDown(
+      {Key? key, required this.itemHeight, required this.dopdownlist})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +118,7 @@ class DropDown extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Column(
-              children:dopdownlist,
+              children: dopdownlist,
             ),
           ),
         ),
@@ -130,10 +134,17 @@ class DropDownItem extends StatelessWidget {
   final bool isFirstItem;
   final bool isLastItem;
 
-  const DropDownItem({Key? key, this.text, this.iconData, this.isSelected = false, this.isFirstItem = false, this.isLastItem = false})
+  const DropDownItem(
+      {Key? key,
+      this.text,
+      this.iconData,
+      this.isSelected = false,
+      this.isFirstItem = false,
+      this.isLastItem = false})
       : super(key: key);
 
-  factory DropDownItem.first({String? text, IconData? iconData, bool? isSelected}) {
+  factory DropDownItem.first(
+      {String? text, IconData? iconData, bool? isSelected}) {
     return DropDownItem(
       text: text,
       iconData: iconData,
@@ -142,7 +153,8 @@ class DropDownItem extends StatelessWidget {
     );
   }
 
-  factory DropDownItem.last({String? text, IconData? iconData, bool? isSelected}) {
+  factory DropDownItem.last(
+      {String? text, IconData? iconData, bool? isSelected}) {
     return DropDownItem(
       text: text,
       iconData: iconData,
@@ -159,14 +171,15 @@ class DropDownItem extends StatelessWidget {
           top: isFirstItem ? const Radius.circular(8) : Radius.zero,
           bottom: isLastItem ? const Radius.circular(8) : Radius.zero,
         ),
-        color: isSelected??false ? Colors.red.shade900 : Colors.red.shade600,
+        color: isSelected ?? false ? Colors.red.shade900 : Colors.red.shade600,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: <Widget>[
           Text(
-            text??''.toUpperCase(),
-            style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w600),
+            text ?? ''.toUpperCase(),
+            style: const TextStyle(
+                color: Colors.white, fontSize: 22, fontWeight: FontWeight.w600),
           ),
           const Spacer(),
           Icon(
@@ -233,7 +246,8 @@ class ArrowShape extends ShapeBorder {
     return path;
   }
 }
-class DropdownLabel{
+
+class DropdownLabel {
   final Widget child;
   final String key;
   DropdownLabel({required this.child, required this.key});
