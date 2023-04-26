@@ -94,7 +94,7 @@ class RemoteDataSourceImpl implements RemoteDataSource{
     debugPrint("stateing");
     String meadiater = '';
     if(sl<Configration>().tocken!=null) {
-      authtocken = Cripto().decript(sl<Configration>().tocken!);
+      authtocken = sl<Configration>().tocken!.decript;
     }
 
     try {

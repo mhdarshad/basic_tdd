@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
@@ -33,11 +34,11 @@ class JsonSave {
   }
 
   /// Can use Cripto for encription
-  static Future writeJsonData(String name, String data) async {
+  static Future writeJsonData(JsonDatakey name, Map<String,dynamic> data) async {
 
     var file;
-    if(kIsWeb){
-      return  sl<SharedPreferences>().setString(name,data);
+    if(true){
+      return  sl<SharedPreferences>().setString(name.name,jsonEncode(data));
     }
     if (Platform.isAndroid) {
       final path = await localPath;
@@ -51,10 +52,10 @@ class JsonSave {
     return file.writeAsString(data);
   }
 
-  static Future<String?> getJsonData(String name) async {
+  static Future<Map<String,dynamic>?> getJsonData(JsonDatakey name) async {
     try {
-     if(kIsWeb){
-    return  sl<SharedPreferences>().getString(name);
+     if(true){
+    return  (sl<SharedPreferences>().getString(name.name)!=null)?jsonDecode(sl<SharedPreferences>().getString(name.name)!):null;
     }
       var file;
       if (Platform.isAndroid) {
@@ -85,7 +86,7 @@ class JsonSave {
 
   static deleteFile(String name) async {
     try {
-      if(kIsWeb){
+      if(true){
         return  sl<SharedPreferences>().remove(name);
       }
       final path = await localPath;
@@ -106,4 +107,7 @@ class JsonSave {
       return 0;
     }
   }
+}
+enum JsonDatakey{
+  db_config,
 }

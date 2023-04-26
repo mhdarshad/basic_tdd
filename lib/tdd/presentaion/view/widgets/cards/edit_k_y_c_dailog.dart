@@ -5,7 +5,7 @@ import '../../../../../rought_genrator.dart';
 import '../butttons/custome_button.dart';
 
 
-class EditKYCDailog extends StatelessWidget with GoNavigations{
+class EditKYCDailog extends StatelessWidget{
   const EditKYCDailog({
     Key? key,
   }) : super(key: key);
@@ -16,8 +16,8 @@ class EditKYCDailog extends StatelessWidget with GoNavigations{
       'Your KYC is been submitted, We will Review and notify you Shortly. '.text.size(16).bodyText1(context).make().p20(),
       'You Can Edit Your KYC Details. '.text.size(10).bodyText1(context).make().p20(),
       CustomeButton(icon: const Icon(Icons.file_copy_rounded,color: Colors.white,size: 20),text: "Edit KYC", ontap:() {
-      GNavigation(context, type: NavigatoreTyp.push,name: Routename.kyc,parms: {'user':'user'});
-      },)
+        navigate.push(context, name: Routename.kyc,parms: {'user':'user'} );
+        },)
     ],)));
   }
 }

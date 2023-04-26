@@ -105,7 +105,7 @@ _external()async {
   // Hive.registerAdapter(ModelEntitiesAdapter() );
   // await sl<SQLDBFunctions>().initilaize(DBType.sqlfite);
   ///Get DB data from CI \ CD Methode if no CI\ CD than take from Json
-  final userDbConfig = Config.stgConstants[Config.DB_DATA] ?? await JsonSave.getJsonData('db_config');
+  final userDbConfig = Config.stgConstants[Config.DB_DATA] ?? await JsonSave.getJsonData(JsonDatakey.db_config);
   debugPrint(userDbConfig);
   /// Getting the Configuration File from Local Json File
   sl<Configration>().dbData = userDbConfig!=null?jsonDecode(userDbConfig):null;
@@ -136,7 +136,12 @@ _external()async {
   // sl.registerLazySingleton<SQLDBFunctions>(() => init);
 }
 sll(){
-  sl.registerLazySingleton<DependencyRepostProvider>(() => DataLayerRepositoryImpl (
+  sl.registerLazySingleton<DependencyRepostProvider<Map<String, dynamic>>>(() => DataLayerRepositoryImpl (
+    remoteDataSource:  sl<RemoteDataSource>(),
+    localDataSource: sl<LocalDataSource>(),
+    networkInfo: sl<NetworkInfo>(),
+    sqlDataSourceImpl: sl<SQLDBFunctions>(),
+  ));  sl.registerLazySingleton<DependencyRepostProvider>(() => DataLayerRepositoryImpl (
     remoteDataSource:  sl<RemoteDataSource>(),
     localDataSource: sl<LocalDataSource>(),
     networkInfo: sl<NetworkInfo>(),
