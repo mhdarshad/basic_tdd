@@ -9,7 +9,7 @@ import '../../../../domain/entities/vx_store.dart';
 // import '../../../events/auth/logout_mutation.dart';
 import '../banner/banner.dart';
 
-class EndDrawer extends StatelessWidget with GoNavigations{
+class EndDrawer extends StatelessWidget {
    EndDrawer({Key? key}) : super(key: key);
 
   @override

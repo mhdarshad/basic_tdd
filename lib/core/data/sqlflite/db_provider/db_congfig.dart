@@ -18,9 +18,9 @@ abstract class DBTranslator {
 }
 class DBProvider extends sqlfDBProvider with MySqlDBProvider{
   initialState() async{
-    if(!kIsWeb) {
-      initMySql();
-    }
+    // if(!kIsWeb) {
+    //   initMySql();
+    // }
     await initSqlflite();
   }
   BulkInsert(var inserQuery, var insertArray) async {

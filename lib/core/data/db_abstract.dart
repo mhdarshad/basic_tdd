@@ -4,6 +4,7 @@ import 'package:mysql1/mysql1.dart';
 
 import '../../tdd/domain/usecase/db/db_config_usecase.dart';
 import '../../tdd/domain/usecase/db/db_insert_usecase.dart';
+import '../controller/json_controller/json_save.dart';
 
 abstract class DBBaseFunctions{
   final String _dbname;
@@ -20,14 +21,20 @@ abstract class DBBaseFunctions{
     print("initial called");
     dbProvider = DBProvider();
     if(DBType.msql.name == type ){
-      dbProvider.conn = await MySqlConnection.connect(
-          ConnectionSettings(
-              host: parms!.host,
-              // host: '127.0.0.1',
-              port: parms.port,
-              user: parms.user,
-              password: parms.pwd,
-              db: parms.db));
+      // await JsonSave.writeJsonData(JsonDatakey.db_config, parms.toJson());
+
+      try {
+        dbProvider.conn = await MySqlConnection.connect(
+                  ConnectionSettings(
+                      host: parms!.host,
+                      // host: '127.0.0.1',
+                      port: parms.port,
+                      user: parms.user,
+                      password: parms.pwd,
+                      db: parms.db));
+      } catch (e) {
+        rethrow;
+      }
           }else if(DBType.sqlfite.name == type ){
         await dbProvider.initialState();
         if(kIsWeb){

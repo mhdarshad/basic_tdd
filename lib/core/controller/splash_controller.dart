@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import '../../rought_genrator.dart';
 import 'state_controller.dart';
 
-class SplashController extends GoNavigations implements StateController{
+class SplashController implements StateController{
 
   @override
   initialState(BuildContext context) {
     // Navigator.of(context).pushReplacementNamed(RoutName.login, arguments: 2);
-    GNavigation(context, type: NavigatoreTyp.logedout);
+    navigate.refresh(context);
+
     // Future.delayed(const Duration(seconds: 3),(){
     // if (kDebugMode) {
     //   print("nextpage Exicuted");
