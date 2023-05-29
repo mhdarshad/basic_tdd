@@ -21,7 +21,7 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
-    return ProjectScafold(child:Padding(
+    return ProjectScafold(displayLogoHead:true,child:Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,

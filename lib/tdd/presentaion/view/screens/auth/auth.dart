@@ -17,7 +17,7 @@ class Auth extends StatefulWidget {
 class _AuthState extends State<Auth> {
   @override
   Widget build(BuildContext context) {
-    return ProjectScafold( child: const Padding(
+    return ProjectScafold(displayLogoHead:true, child: const Padding(
       padding: EdgeInsets.all(10.0),
       child: Padding(
         padding: EdgeInsets.all(10.0),

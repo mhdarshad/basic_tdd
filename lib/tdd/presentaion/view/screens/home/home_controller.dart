@@ -5,6 +5,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../components/gym_page/dash_boaard_conteainer/dash_board.dart';
 import '../../components/gym_page/plan_select_container/plan_select_container.dart';
+import '../../components/gym_page/scedule_listing/scedule_listing.dart';
 
 class DashBoardController {
   static List<BottomNavigationBarItem> navigationItems = navigations.keys.map((e) => bottomNavigationBarItem(e)).toList();
@@ -35,10 +36,14 @@ Map<BotemNavigations,Map<String,dynamic>> navigations= {
     'icon':Icons.event_busy,
     'label':"Plan",
     'page':const PlanSelectList()
+  },
+  BotemNavigations.scedule:{
+    'icon':Icons.event_busy,
+    'label':"Scedule",
+    'page':const SceduleListing()
   }
 };
 
-
 enum BotemNavigations{
-  dashboard,plans
+  dashboard,plans,scedule
 }

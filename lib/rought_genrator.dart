@@ -301,6 +301,7 @@ import 'package:go_router/go_router.dart';
 
 import 'core/util/config/user_config.dart';
 import 'injection_container.dart';
+import 'tdd/presentaion/view/components/gym_page/check_out/check_out.dart';
 import 'tdd/presentaion/view/components/sign_up/sign_up_form.dart';
 import 'tdd/presentaion/view/screens/auth/auth.dart';
 import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
@@ -343,7 +344,8 @@ class PageControler{
     goRoute(Routename.signup,(BuildContext context, GoRouterState state)=> SignUpPage(key: state.pageKey,),routes: [
       goRoute(Routename.form,(BuildContext context, GoRouterState state)=> SignUpForm(key: state.pageKey,),isSubROught: true),
     ]),
-    goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.params['page'],key: state.pageKey,),params: ['page']),
+    goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page']),
+    goRoute(Routename.checkout,(BuildContext context, GoRouterState state)=>CheckOut(key: state.pageKey,)),
   ];
 
   // Scaffold get CircularProgressIndicatore =>  Scaffold(appBar:AppBar(),body: const Center(child: CircularProgressIndicator()),);
@@ -413,13 +415,13 @@ class Navigations {
     // }else{
     //   context.pushNamed(nUri(name!).name);
     // }
-    context.pushNamed(name.nUri.name,params: parms.map((key, value) => MapEntry(key, value.toString())),queryParams: qparms);
+    context.pushNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);
   }
   String getCurrentRoute(){
     return router.location;
   }
   pushReplace(BuildContext context,{required Routename name,Map<String, dynamic> parms = const <String, dynamic>{}, Map<String, dynamic> qparms = const <String, dynamic>{}}){
-    context.pushReplacementNamed(name.nUri.name,params: parms.map((key, value) => MapEntry(key, value.toString())),queryParams: qparms);
+    context.pushReplacementNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);
   }
   pop(BuildContext context){
     if(GoRouter.of(context).canPop()) {
@@ -450,7 +452,7 @@ class Navigations {
     // }else{
     //   context.pushNamed(nUri(name!).name);
     // }
-    context.goNamed(name.nUri.name,params: parms.map((key, value) => MapEntry(key, value.toString())),queryParams: qparms);
+    context.goNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);
   }
   refresh(BuildContext context){
     WidgetsBinding.instance.addPostFrameCallback((_) { context.go("/"); });

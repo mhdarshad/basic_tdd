@@ -8,7 +8,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 class ProjectScafold extends StatefulWidget {
    ProjectScafold({
     super.key,
-    required this.child,  this.displayLogoHead = true,
+    required this.child,  this.displayLogoHead = false,
   });
 
   final Widget child;

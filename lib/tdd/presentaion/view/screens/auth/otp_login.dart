@@ -17,7 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ProjectScafold( child: const Padding(
+    return ProjectScafold( displayLogoHead:true,child: const Padding(
       padding: EdgeInsets.all(10.0),
       child: SignupOtp(),
     ),);
