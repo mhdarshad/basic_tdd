@@ -2,10 +2,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-import 'flutter_flow_theme.dart';
-
 class FFButtonOptions {
-
   const FFButtonOptions({
     this.textStyle,
     this.elevation,
@@ -21,8 +18,10 @@ class FFButtonOptions {
     this.iconPadding,
     this.borderRadius,
     this.borderSide,
-    this.gradiant,
-    this.border
+    this.hoverColor,
+    this.hoverBorderSide,
+    this.hoverTextColor,
+    this.hoverElevation,
   });
 
   final TextStyle? textStyle;
@@ -37,13 +36,15 @@ class FFButtonOptions {
   final double? iconSize;
   final Color? iconColor;
   final EdgeInsetsGeometry? iconPadding;
-  final double? borderRadius;
+  final BorderRadius? borderRadius;
   final BorderSide? borderSide;
-  final Border? border;
-  final LinearGradient? gradiant;
+  final Color? hoverColor;
+  final BorderSide? hoverBorderSide;
+  final Color? hoverTextColor;
+  final double? hoverElevation;
 }
 
-class FFButtonWidget extends StatelessWidget {
+class FFButtonWidget extends StatefulWidget {
   const FFButtonWidget({
     Key? key,
     required this.text,
@@ -51,70 +52,187 @@ class FFButtonWidget extends StatelessWidget {
     this.icon,
     this.iconData,
     required this.options,
-    this.loading = false,
+    this.showLoadingIndicator = true,
   }) : super(key: key);
 
   final String text;
   final Widget? icon;
   final IconData? iconData;
-  final VoidCallback onPressed;
+  final Function()? onPressed;
   final FFButtonOptions options;
-  final bool loading;
+  final bool showLoadingIndicator;
+
+  @override
+  State<FFButtonWidget> createState() => _FFButtonWidgetState();
+}
+
+class _FFButtonWidgetState extends State<FFButtonWidget> {
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
     Widget textWidget = loading
         ? Center(
-      child: Container(
-        width: 23,
-        height: 23,
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(
-            options.textStyle!.color ?? Colors.white,
-          ),
-        ),
-      ),
-    )
+            child: Container(
+              width: 23,
+              height: 23,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  widget.options.textStyle!.color ?? Colors.white,
+                ),
+              ),
+            ),
+          )
         : AutoSizeText(
-      text,
-      style: options.textStyle,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-    );
-    if (icon != null || iconData != null) {
-      textWidget = Flexible(child: textWidget);
-      return Container(
-        height: options.height,
-        width: options.width,
+            widget.text,
+            style: widget.options.textStyle?.withoutColor(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          );
 
-        child: Container(),
+    final onPressed = widget.onPressed != null
+        ? (widget.showLoadingIndicator
+            ? () async {
+                if (loading) {
+                  return;
+                }
+                setState(() => loading = true);
+                try {
+                  await widget.onPressed!();
+                } finally {
+                  if (mounted) {
+                    setState(() => loading = false);
+                  }
+                }
+              }
+            : () => widget.onPressed!())
+        : null;
+
+    ButtonStyle style = ButtonStyle(
+      shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+        (states) {
+          if (states.contains(MaterialState.hovered) &&
+              widget.options.hoverBorderSide != null) {
+            return RoundedRectangleBorder(
+              borderRadius:
+                  widget.options.borderRadius ?? BorderRadius.circular(8),
+              side: widget.options.hoverBorderSide!,
+            );
+          }
+          return RoundedRectangleBorder(
+            borderRadius:
+                widget.options.borderRadius ?? BorderRadius.circular(8),
+            side: widget.options.borderSide ?? BorderSide.none,
+          );
+        },
+      ),
+      foregroundColor: MaterialStateProperty.resolveWith<Color?>(
+        (states) {
+          if (states.contains(MaterialState.disabled) &&
+              widget.options.disabledTextColor != null) {
+            return widget.options.disabledTextColor;
+          }
+          if (states.contains(MaterialState.hovered) &&
+              widget.options.hoverTextColor != null) {
+            return widget.options.hoverTextColor;
+          }
+          return widget.options.textStyle?.color;
+        },
+      ),
+      backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+        (states) {
+          if (states.contains(MaterialState.disabled) &&
+              widget.options.disabledColor != null) {
+            return widget.options.disabledColor;
+          }
+          if (states.contains(MaterialState.hovered) &&
+              widget.options.hoverColor != null) {
+            return widget.options.hoverColor;
+          }
+          return widget.options.color;
+        },
+      ),
+      overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
+        if (states.contains(MaterialState.pressed)) {
+          return widget.options.splashColor;
+        }
+        return null;
+      }),
+      padding: MaterialStateProperty.all(widget.options.padding ??
+          const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0)),
+      elevation: MaterialStateProperty.resolveWith<double?>(
+        (states) {
+          if (states.contains(MaterialState.hovered) &&
+              widget.options.hoverElevation != null) {
+            return widget.options.hoverElevation!;
+          }
+          return widget.options.elevation;
+        },
+      ),
+    );
+
+    if (widget.icon != null || widget.iconData != null) {
+      return Container(
+        height: widget.options.height,
+        width: widget.options.width,
+        child: ElevatedButton.icon(
+          icon: Padding(
+            padding: widget.options.iconPadding ?? EdgeInsets.zero,
+            child: widget.icon ??
+                FaIcon(
+                  widget.iconData,
+                  size: widget.options.iconSize,
+                  color: widget.options.iconColor ??
+                      widget.options.textStyle!.color,
+                ),
+          ),
+          label: textWidget,
+          onPressed: onPressed,
+          style: style,
+        ),
       );
     }
 
-    return GestureDetector(
-      onTap: ()=>onPressed(),
-      child: Container(
-        height: options.height,
-        width: options.width,
-      decoration: BoxDecoration(color: Colors.white,gradient: options.gradiant,),
-        child: Container(
-          width: options.width,
-          height: options.height,
-          decoration: BoxDecoration(
-            border:options.border,
-            color: options.color,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Align(
-            alignment: AlignmentDirectional(0, 0),
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: options.textStyle,
-            ),
-          ),
-        ),
+    return Container(
+      height: widget.options.height,
+      width: widget.options.width,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: style,
+        child: textWidget,
       ),
     );
   }
+}
+
+extension _WithoutColorExtension on TextStyle {
+  TextStyle withoutColor() => TextStyle(
+        inherit: inherit,
+        color: null,
+        backgroundColor: backgroundColor,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: fontStyle,
+        letterSpacing: letterSpacing,
+        wordSpacing: wordSpacing,
+        textBaseline: textBaseline,
+        height: height,
+        leadingDistribution: leadingDistribution,
+        locale: locale,
+        foreground: foreground,
+        background: background,
+        shadows: shadows,
+        fontFeatures: fontFeatures,
+        decoration: decoration,
+        decorationColor: decorationColor,
+        decorationStyle: decorationStyle,
+        decorationThickness: decorationThickness,
+        debugLabel: debugLabel,
+        fontFamily: fontFamily,
+        fontFamilyFallback: fontFamilyFallback,
+        // The _package field is private so unfortunately we can't set it here,
+        // but it's almost always unset anyway.
+        // package: _package,
+        overflow: overflow,
+      );
 }

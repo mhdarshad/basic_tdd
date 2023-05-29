@@ -12,6 +12,11 @@ class LoginFormConsumer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VxConsumer<ProjectStore>(
+      notifications: const {
+        // GetUserEvents:(context,store, {state}){
+        //
+        // }
+      },
       builder: (context,store,_) {
         return builder(context,store,_);
       }, mutations: const {GetUserEvents},

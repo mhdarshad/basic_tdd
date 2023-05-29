@@ -40,7 +40,7 @@ class CountCard extends StatelessWidget {
                   children: [
                     Text(
                       walletname,
-                      style: FlutterFlowTheme.title3
+                      style: FlutterFlowTheme.of(context).title3
                           .override(
                         fontFamily: 'Poppins',
                         color: const Color(0xFFEBEBEB),
@@ -48,7 +48,7 @@ class CountCard extends StatelessWidget {
                     ),
                     Text(
                       discription,
-                      style: FlutterFlowTheme.subtitle2
+                      style: FlutterFlowTheme.of(context).subtitle2
                           .override(
                         fontFamily: 'Poppins',
                         color: const Color(0xFFEBEBEB),
@@ -64,7 +64,7 @@ class CountCard extends StatelessWidget {
                   children: [
                     Text(
                       '$unit ${balence}',
-                      style: FlutterFlowTheme.title1
+                      style: FlutterFlowTheme.of(context).title1
                           .override(
                         fontFamily: 'Poppins',
                         color: const Color(0xFFEBEBEB),
@@ -76,7 +76,7 @@ class CountCard extends StatelessWidget {
                       decoration: const BoxDecoration(),
                       child: Text(
                         'View More',
-                        style: FlutterFlowTheme.bodyText1
+                        style: FlutterFlowTheme.of(context).bodyText1
                             .override(
                           fontFamily: 'Poppins',
                           fontSize: 14,
