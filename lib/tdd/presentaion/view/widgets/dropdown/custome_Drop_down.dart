@@ -63,7 +63,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
           } else {
             findDropdownData();
             floatingDropdown = _createFloatingDropdown();
-            Overlay.of(context).insert(floatingDropdown);
+            Overlay.of(context)?.insert(floatingDropdown);
           }
 
           isDropdownOpened = !isDropdownOpened;
