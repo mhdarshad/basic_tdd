@@ -279,8 +279,8 @@ enum IconAlign{
 */
 import 'package:flutter/material.dart';
 
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
+import '../../../../../core/util/presentation/flutter_flow/flutter_flow_widgets.dart';
 
 class AsfaSearchBar extends StatelessWidget {
   final TextEditingController textController;
@@ -385,7 +385,7 @@ class AsfaSearchBar extends StatelessWidget {
                       color: Colors.transparent,
                       width: 1,
                     ),
-                    borderRadius: 50,
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
                   ),
                 ),
               ),

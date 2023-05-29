@@ -1,88 +1,93 @@
-import 'dart:math';
-import 'dart:ui';
-
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 enum AnimationTrigger {
   onPageLoad,
+  onActionTrigger,
 }
 
 class AnimationInfo {
   AnimationInfo({
-    this.curve = Curves.easeInOut,
     required this.trigger,
-    required this.duration,
-    this.delay = 0,
-    this.fadeIn = false,
-    this.slideOffset,
-    this.scale = 0,
+    required this.effects,
+    this.loop = false,
+    this.reverse = false,
+    this.applyInitialState = true,
   });
-
-  final Curve? curve;
-  final AnimationTrigger? trigger;
-  final int? duration;
-  final int? delay;
-  final bool? fadeIn;
-  final Offset? slideOffset;
-  final double? scale;
-  CurvedAnimation? curvedAnimation;
+  final AnimationTrigger trigger;
+  final List<Effect<dynamic>> effects;
+  final bool applyInitialState;
+  final bool loop;
+  final bool reverse;
+  late AnimationController controller;
 }
 
-void startAnimations(Iterable<AnimationInfo> animations, TickerProvider vsync) {
-  animations.forEach((animation) {
-    animation.curvedAnimation = CurvedAnimation(
-      parent: AnimationController(
-        duration: Duration(milliseconds: animation.duration!),
-        vsync: vsync,
-      ),
-      curve: animation.curve!,
-    );
+void createAnimation(AnimationInfo animation, TickerProvider vsync) {
+  final newController = AnimationController(vsync: vsync);
+  animation.controller = newController;
+}
 
-    Future.delayed(
-      Duration(milliseconds: animation.delay!),
-      () => (animation.curvedAnimation!.parent as AnimationController)
-          .forward(from: 0.0),
-    );
-  });
+void setupAnimations(Iterable<AnimationInfo> animations, TickerProvider vsync) {
+  animations.forEach((animation) => createAnimation(animation, vsync));
 }
 
 extension AnimatedWidgetExtension on Widget {
-  Widget animated(Iterable<AnimationInfo> animationInfos) {
-    final animationInfo = animationInfos.first;
-    return AnimatedBuilder(
-      animation: animationInfo.curvedAnimation!,
-      builder: (context, child) {
-        var returnedWidget = child;
-        if (animationInfo.slideOffset != null) {
-          final animationValue = 1 - animationInfo.curvedAnimation!.value;
-          returnedWidget = Transform.translate(
-            child: child,
-            offset: animationInfo.slideOffset! * -animationValue,
-          );
-        }
-        if (animationInfo.scale! > 0 && animationInfo.scale != 1.0) {
-          final scale = returnedWidget = Transform.scale(
-            scale: animationInfo.scale! +
-                (1.0 - animationInfo.scale!) *
-                    animationInfo.curvedAnimation!.value,
-            child: child,
-          );
-        }
-        if (animationInfo.fadeIn!) {
-          // In cases where the child tree has a Material widget with elevation,
-          // opacity animations may result in sudden box shadow "glitches"
-          // To prevent this, opacity is animated up to but NOT including 1.0.
-          // It is impossible to tell the difference between 0.998 and 1.0 opacity.
-          returnedWidget = Opacity(
-            opacity: min(0.998, animationInfo.curvedAnimation!.value),
-            child: returnedWidget,
-          );
-        }
-        return returnedWidget!;
-      },
-      child:
-          animationInfos.length > 1 ? animated(animationInfos.skip(1)) : this,
+  Widget animateOnPageLoad(AnimationInfo animationInfo) => Animate(
+      effects: animationInfo.effects,
+      child: this,
+      onPlay: (controller) => animationInfo.loop
+          ? controller.repeat(reverse: animationInfo.reverse)
+          : null,
+      onComplete: (controller) => !animationInfo.loop && animationInfo.reverse
+          ? controller.reverse()
+          : null);
+
+  Widget animateOnActionTrigger(
+    AnimationInfo animationInfo, {
+    bool hasBeenTriggered = false,
+  }) =>
+      hasBeenTriggered || animationInfo.applyInitialState
+          ? Animate(
+              controller: animationInfo.controller,
+              autoPlay: false,
+              effects: animationInfo.effects,
+              child: this)
+          : this;
+}
+
+class TiltEffect extends Effect<Offset> {
+  const TiltEffect({
+    Duration? delay,
+    Duration? duration,
+    Curve? curve,
+    Offset? begin,
+    Offset? end,
+  }) : super(
+          delay: delay,
+          duration: duration,
+          curve: curve,
+          begin: begin ?? const Offset(0.0, 0.0),
+          end: end ?? const Offset(0.0, 0.0),
+        );
+
+  @override
+  Widget build(
+    BuildContext context,
+    Widget child,
+    AnimationController controller,
+    EffectEntry entry,
+  ) {
+    Animation<Offset> animation = buildAnimation(controller, entry);
+    return getOptimizedBuilder<Offset>(
+      animation: animation,
+      builder: (_, __) => Transform(
+        transform: Matrix4.identity()
+          ..setEntry(3, 2, 0.001)
+          ..rotateX(animation.value.dx)
+          ..rotateY(animation.value.dy),
+        alignment: Alignment.center,
+        child: child,
+      ),
     );
   }
 }

@@ -19,7 +19,7 @@ class DynamicThemeControle{
     themes: {
       0: ThemeData(
           primarySwatch: PrimerySwatchThemeData,
-          backgroundColor: const Color(0xFF2D2D2D),
+          backgroundColor: const Color(0xFF14181B),
           scaffoldBackgroundColor: const Color(0xFF2D2D2D),
           popupMenuTheme: const PopupMenuThemeData(color: Color(0xFF2D2D2D)),
           fontFamily: 'Roboto',
@@ -28,6 +28,7 @@ class DynamicThemeControle{
             subtitle1: TextStyle(color: Colors.white,fontSize: 20,),
             bodyText1: TextStyle(color: Colors.grey,),
           ),
+          accentColor: Color(0xA370DCDC),
           dialogTheme: const DialogTheme(backgroundColor:Color(0xFF333632) ,titleTextStyle: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
           appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF2D2D2D),titleTextStyle: TextStyle(color: Colors.grey)),
           cardColor: const Color(0xFF333632),

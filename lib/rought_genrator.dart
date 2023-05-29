@@ -9,7 +9,7 @@
 //
 // import 'injection_container.dart';
 // import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
-// import 'tdd/presentaion/view/screens/home/dash_board.dart';
+// import 'tdd/presentaion/view/screens/home/home.dart';
 // enum Routename{
 //   Home,Login,checkout,editvenodreproduct,kyc
 // }
@@ -293,7 +293,7 @@
 // }
 //
 
-import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/dash_board.dart';
+import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -301,11 +301,13 @@ import 'package:go_router/go_router.dart';
 
 import 'core/util/config/user_config.dart';
 import 'injection_container.dart';
+import 'tdd/presentaion/view/components/sign_up/sign_up_form.dart';
 import 'tdd/presentaion/view/screens/auth/auth.dart';
 import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
+import 'tdd/presentaion/view/screens/auth/otp_login.dart';
 
 enum Routename{
-  home,login,checkout,editvenodreproduct,kyc, config
+  home,login,checkout,editvenodreproduct,kyc, config, signup, form
 }
 extension ListToString on List<String> {
   String toRequiredParamsString() {
@@ -326,6 +328,8 @@ extension GoNavigations on Routename{
       case Routename.kyc:  return  CUri("kyc");
       case Routename.checkout:return  CUri("checkout");
       case Routename.editvenodreproduct: return  CUri("editvenodreproduct");
+      case Routename.signup: return  CUri("signup");
+      case Routename.form:return  CUri("form");
     }
   }
 }
@@ -336,7 +340,10 @@ class PageControler{
   get routs =>[
     goRoute(Routename.login,(BuildContext context, GoRouterState state)=> Auth(key: state.pageKey,)),
     goRoute(Routename.config,(BuildContext context, GoRouterState state)=> DbConfig(key: state.pageKey,)),
-    goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoard(state.params['model']??'',key: state.pageKey,)),
+    goRoute(Routename.signup,(BuildContext context, GoRouterState state)=> SignUpPage(key: state.pageKey,),routes: [
+      goRoute(Routename.form,(BuildContext context, GoRouterState state)=> SignUpForm(key: state.pageKey,),isSubROught: true),
+    ]),
+    goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.params['page'],key: state.pageKey,),params: ['page']),
   ];
 
   // Scaffold get CircularProgressIndicatore =>  Scaffold(appBar:AppBar(),body: const Center(child: CircularProgressIndicator()),);
@@ -359,14 +366,15 @@ class PageControler{
 final router = GoRouter(
   redirect: (context,state){
     print("path: ${state.location}");
-    if((state.location !=  Routename.config.nUri.path) && (sl<Configration>().dbData ==null)){
-      print("no data");
-      return Routename.config.nUri.path;
-    }
-    if ((state.location !=  Routename.config.nUri.path) && (state.location !=  Routename.login.nUri.path) &&  (sl<Configration>().tocken ==null) ) {
-      print("no data");
-      return Routename.login.nUri.path;
-    }
+    // if((state.location !=  Routename.config.nUri.path) && (sl<Configration>().dbData ==null)){
+    //   print("no data");
+    //   return Routename.config.nUri.path;
+    // }
+
+    // if ((state.location !=  Routename.config.nUri.path) && (state.location !=  Routename.login.nUri.path) &&  (sl<Configration>().tocken ==null) ) {
+    //   print("no data");
+    //   return Routename.login.nUri.path;
+    // }
   },
   initialLocation:"/",
   debugLogDiagnostics:kDebugMode,
