@@ -339,6 +339,7 @@ extension GoNavigations on Routename{
 /// };
 class PageControler{
   get routs =>[
+    GoRoute(path: '/',redirect: (_,__)=>"/${Routename.login.nUri.name}"),
     goRoute(Routename.login,(BuildContext context, GoRouterState state)=> Auth(key: state.pageKey,)),
     goRoute(Routename.config,(BuildContext context, GoRouterState state)=> DbConfig(key: state.pageKey,)),
     goRoute(Routename.signup,(BuildContext context, GoRouterState state)=> SignUpPage(key: state.pageKey,),routes: [
@@ -378,7 +379,7 @@ final router = GoRouter(
     //   return Routename.login.nUri.path;
     // }
   },
-  initialLocation:"/",
+  initialLocation:"/login",
   debugLogDiagnostics:kDebugMode,
   routes: PageControler().routs,
 );

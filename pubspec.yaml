@@ -75,7 +75,7 @@ dependencies:
   shimmer: ^2.0.0
   flutter_svg:
   cached_network_image: ^3.2.2
-  expansion_card: ^0.1.0
+  expansion_tile_card: ^3.0.0
   expandable: ^5.0.1
   mockito: ^5.3.2
   sqflite_common_ffi_web: ^0.3.2
@@ -127,7 +127,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   sqflite_common_ffi: ^2.2.0+1
-  sqlite3_flutter_libs: ^0.5.12
+  sqlite3_flutter_libs: ^0.5.15
   socket_io_client: ^1.0.1
   laravel_echo:
     path: ./echo_laravel

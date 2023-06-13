@@ -12,18 +12,44 @@ class LoginUseCase extends UseCase<UserAcsessData,LoginData>{
   LoginUseCase({required this.repo});
   @override
   Future<Either<Failure, UserAcsessData>> call({required LoginData data}) async{
-   final result =  await repo.getRequest(Params(uri: Uri.parse("api/login"), methed: Methed.Post,
+   final result =  await repo.getRequest(Params(uri: Uri.parse("api/flutter/signIn"), methed: Methed.Post,
         data: {
-      'email':data.username,
+      'username':data.username,
       'password':data.password,
-      'license_key':data.key,
+      // 'license_key':data.key,
     }));
    return result.fold((l) => Left(l), (r) =>Right( UserAcsessData.fromJson(r)));
   }
 }
-class LoginData {
+class OtpUseCase extends UseCase<UserAcsessData,LoginData>{
+  DependencyRepostProvider repo;
+  OtpUseCase({required this.repo});
+  @override
+  Future<Either<Failure, UserAcsessData>> call({required LoginData data}) async{
+   final result =  await repo.getRequest(Params(uri: Uri.parse("api/flutter/resend_otp"), methed: Methed.Post,
+        data: {
+      'username':data.username,
+      // 'license_key':data.key,
+    }));
+   return result.fold((l) => Left(l), (r) =>Right( UserAcsessData.fromJson(r)));
+  }
+}
+
+class LoginData extends AuthParamsAbstarct{
   final String username;
   final String password;
   final String key;
   LoginData({required this.username, required this.password, required this.key});
+}
+class OTPData extends AuthParamsAbstarct{
+  final String phone;
+  OTPData({required this.phone, });
+}
+class OTPVerifyData extends AuthParamsAbstarct{
+  final String phone;
+  final String otp;
+  OTPVerifyData({required this.phone,required this.otp, });
+}
+abstract class AuthParamsAbstarct{
+
 }

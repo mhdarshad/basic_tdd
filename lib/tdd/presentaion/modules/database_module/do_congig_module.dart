@@ -1,4 +1,6 @@
 
+import 'package:flutter/foundation.dart';
+
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../data/models/api/user/use_data.dart';
@@ -14,11 +16,13 @@ class DBCongigMutation extends EventMutations<dynamic> {
 
   @override
   perform() async {
-    if(usecase is DBInsertUseCase) {
+  /*  if(usecase is DBInsertUseCase) {
       final request =  await (usecase as DBInsertUseCase)(data:data);
       request.fold((l) => errorToast(l.properties.first), (r) => null);
-    }else if(usecase is BDConfigUseCase){
-      print("configuration Sql DB");
+    }else */if(usecase is BDConfigUseCase){
+      if (kDebugMode) {
+        print("configuration Sql DB");
+      }
       final  request = await (usecase as BDConfigUseCase)(data:data);
       request.fold((l) => errorToast(l.properties.first), (r) => (r)?successToast("Successfully Configured"):errorToast("Error Occurred"),);
     }

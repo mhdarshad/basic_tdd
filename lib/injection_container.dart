@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:cloud_me_v2/core/controller/json_controller/json_save.dart';
+import 'package:cloud_me_v2/core/cripto_algo.dart';
 import 'package:cloud_me_v2/tdd/domain/usecase/db/db_insert_usecase.dart';
 import 'package:cloud_me_v2/tdd/domain/usecase/product/product_usecase.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/product/product_controller.dart';
@@ -45,7 +46,7 @@ _bloc(){
   //Bloc
 
   sl.registerFactory(() => ProductEvent(ProductUseCase( repo: sl(),),));
-  sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),),));
+  sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),),OtpUseCase(repo:sl())));
   sl.registerFactory(() => GetDBController(BDConfigUseCase( repo: sl(),),));
   // sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),),));
   // sl.registerFactory(() => RegisterEvent(RegisterUseCase(sll()),));
@@ -68,6 +69,7 @@ _bloc(){
   // sl.registerFactory(() => UserProfileBloc(profileUserUsecase:GetProfileCustomerUcase(repo:  sll()),),);
   // sl.registerFactory(() => SearchBloc(searchUserrUsecase:SearchUserUsecase(repo:  sll()), searchProductUsecase: SearchProductUsecase(repo:  sll()),),);//Bloc/Bloc
 }
+
 // _repo(){
 //   sl.registerLazySingleton<DependencyRepostProvider<Map<String,dynamic>>>(
 //         () => DataLayerRepositoryImpl(
@@ -106,10 +108,12 @@ _external()async {
   // await sl<SQLDBFunctions>().initilaize(DBType.sqlfite);
   ///Get DB data from CI \ CD Methode if no CI\ CD than take from Json
   final userDbConfig = Config.stgConstants[Config.DB_DATA] ?? await JsonSave.getJsonData(JsonDatakey.db_config);
-  debugPrint(userDbConfig);
+  debugPrint(userDbConfig.toString());
   /// Getting the Configuration File from Local Json File
-  sl<Configration>().dbData = userDbConfig!=null?jsonDecode(userDbConfig):null;
+  sl<Configration>().dbData = userDbConfig!=null?userDbConfig is String?jsonDecode(userDbConfig):userDbConfig:null;
   /// Checking the Configuration File Exist
+     sl<Configration>().tocken = const String.fromEnvironment(Config.CLIENT_ID).encript;
+  print("Token: ${sl<Configration>().tocken}");
   if(sl<Configration>().dbData!=null){
     /// Providing the table name to fetch from SQL
     sl<Configration>().dbType = sl<Configration>().dbData!['db_type'];
@@ -124,7 +128,8 @@ _external()async {
       /// fetching the Business table which has already Provided in [sl<SQLDBFunctions>().tablename]
       final data = await sl<SQLDBFunctions>().fetchAll();
       /// getting the token and Adding in Json Configuration File
-      sl<Configration>().tocken = data.first['tocken'];
+      sl<Configration>().tocken = const String.fromEnvironment(Config.CLIENT_ID);
+      print("Token: ${sl<Configration>().tocken}");
     } on Exception catch (e) {
       //TODO: Need Log Implementation
       debugPrint('Need Login');

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import '../../../core/data/hive_db.dart';
 import '../../../core/data/sqlflite/sql_db.dart';
 import '../../../core/error/exceptions.dart';
@@ -30,8 +31,13 @@ class DataLayerRepositoryImpl implements DependencyRepostProvider<Map<String, dy
         final remoteTrivia = await getRequest();
         return Right(remoteTrivia.data);
       } on ServerExceptions catch(e){
-        print("server exception");
+        if (kDebugMode) {
+          print("server exception ${e.messege}");
+        }
         // ServerExceptions? exceptions ;
+        if (kDebugMode) {
+          print(e.messege);
+        }
         if(e.code == 401){
           return Left(ClintFailure(ExceptiomModle(message: e.messege!.message,errors: e.messege!.errors)));
         }
@@ -55,7 +61,9 @@ class DataLayerRepositoryImpl implements DependencyRepostProvider<Map<String, dy
         final localTrivia = await localDataSource.getCachedData(
             key: param.key, table: param.table);
         if(localTrivia.data.trim().trimRight().toString()=="{}"){
-          print("cache execution");
+          if (kDebugMode) {
+            print("cache execution");
+          }
           return Left(CacheFailure());
         }else{
           return Right(jsonDecode(localTrivia.data));
@@ -64,20 +72,16 @@ class DataLayerRepositoryImpl implements DependencyRepostProvider<Map<String, dy
       else if(param.methed==DB.SET){
         localDataSource.cachedData(key:param.key,value: RepositoryModel.fromJson(param.data!),table: param.table);
         final localTrivia = await localDataSource.getCachedData(key: param.key,table: param.table);
-
         return Right(jsonDecode(localTrivia.data));
       } else if(param.methed==DB.UPDATE){
         final localTrivia = await localDataSource.getCachedData(key: param.key,table: param.table);
-
         return Right(jsonDecode(localTrivia.data));
       }else if(param.methed==DB.REMOVE){
         localDataSource.removeCachedData(key:param.key,table: param.table);
         final localTrivia = await localDataSource.getCachedData(key: param.key,table: param.table);
-
         return Right(jsonDecode(localTrivia.data));
       }else {
         final localTrivia = await localDataSource.getCachedData(key: param.key,table: DBTable.DataFetchHistory);
-
         return Right(jsonDecode(localTrivia.data));
       }
     }on CacheExceptions{

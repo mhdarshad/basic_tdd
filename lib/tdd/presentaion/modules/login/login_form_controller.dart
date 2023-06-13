@@ -4,8 +4,10 @@ import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../../core/event/event_hanling.dart';
+import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../../core/util/presentation/flutter_flow/form_field_controller.dart';
 import '../../../../injection_container.dart';
@@ -17,9 +19,10 @@ import 'login_form_interfrence.dart';
 
 class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with GetUserInterference{
   LoginUseCase usecase;
+  OtpUseCase otpUseCase;
 
 
-  GetUserController(this.usecase) : super(usecase);
+  GetUserController(this.usecase,this.otpUseCase) : super(usecase);
   // State field(s) for emailAddress widget.
   static  TextEditingController? phoneNumberController = TextEditingController();
   static  TextEditingController? emailAddressController = TextEditingController();
@@ -51,16 +54,18 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
     // TODO: implement call
     return GetUserEvents(usecase, data);
   }
+
   static onContryChange(CountryCode code){
     contryCode = code.code??'0';
 }
 
-   static login(context) {
+   static login() {
     // TODO: implement login
-     print("User name: $phoneNumberController");
+     if (kDebugMode) {
+       print("User name: ${phoneNumberController?.value.text}");
+     }
     // throw UnimplementedError();
-     navigate.push(context, name: Routename.home);
-    //  sl<GetUserController>()(data:LoginData(username: emailAddressController?.text??'', password:  passwordController?.text??"", key: "key") );
+     sl<GetUserController>()(data:LoginData(username: phoneNumberController?.text??'', password:  passwordController?.text??"", key: "key") );
   }
   static void initState(BuildContext context) {
     passwordVisibility.value = false;
@@ -74,24 +79,32 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
     // passwordController?.dispose();
   }
 
-  static fetchotp(BuildContext context) {
+   fetchotp() {
     showOtp.value = true;
     showOtp.notifyListeners();
+    return GetUserEvents(otpUseCase,OTPData(phone: phoneNumberController?.text??''));
   }
 }
 
-class GetUserEvents extends EventMutations<LoginData> {
-  LoginUseCase usecase;
-
-  GetUserEvents(this.usecase, LoginData data) : super(data);
+class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
+  UseCase usecase;
+  GetUserEvents(this.usecase, AuthParamsAbstarct data) : super(data);
 
   @override
   perform() async {
-    // final request = await usecase(data:data);
-   // if(!request.isLeft()){
-   //   // request.forEach((r) {
-   //   //   next(() => DBCongigMutation(DBInsertUseCase(repo: usecase.repo as DependencyRepostProvider<Map<String, dynamic>>),r));
-   //   // });
-   // }
+    final request = await usecase(data:data);
+
+    if(usecase  is OtpUseCase ){
+
+    }else if (usecase is LoginUseCase){
+      if(!request.isLeft()){
+        if (kDebugMode) {
+          print("logged in");
+        }
+        // request.forEach((r) {
+        //   next(() => DBCongigMutation(DBInsertUseCase(repo: usecase.repo as DependencyRepostProvider<Map<String, dynamic>>),r));
+        // });
+      }
+    }
   }
 }

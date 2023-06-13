@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cloud_me_v2/core/network/http_override.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +18,7 @@ import 'tdd/domain/entities/vx_store.dart';
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
   // await Firebase.initializeApp(
   //   options: const FirebaseOptions(apiKey: "AIzaSyD2VSxQ77bxHFLMHIdzNY3lbY23uPoTrgA", appId: "1:772276630637:web:ab958a8e34fb22c369fb64", messagingSenderId: "772276630637", projectId: "asfa-mantanance-works"),
   // );
@@ -25,7 +29,7 @@ void main() async{
 
 class MyApp extends StatelessWidget {
    MyApp({Key? key}) : super(key: key);
-  ThemeMode _themeMode = FlutterFlowTheme.themeMode;
+  final ThemeMode _themeMode = FlutterFlowTheme.themeMode;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp.router(
 
         title: 'Cloud Me',
-        theme: ThemeData(brightness: Brightness.light),
+        theme: ThemeData(brightness: Brightness.dark),
         darkTheme: ThemeData(brightness: Brightness.dark),
         themeMode: _themeMode,
           supportedLocales:[... languages.map((language) => Locale(language.languageCode!, language.countryCode)),...[

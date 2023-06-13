@@ -53,7 +53,7 @@ class _LoginFormComponent2WidgetState extends State<LoginFormComponent2Widget> {
 
                 color:FlutterFlowTheme.of(context).primary,
                 borderColor: Colors.transparent,
-                onPressed: ()=>GetUserController.login(context), text: 'Sign In',);
+                onPressed: ()=>GetUserController.login(), text: 'Sign In',);
             }
           ),
           CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,

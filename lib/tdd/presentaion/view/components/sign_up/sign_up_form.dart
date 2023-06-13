@@ -188,7 +188,7 @@ class _SignUpFormState extends State<SignUpForm> {
             child: CustomeButton(
               color:FlutterFlowTheme.of(context).primary,
               borderColor: Colors.transparent,
-              onPressed: ()=>GetUserController.login(context), text: 'Sign Up',),
+              onPressed: ()=>GetUserController.login(), text: 'Sign Up',),
           ),
         // Padding(
           //             padding: const EdgeInsets.all(8.0),

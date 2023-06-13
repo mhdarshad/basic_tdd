@@ -97,7 +97,7 @@ class _SignupOtpState extends State<SignupOtp> {
                   }
               ):CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,
                 borderColor:  FlutterFlowTheme.of(context).alternate,
-                onPressed: () => GetUserController.fetchotp(context), text: 'Send OTP',),
+                onPressed: () =>     sl<GetUserController>().fetchotp(), text: 'Send OTP',),
               CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,
                 borderColor:  FlutterFlowTheme.of(context).secondaryText,
                 onPressed: () {

@@ -7,7 +7,7 @@ abstract class ModelEntities extends Equatable {
   String? status;
   String? msg;
   dynamic? data;
-  String? flags;
+  List<dynamic>? flags;
 
   ModelEntities({this.status, this.msg, this.data, this.flags});
 
