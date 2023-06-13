@@ -101,9 +101,9 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
         if (kDebugMode) {
           print("logged in");
         }
-        // request.forEach((r) {
-        //   next(() => DBCongigMutation(DBInsertUseCase(repo: usecase.repo as DependencyRepostProvider<Map<String, dynamic>>),r));
-        // });
+        request.forEach((r) {
+
+        });
       }
     }
   }

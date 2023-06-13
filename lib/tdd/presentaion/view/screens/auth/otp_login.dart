@@ -1,9 +1,7 @@
 
 import 'package:cloud_me_v2/tdd/presentaion/view/components/sign_up/otp_signup.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
-import '../../../../../core/util/presentation/flutter_flow/flutter_flow_animations.dart';
 import '../../../../../core/util/presentation/template/custom_scafold.dart';
 
 class SignUpPage extends StatefulWidget {

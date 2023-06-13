@@ -18,7 +18,7 @@ class LoginUseCase extends UseCase<UserAcsessData,LoginData>{
       'password':data.password,
       // 'license_key':data.key,
     }));
-   return result.fold((l) => Left(l), (r) =>Right( UserAcsessData.fromJson(r)));
+   return result.fold((l) => Left(l), (r) => Right( UserAcsessData.fromJson(r)));
   }
 }
 class OtpUseCase extends UseCase<UserAcsessData,LoginData>{

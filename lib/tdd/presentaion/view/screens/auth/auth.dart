@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
-import '../../../../../core/util/presentation/flutter_flow/flutter_flow_animations.dart';
-import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../core/util/presentation/template/custom_scafold.dart';
-import '../../../modules/notifier/error/error_notifier_container.dart';
 import '../../components/login/mobile_password_login.dart';
 
 class Auth extends StatefulWidget {

@@ -1,15 +1,9 @@
 
-import 'package:cloud_me_v2/tdd/presentaion/view/components/gym_page/dash_boaard_conteainer/dash_board.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../core/util/presentation/template/custom_scafold.dart';
-import '../../../../../rought_genrator.dart';
-import '../../../../domain/entities/vx_store.dart';
 
-import '../../../modules/notifier/error/error_notifier_container.dart';
-import '../../components/kiosk_container/kiosk_container.dart';
 import '../../widgets/drawer/end_drawer.dart';
 import 'home_controller.dart';
 

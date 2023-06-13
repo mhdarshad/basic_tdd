@@ -1,41 +1,41 @@
+// class UserAcsessData {
+//   UserAcsessData({
+//     required this.status,
+//     required this.msg,
+//     required this.data,
+//     required this.flags,
+//   });
+//   late final String status;
+//   late final String msg;
+//   late final Data data;
+//   late final List<dynamic> flags;
+//
+//   UserAcsessData.fromJson(Map<String, dynamic> json){
+//     status = json['status'];
+//     msg = json['msg'];
+//     data = Data.fromJson(json['data']);
+//     flags = List.castFrom<dynamic, dynamic>(json['flags']);
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final _data = <String, dynamic>{};
+//     _data['status'] = status;
+//     _data['msg'] = msg;
+//     _data['data'] = data.toJson();
+//     _data['flags'] = flags;
+//     return _data;
+//   }
+// }
+
 class UserAcsessData {
   UserAcsessData({
-    required this.status,
-    required this.msg,
-    required this.data,
-    required this.flags,
-  });
-  late final String status;
-  late final String msg;
-  late final Data data;
-  late final List<dynamic> flags;
-
-  UserAcsessData.fromJson(Map<String, dynamic> json){
-    status = json['status'];
-    msg = json['msg'];
-    data = Data.fromJson(json['data']);
-    flags = List.castFrom<dynamic, dynamic>(json['flags']);
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['status'] = status;
-    _data['msg'] = msg;
-    _data['data'] = data.toJson();
-    _data['flags'] = flags;
-    return _data;
-  }
-}
-
-class Data {
-  Data({
     required this.customer,
     required this.customerAuth,
   });
   late final Customer customer;
   late final String customerAuth;
 
-  Data.fromJson(Map<String, dynamic> json){
+  UserAcsessData.fromJson(Map<String, dynamic> json){
     customer = Customer.fromJson(json['customer']);
     customerAuth = json['customer_auth'];
   }

@@ -1,7 +1,5 @@
 import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/components/kiosk_container/kiosk_container.dart';
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 import '../../components/gym_page/dash_boaard_conteainer/dash_board.dart';
 import '../../components/gym_page/plan_select_container/plan_select_container.dart';

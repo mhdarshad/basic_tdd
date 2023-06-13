@@ -1,7 +1,10 @@
+import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../domain/entities/vx_store.dart';
+import '../../../domain/usecase/auth/user_login.dart';
+import '../../view/screens/home/home_controller.dart';
 import 'login_form_controller.dart';
 
 class LoginFormConsumer extends StatelessWidget {
@@ -12,10 +15,16 @@ class LoginFormConsumer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VxConsumer<ProjectStore>(
-      notifications: const {
-        // GetUserEvents:(context,store, {state}){
-        //
-        // }
+      notifications:  {
+        GetUserEvents:(context,store, {VxStatus? status}){
+          if((store as GetUserEvents).usecase  is LoginUseCase){
+            if(status == VxStatus.success){
+              navigate.push(context, name: Routename.home,parms: {
+                'page':BotemNavigations.dashboard.name
+              });
+            }
+          }
+        }
       },
       builder: (context,store,_) {
         return builder(context,store,_);
