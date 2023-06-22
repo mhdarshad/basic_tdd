@@ -1,4 +1,5 @@
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -31,49 +32,55 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: ValueListenableBuilder<bool>(
-        valueListenable: controller.isShowFab,
-        builder: (context,value,_){
-          return value?FloatingActionButton(onPressed: ()=>controller.onClickFabButton(),child: const Icon(Icons.edit_calendar),):SizedBox.shrink();
-        },
-      ),
+        floatingActionButton: ValueListenableBuilder<bool>(
+          valueListenable: controller.isShowFab,
+          builder: (context,value,_)=>value?FloatingActionButton(onPressed: ()=>controller.onClickFabButton(),child: const Icon(Icons.edit_calendar),):const SizedBox.shrink(),
+        ),
         body:  SfCalendar(
-          controller: controller.controller,
-          allowDragAndDrop: true,
+            controller: controller.controller,
+            allowDragAndDrop: true,
             allowAppointmentResize: true,
-          onAppointmentResizeEnd: widget.onAppointmentResizeed,
-          // allowViewNavigation: true,
+            onAppointmentResizeEnd: widget.onAppointmentResizeed,
+            // allowViewNavigation: true,
             cellBorderColor: Colors.green,
             showCurrentTimeIndicator:true,
             monthViewSettings: const MonthViewSettings(navigationDirection:MonthNavigationDirection.vertical ,showAgenda: true,appointmentDisplayMode: MonthAppointmentDisplayMode.indicator),
             viewNavigationMode: ViewNavigationMode.snap,
             allowedViews: const [
-              CalendarView.timelineDay,
-              CalendarView.timelineWeek,
-              CalendarView.month,
+              // CalendarView.timelineDay,
+              // CalendarView.timelineWeek,
+              // CalendarView.month,
               CalendarView.schedule
             ],
             scheduleViewSettings:const ScheduleViewSettings(appointmentTextStyle:TextStyle(color: Colors.black),hideEmptyScheduleWeek: true,monthHeaderSettings: MonthHeaderSettings(height: 60,textAlign: TextAlign.center),weekHeaderSettings: WeekHeaderSettings()),
-          showNavigationArrow: true,
-          dragAndDropSettings: controller.draganddropSettings,
+            // showNavigationArrow: true,
+            dragAndDropSettings: controller.draganddropSettings,
             onDragStart: (arguments){
-              print("Drag Started");
+              if (kDebugMode) {
+                print("Drag Started");
+              }
             },
             onDragEnd: (arguments){
-              print("Drag End");
+              if (kDebugMode) {
+                print("Drag End");
+              }
             },
             appointmentBuilder:widget.eventViewBuilder,
             onDragUpdate: widget.onDraged,
             onTap:(event) {
-            if(controller.isMonthViewClick(event)){
-            }else if(controller.isScheduleViewClick(event)){
-              controller.changeView(CalendarView.timelineDay);
+              if(controller.isMonthViewClick(event)){
+              }else if(controller.isScheduleViewClick(event)){
+                // controller.changeView(CalendarView.timelineDay);
+
               }else if(controller.isScheduleViewClickWeekHeader(event)){
-              controller.changeView(CalendarView.timelineWeek);
-             }
-              widget.onTap!(event);
+
+                // controller.changeView(CalendarView.timelineWeek);
+              }
+              if(widget.onTap!=null) {
+                widget.onTap!(event);
+              }
             },
-            view: CalendarView.timelineDay,
+            view: CalendarView.schedule,
             firstDayOfWeek: 1,
             showDatePickerButton: true,
             timeSlotViewSettings: const TimeSlotViewSettings(startHour: 0, endHour: 24,nonWorkingDays: <int>[DateTime.friday, DateTime.saturday]),
@@ -82,4 +89,3 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
         ));
   }
 }
-

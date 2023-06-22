@@ -50,17 +50,16 @@ class _LoginFormComponent2WidgetState extends State<LoginFormComponent2Widget> {
           LoginFormConsumer(
             builder: (context,store,state) {
               return CustomeButton(
-
                 color:FlutterFlowTheme.of(context).primary,
                 borderColor: Colors.transparent,
                 onPressed: ()=>GetUserController.login(), text: 'Sign In',);
             }
           ),
-          CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,
+          CustomeButton(
+            color:FlutterFlowTheme.of(context).secondaryBackground,
             borderColor:  FlutterFlowTheme.of(context).secondaryText,
-            onPressed: () {
-              navigate.pushReplace(context, name: Routename.signup);
-          }, text: 'Sign Up',),
+            onPressed: () => navigate.pushReplace(context, name: Routename.form),
+            text: 'Sign Up',),
           // Column(
           //   mainAxisSize: MainAxisSize.max,
           //   children: [

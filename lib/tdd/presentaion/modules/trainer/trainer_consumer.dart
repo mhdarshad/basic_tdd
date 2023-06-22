@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/entities/vx_store.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'scedule_controller.dart';
+import 'trainer_controller.dart';
 
-class SceduleContainer extends StatelessWidget {
-  const SceduleContainer({super.key, required this.builder});
+class TrainerContainer extends StatelessWidget {
+  const TrainerContainer({super.key, required this.builder});
 
   final Widget Function(BuildContext context, ProjectStore store, VxStatus state) builder;
 
   @override
   Widget build(BuildContext context) {
     return VxConsumer<ProjectStore>(
-        notifications: {SceduleMutation: (ctx, store, {status}) {
+        notifications: {TrainerMutation: (ctx, store, {status}) {
           if (status == VxStatus.error) {
             // VxToast.show(
             //     ctx, msg: (store as PlansListMutation).err ?? '');
@@ -20,7 +20,7 @@ class SceduleContainer extends StatelessWidget {
 
           }
         }
-        }, mutations: const {SceduleMutation},
+        }, mutations: const {TrainerMutation},
         builder: (context, store, state) {
           switch (state!) {
             case VxStatus.none:

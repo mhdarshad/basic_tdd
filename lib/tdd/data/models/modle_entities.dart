@@ -6,8 +6,8 @@ import 'package:hive/hive.dart';
 abstract class ModelEntities extends Equatable {
   String? status;
   String? msg;
-  dynamic? data;
-  List<dynamic>? flags;
+  dynamic data;
+  dynamic flags;
 
   ModelEntities({this.status, this.msg, this.data, this.flags});
 

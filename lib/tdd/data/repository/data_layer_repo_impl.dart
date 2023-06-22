@@ -16,7 +16,7 @@ import '../models/exception_modle.dart';
 import '../models/repository_modle.dart';
 
 typedef GetRequest = Future<RepositoryModel> Function();
-class DataLayerRepositoryImpl implements DependencyRepostProvider<Map<String, dynamic>>{
+class DataLayerRepositoryImpl implements DependencyRepostProvider<dynamic>{
   final RemoteDataSource remoteDataSource;
   final NetworkInfo networkInfo;
   final LocalDataSource localDataSource;
@@ -24,11 +24,12 @@ class DataLayerRepositoryImpl implements DependencyRepostProvider<Map<String, dy
   DataLayerRepositoryImpl({required this.remoteDataSource, required this.localDataSource,required this.sqlDataSourceImpl, required this. networkInfo});
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getRequest(Params param) =>_getRequest(param.uri.path,() => remoteDataSource.getRequest(param));
-  Future<Either<Failure, Map<String, dynamic>>> _getRequest(String key,GetRequest getRequest) async{
+  Future<Either<Failure, dynamic>> getRequest(Params param) =>_getRequest(param.uri.path,() => remoteDataSource.getRequest(param));
+  Future<Either<Failure, dynamic>> _getRequest(String key,GetRequest getRequest) async{
     if (await networkInfo.isConnected) {
       try {
         final remoteTrivia = await getRequest();
+        print(remoteTrivia.data);
         return Right(remoteTrivia.data);
       } on ServerExceptions catch(e){
         if (kDebugMode) {

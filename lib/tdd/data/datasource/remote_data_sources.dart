@@ -25,6 +25,7 @@ class RemoteDataSourceImpl implements RemoteDataSource{
   final baseurl =APIConstants.API_URI;
   late http.Response responsejs;
   String? authtocken;
+  String? custauthtocken;
 
   RemoteDataSourceImpl({ required this.client});
 
@@ -96,6 +97,9 @@ class RemoteDataSourceImpl implements RemoteDataSource{
     if(sl<Configration>().tocken!=null) {
       authtocken = sl<Configration>().tocken!.decript;
     }
+    if(sl<Configration>().custTocken!=null) {
+      custauthtocken = sl<Configration>().custTocken!.decript;
+    }
 
     try {
       if(param.methed==Methed.Get){
@@ -117,6 +121,7 @@ class RemoteDataSourceImpl implements RemoteDataSource{
       late Map<String,String> headers = {};
       headers['Content-Type'] = "application/x-www-form-urlencoded";
       headers['Accept'] = "application/json";
+      if(custauthtocken!=null)headers['X-Customer-Auth'] = '$custauthtocken';
       if(authtocken!=null)headers['Authorization'] = 'Bearer $authtocken';
 
       if(param.methed == Methed.Post){
@@ -155,14 +160,16 @@ class RemoteDataSourceImpl implements RemoteDataSource{
         }else{
           final responsp = RepositoryModel.fromJson(json.decode(response));
           ///if Response is written {[]}
-          if(responsp.msg == 'Unauthorised'){
+         if(responsp.msg == 'Unauthorised'){
             throw ServerExceptions(401,ExceptiomModle(message: "Check Credentials",errors: json.decode(responsejs.body)['data']));
           }
           throw ServerExceptions(responsejs.statusCode,ExceptiomModle(message: json.decode(responsejs.body)['messege'],errors: json.decode(responsejs.body)['errors']));
           // return RepositoryModel.fromJson(json.decode(response));
         }
       } else {
-        print("status: ${responsejs.statusCode} error: ${responsejs.body}");
+        if (kDebugMode) {
+          print("status: ${responsejs.statusCode} error: ${responsejs.body}");
+        }
         // print(await responses.stream.bytesToString());
         throw ServerExceptions(responsejs.statusCode,ExceptiomModle(message: json.decode(responsejs.body)['messege'],errors: json.decode(responsejs.body)['errors']));
       }

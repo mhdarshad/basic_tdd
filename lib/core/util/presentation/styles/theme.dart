@@ -28,7 +28,7 @@ class DynamicThemeControle{
             subtitle1: TextStyle(color: Colors.white,fontSize: 20,),
             bodyText1: TextStyle(color: Colors.grey,),
           ),
-          accentColor: Color(0xA370DCDC),
+          secondaryHeaderColor: Color(0xA370DCDC),
           dialogTheme: const DialogTheme(backgroundColor:Color(0xFF333632) ,titleTextStyle: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
           appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF2D2D2D),titleTextStyle: TextStyle(color: Colors.grey)),
           cardColor: const Color(0xFF333632),

@@ -54,7 +54,7 @@ class _SignupOtpState extends State<SignupOtp> {
                 child: PinCodeTextField(
                   autoDisposeControllers: false,
                   appContext: context,
-                  length: 4,
+                  length: 6,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                     fontFamily: 'Urbanist',
                     color: FlutterFlowTheme.of(context).primary,
@@ -90,19 +90,30 @@ class _SignupOtpState extends State<SignupOtp> {
               otpSent?LoginFormConsumer(
                   builder: (context,store,state) {
                     return CustomeButton(
-
                       color:FlutterFlowTheme.of(context).primary,
                       borderColor: Colors.transparent,
-                      onPressed: ()=>navigate.pushReplace(context, name: Routename.form), text: 'Sign Up',);
+                      onPressed: ()=>sl<GetUserController>().verifyOTP(), text: 'Verify',);
                   }
-              ):CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,
-                borderColor:  FlutterFlowTheme.of(context).alternate,
-                onPressed: () =>     sl<GetUserController>().fetchotp(), text: 'Send OTP',),
-              CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,
-                borderColor:  FlutterFlowTheme.of(context).secondaryText,
-                onPressed: () {
-                navigate.pushReplace(context, name: Routename.login);
-                }, text: 'Sign In',),
+              ): VxConsumer(
+                  mutations: const {GetUserEvents},
+                  notifications: {
+                    GetUserEvents:(ctx, store, {status}) {
+                      if(status == VxStatus.success){
+                        navigate.pushReplace(context, name: Routename.home);
+                      }
+                    }
+                  },
+                  builder: (context,store,status) {
+                  return CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,
+                    borderColor:  FlutterFlowTheme.of(context).alternate,
+                    onPressed: () =>   sl<GetUserController>().signUp(), text: 'Send OTP',);
+                }
+              ),
+              // CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,
+              //   borderColor:  FlutterFlowTheme.of(context).secondaryText,
+              //   onPressed: () {
+              //   navigate.pushReplace(context, name: Routename.login);
+              //   }, text: 'Sign In',),
               // Column(
               //   mainAxisSize: MainAxisSize.max,
               //   children: [

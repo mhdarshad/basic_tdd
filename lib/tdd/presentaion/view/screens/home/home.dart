@@ -73,8 +73,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
       bottomNavigationBar: BottomNavigationBar(items: DashBoardController.navigationItems,
       currentIndex: DashBoardController.setNavigationIndex(widget.pageName??BotemNavigations.dashboard.name),
         onTap:(index) =>DashBoardController.onTapavigation(context,index),),
-      body: SafeArea(child:  ProjectScafold(child: DashBoardController.getPageOnWidget(widget.pageName??BotemNavigations.dashboard.name)),
-      ));
+      body: SafeArea(child:  ProjectScafold(child: DashBoardController.getPageOnWidget(widget.pageName??BotemNavigations.dashboard.name)),));
   }
 }
 

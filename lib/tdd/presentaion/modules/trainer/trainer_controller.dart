@@ -5,19 +5,21 @@ import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../domain/usecase/dashboard/dashboard_usecase.dart';
 import '../../../domain/usecase/scedule/scedule_usecase.dart';
-class   SceduleEvent extends LogicHandler<SceduleUseCase, NoPrams>{
-  SceduleEvent(super.usecase);
+import '../../../domain/usecase/trainer/trainer_usecase.dart';
+typedef UseCaseData = TrainersUseCase;
+class   TrainerEvent extends LogicHandler<UseCaseData, PlanFetchData>{
+  TrainerEvent(super.usecase);
 
   @override
-  call({required NoPrams data}) {
+  call({required PlanFetchData data}) {
     // TODO: implement call
-     return  SceduleMutation(usecase, data);
+     return  TrainerMutation(usecase, data);
   }
 }
 
-class SceduleMutation extends EventMutations<NoPrams>  {
-  SceduleUseCase usecase;
-  SceduleMutation(this.usecase, NoPrams data) : super(data);
+class TrainerMutation extends EventMutations<PlanFetchData>  {
+  UseCaseData usecase;
+  TrainerMutation(this.usecase, PlanFetchData data) : super(data);
 
   @override
   perform() async {
@@ -28,8 +30,12 @@ class SceduleMutation extends EventMutations<NoPrams>  {
         print("logged in");
       }
       request.forEach((r) {
-        store?.scedules = r;
+        store?.trainerData = r;
       });
     }
   }
+}
+class PlanFetchData{
+  final String? planId;
+  const PlanFetchData({ this.planId});
 }

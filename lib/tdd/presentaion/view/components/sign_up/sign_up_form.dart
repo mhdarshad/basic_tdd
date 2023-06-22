@@ -1,12 +1,15 @@
 import 'package:age_calculator/age_calculator.dart';
 import 'package:cloud_me_v2/core/util/presentation/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_me_v2/core/util/presentation/template/custom_scafold.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_drop_down.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../core/util/presentation/flutter_flow/form_field_controller.dart';
 import '../../../../../injection_container.dart';
+import '../../../../../rought_genrator.dart';
 import '../../../modules/login/login_form_controller.dart';
 import '../../widgets/dropdown/project_drop_down_select.dart';
 import '../../widgets/expansion_widget/project_custome_expansion.dart';
@@ -190,7 +193,9 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           ),
           ProjectDropDownSelect<String>(onChanged: (val){
-            print(val);
+            if (kDebugMode) {
+              print(val);
+            }
             GetUserController.dropDownValue.value = val ;
             GetUserController.dropDownValue.notifyListeners();
           }, values: const [
@@ -201,7 +206,9 @@ class _SignUpFormState extends State<SignUpForm> {
             child: CustomeButton(
               color:FlutterFlowTheme.of(context).primary,
               borderColor: Colors.transparent,
-              onPressed: ()=>sl<GetUserController>().signUp(), text: 'Sign Up',),
+              onPressed: () => navigate.pushReplace(context, name: Routename.signup),
+              text: 'Sign Up',
+            ),
           ),
         // Padding(
           //             padding: const EdgeInsets.all(8.0),

@@ -4,19 +4,20 @@ import 'package:flutter/foundation.dart';
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../domain/usecase/dashboard/dashboard_usecase.dart';
-class   DashboardEvent extends LogicHandler<DashBoardUseCase, NoPrams>{
-  DashboardEvent(super.usecase);
+import '../../../domain/usecase/scedule/scedule_usecase.dart';
+class   SceduleEvent extends LogicHandler<SceduleUseCase, NoPrams>{
+  SceduleEvent(super.usecase);
 
   @override
   call({required NoPrams data}) {
     // TODO: implement call
- return  PlansListMutation(usecase, data);
+     return  SceduleMutation(usecase, data);
   }
-
 }
-class PlansListMutation extends EventMutations<NoPrams>  {
-  DashBoardUseCase usecase;
-  PlansListMutation(this.usecase, NoPrams data) : super(data);
+
+class SceduleMutation extends EventMutations<NoPrams>  {
+  SceduleUseCase usecase;
+  SceduleMutation(this.usecase, NoPrams data) : super(data);
 
   @override
   perform() async {
@@ -27,7 +28,7 @@ class PlansListMutation extends EventMutations<NoPrams>  {
         print("logged in");
       }
       request.forEach((r) {
-        store?.dashboard = r;
+        store?.scedules = r;
       });
     }
   }

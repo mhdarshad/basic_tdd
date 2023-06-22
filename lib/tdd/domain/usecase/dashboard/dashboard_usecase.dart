@@ -3,23 +3,25 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../core/error/failuers.dart';
 import '../../../../core/usecases/usecase.dart';
+import '../../../data/models/api/scdule/scedule_api.dart';
+import '../../../data/models/api/user/dashboard_data.dart';
 import '../../../data/models/api/user/plans_data.dart';
 import '../../repositories/repository_provider.dart';
 
-class PlansUseCase extends UseCase<List<PlanDatas>,NoPrams>{
+class DashBoardUseCase extends UseCase<List<Scedule>,NoPrams>{
   DependencyRepostProvider<dynamic> repo;
-  PlansUseCase({required this.repo});
+  DashBoardUseCase({required this.repo});
   /// call meted for inserting product to db
 
   /// Use Case For Setup DB
   @override
-  Future<Either<Failure, List<PlanDatas>>> call({required NoPrams data}) async{
-    final result =  await repo.getRequest(Params(uri: Uri.parse("all_plan"), methed: Methed.Get));
+  Future<Either<Failure, List<Scedule>>> call({required NoPrams data}) async {
+    final result =  await repo.getRequest(Params(uri: Uri.parse("customer_dashboard"), methed: Methed.Get));
     return result.fold((l) => Left(l), (r) {
       if (kDebugMode) {
         print(r);
       }
-      return  Right((r as List).map((e) => PlanDatas.fromJson(e)).toList());
+      return  Right((r as List).map((e) => Scedule.fromJson(e)).toList());
     });
   }
 }

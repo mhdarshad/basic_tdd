@@ -293,22 +293,21 @@
 // }
 //
 
+import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
 import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import 'core/util/config/user_config.dart';
-import 'injection_container.dart';
 import 'tdd/presentaion/view/components/gym_page/check_out/check_out.dart';
+import 'tdd/presentaion/view/components/gym_page/select_trainer_container/select_trainer.dart';
 import 'tdd/presentaion/view/components/sign_up/sign_up_form.dart';
 import 'tdd/presentaion/view/screens/auth/auth.dart';
 import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
 import 'tdd/presentaion/view/screens/auth/otp_login.dart';
 
 enum Routename{
-  home,login,checkout,editvenodreproduct,kyc, config, signup, form
+  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers
 }
 extension ListToString on List<String> {
   String toRequiredParamsString() {
@@ -331,6 +330,7 @@ extension GoNavigations on Routename{
       case Routename.editvenodreproduct: return  CUri("editvenodreproduct");
       case Routename.signup: return  CUri("signup");
       case Routename.form:return  CUri("form");
+      case Routename.trainers:return  CUri("trainer");
     }
   }
 }
@@ -345,7 +345,9 @@ class PageControler{
     goRoute(Routename.signup,(BuildContext context, GoRouterState state)=> SignUpPage(key: state.pageKey,),routes: [
       goRoute(Routename.form,(BuildContext context, GoRouterState state)=> SignUpForm(key: state.pageKey,),isSubROught: true),
     ]),
-    goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page']),
+    goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page'],routes: [
+      goRoute(Routename.trainers,(BuildContext context, GoRouterState state)=> SelectTrainer(key: state.pageKey,planId:state.queryParameters['item_code']),isSubROught: true),
+    ]),
     goRoute(Routename.checkout,(BuildContext context, GoRouterState state)=>CheckOut(key: state.pageKey,)),
   ];
 
@@ -364,11 +366,16 @@ class PageControler{
 
   GoRoute goRoute(Routename route,Widget Function(BuildContext context,
       GoRouterState state) widget,
-      {List<String>? params, List<RouteBase>? routes,bool isSubROught = false}) => GoRoute(name:route.nUri.name,path: "${isSubROught?route.nUri.path.replaceFirst('/', ''):route.nUri.path}${(params??[]).toRequiredParamsString()}",routes:routes??const <RouteBase>[],builder: (BuildContext context, GoRouterState state)=> widget(context,state));
+      {List<String>? params, List<RouteBase>? routes,bool isSubROught = false}) => GoRoute(name:route.nUri.name,path: "${isSubROught?route.nUri.path.replaceFirst('/', ''):route.nUri.path}${(params??[]).toRequiredParamsString()}",routes:routes??const <RouteBase>[],builder: (BuildContext context, GoRouterState state) {
+    stored.pathParameters = state.pathParameters;
+    print(state.pathParameters);
+        return widget(context,state);
+      });
 }
 final router = GoRouter(
   redirect: (context,state){
     print("path: ${state.location}");
+    return null;
     // if((state.location !=  Routename.config.nUri.path) && (sl<Configration>().dbData ==null)){
     //   print("no data");
     //   return Routename.config.nUri.path;
@@ -394,6 +401,7 @@ class CUri{
   String get path => '/$uri';
 }
 class Navigations {
+
   push(BuildContext context,{required Routename name,Map<String, dynamic> parms = const <String, dynamic>{}, Map<String, dynamic> qparms = const <String, dynamic>{}}){
     // if(parms!=null && qparms!=null){
     //   Map<String,String> qparms1={};

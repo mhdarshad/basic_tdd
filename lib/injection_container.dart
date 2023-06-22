@@ -27,9 +27,15 @@ import 'tdd/data/repository/data_layer_repo_impl.dart';
 import 'tdd/domain/repositories/repository_provider.dart';
 import 'tdd/domain/usecase/auth/user_login.dart';
 import 'tdd/domain/usecase/db/db_config_usecase.dart';
+import 'tdd/domain/usecase/plans/plans_usecase.dart';
+import 'tdd/domain/usecase/scedule/scedule_usecase.dart';
+import 'tdd/domain/usecase/trainer/trainer_usecase.dart';
 import 'tdd/presentaion/modules/database_module/db_config_controller.dart';
 import 'tdd/presentaion/modules/database_module/do_congig_module.dart';
 import 'tdd/presentaion/modules/login/login_form_controller.dart';
+import 'tdd/presentaion/modules/plans/plans_list_controller.dart';
+import 'tdd/presentaion/modules/scedule/scedule_controller.dart';
+import 'tdd/presentaion/modules/trainer/trainer_controller.dart';
 
 
 final sl = GetIt.instance;
@@ -46,11 +52,15 @@ _bloc(){
   //Bloc
 
   sl.registerFactory(() => ProductEvent(ProductUseCase( repo: sl(),),));
+  sl.registerFactory(() => PlansListEvent(PlansUseCase( repo: sl(),),));
+  sl.registerFactory(() => SceduleEvent(SceduleUseCase( repo: sl(),),));
+  sl.registerFactory(() => TrainerEvent(TrainersUseCase( repo: sl(),),));
+  sl.registerFactory(() => TrainerEvent(TrainersUseCase( repo: sl(),),));
   sl.registerFactory(() => GetUserController(
       LoginUseCase( repo: sl(),),
       OtpUseCase(repo:sl()),
-      SingUpUseCase(repo: sl()))
-  );
+      SingUpUseCase(repo: sl())
+  ));
   sl.registerFactory(() => GetDBController(BDConfigUseCase( repo: sl(),),));
   // sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),),));
   // sl.registerFactory(() => RegisterEvent(RegisterUseCase(sll()),));
@@ -145,15 +155,16 @@ _external()async {
   // sl.registerLazySingleton<SQLDBFunctions>(() => init);
 }
 sll(){
-  sl.registerLazySingleton<DependencyRepostProvider<Map<String, dynamic>>>(() => DataLayerRepositoryImpl (
-    remoteDataSource:  sl<RemoteDataSource>(),
-    localDataSource: sl<LocalDataSource>(),
-    networkInfo: sl<NetworkInfo>(),
-    sqlDataSourceImpl: sl<SQLDBFunctions>(),
-  ));  sl.registerLazySingleton<DependencyRepostProvider>(() => DataLayerRepositoryImpl (
+  sl.registerLazySingleton<DependencyRepostProvider<dynamic>>(() => DataLayerRepositoryImpl (
     remoteDataSource:  sl<RemoteDataSource>(),
     localDataSource: sl<LocalDataSource>(),
     networkInfo: sl<NetworkInfo>(),
     sqlDataSourceImpl: sl<SQLDBFunctions>(),
   ));
+  // sl.registerLazySingleton<DependencyRepostProvider>(() => DataLayerRepositoryImpl (
+  //   remoteDataSource:  sl<RemoteDataSource>(),
+  //   localDataSource: sl<LocalDataSource>(),
+  //   networkInfo: sl<NetworkInfo>(),
+  //   sqlDataSourceImpl: sl<SQLDBFunctions>(),
+  // ));
 }

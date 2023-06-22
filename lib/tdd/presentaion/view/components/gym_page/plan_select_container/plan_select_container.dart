@@ -1,9 +1,15 @@
+import 'package:cloud_me_v2/core/usecases/usecase.dart';
+import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
+import '../../../../../../injection_container.dart';
+import '../../../../../domain/entities/vx_store.dart';
+import '../../../../modules/plans/plans_list_consumer.dart';
+import '../../../../modules/plans/plans_list_controller.dart';
 import '../../../widgets/cards/project_plans_card.dart';
-import '../../../widgets/expansion_widget/project_custome_expansion.dart';
-import 'plans_listing.dart';
+import '../../plan_list/plans_listing.dart';
 
 class PlanSelectList extends StatefulWidget {
   const PlanSelectList( {Key? key}) : super(key: key);
@@ -14,17 +20,23 @@ class PlanSelectList extends StatefulWidget {
 
 class _PlanSelectListState extends State<PlanSelectList> {
   @override
+  void initState() {
+    // TODO: implement initState
+    sl<PlansListEvent>()(data: NoPrams());
+  }
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      children:   const [
-        PlansListing(title: '2023 OFFERS', children: [
-          CardListContaint(title: 'BUILD - A BETTER VERSION OF YOU', discription: 'Watch your muscles grow through body resistance and free weight training.', price: '220 AED',),
-          CardListContaint(title: 'BUILD - A BETTER VERSION OF YOU', discription: 'Watch your muscles grow through body resistance and free weight training.', price: '220 AED',),
-          CardListContaint(title: 'BUILD - A BETTER VERSION OF YOU', discription: 'Watch your muscles grow through body resistance and free weight training.', price: '220 AED',),
-          CardListContaint(title: 'BUILD - A BETTER VERSION OF YOU', discription: 'Watch your muscles grow through body resistance and free weight training.', price: '220 AED',),
-          CardListContaint(title: 'BUILD - A BETTER VERSION OF YOU', discription: 'Watch your muscles grow through body resistance and free weight training.', price: '220 AED',),
-        ],),
-      ],
+    return PlansListContainer(
+      builder: (BuildContext context, ProjectStore store, VxStatus state) {
+        return ListView(
+          children:  store.plans.map((e) =>
+             PlansListing(title: e.groupName??'', children: e.plans.map((e) =>  GestureDetector(onTap:()=>navigate.push(context, name: Routename.trainers,qparms: {
+               'item_code':e.itemCode.toString()
+             },parms: stored.pathParameters??{}),child: CardListContaint(title:e.itemDescription, discription: e.itemDescription, price: e.itemPrice.toString(),))).toList(),),
+          ).toList() ,
+        );
+      },
+
     );
   }
 }
