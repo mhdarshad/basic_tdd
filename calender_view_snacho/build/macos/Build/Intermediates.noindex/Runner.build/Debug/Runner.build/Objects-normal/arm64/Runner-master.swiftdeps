@@ -1,0 +1,8 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "89148117a2384322e9c1b99c850a5dfc56636224f9b72fed32a429ca35ec9520"
+build_start_time: [1684838272, 494904041]
+build_end_time: [1684838275, 964800834]
+inputs:
+  "/Users/faisal/AndroidStudioProjects/calender_view_snacho/macos/Flutter/GeneratedPluginRegistrant.swift": [1684838261, 576509952]
+  "/Users/faisal/AndroidStudioProjects/calender_view_snacho/macos/Runner/AppDelegate.swift": [1666762328, 0]
+  "/Users/faisal/AndroidStudioProjects/calender_view_snacho/macos/Runner/MainFlutterWindow.swift": [1666762328, 0]

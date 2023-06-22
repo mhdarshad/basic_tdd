@@ -107,7 +107,6 @@ class _ProjectScafoldState extends State<ProjectScafold> {
       body: Stack(
         // mainAxisSize: MainAxisSize.max,
         children: [
-
           Align(
             alignment: Alignment.topCenter,
             child: Container(

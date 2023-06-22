@@ -20,14 +20,18 @@ import 'login_form_interfrence.dart';
 class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with GetUserInterference{
   LoginUseCase usecase;
   OtpUseCase otpUseCase;
+  SingUpUseCase signUpUseCase;
 
 
-  GetUserController(this.usecase,this.otpUseCase) : super(usecase);
+  GetUserController(this.usecase,this.otpUseCase,this.signUpUseCase) : super(usecase);
   // State field(s) for emailAddress widget.
   static  TextEditingController? phoneNumberController = TextEditingController();
   static  TextEditingController? emailAddressController = TextEditingController();
+  static  TextEditingController? firstNameController = TextEditingController();
+  static  TextEditingController? lastNameController = TextEditingController();
   static TextEditingController? pinCodeController= TextEditingController();
   static TextEditingController? passwordController = TextEditingController();
+  static ValueNotifier<DateTime?> dateController = ValueNotifier(null);
  static String? Function(BuildContext, String?)? emailAddressControllerValidator;
  static String? Function(BuildContext, String?)? phoneNumberControllerValidator;
   String? Function(BuildContext, String?)? passwordControllerValidator;
@@ -58,7 +62,6 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
   static onContryChange(CountryCode code){
     contryCode = code.code??'0';
 }
-
    static login() {
     // TODO: implement login
      if (kDebugMode) {
@@ -67,6 +70,10 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
     // throw UnimplementedError();
      sl<GetUserController>()(data:LoginData(username: phoneNumberController?.text??'', password:  passwordController?.text??"", key: "key") );
   }
+  signUp(){
+    return GetUserEvents(signUpUseCase, SignUpData(userFirstname: firstNameController?.text??'',userSecondname:lastNameController?.text??"", password:  passwordController?.text??"",  dateOfBirth: '',  gender: '', emaile: emailAddressController?.text??''));
+  }
+
   static void initState(BuildContext context) {
     passwordVisibility.value = false;
     contryCode = '+91' ;
@@ -78,7 +85,10 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
     // phoneNumberController?.dispose();
     // passwordController?.dispose();
   }
-
+  static void selectDOB(DateTime? date){
+    dateController.value = date;
+    dateController.notifyListeners();
+  }
    fetchotp() {
     showOtp.value = true;
     showOtp.notifyListeners();
@@ -97,6 +107,15 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
     if(usecase  is OtpUseCase ){
 
     }else if (usecase is LoginUseCase){
+      if(!request.isLeft()){
+        if (kDebugMode) {
+          print("logged in");
+        }
+        request.forEach((r) {
+
+        });
+      }
+    }else if (usecase is SingUpUseCase){
       if(!request.isLeft()){
         if (kDebugMode) {
           print("logged in");

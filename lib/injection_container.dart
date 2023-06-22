@@ -46,7 +46,11 @@ _bloc(){
   //Bloc
 
   sl.registerFactory(() => ProductEvent(ProductUseCase( repo: sl(),),));
-  sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),),OtpUseCase(repo:sl())));
+  sl.registerFactory(() => GetUserController(
+      LoginUseCase( repo: sl(),),
+      OtpUseCase(repo:sl()),
+      SingUpUseCase(repo: sl()))
+  );
   sl.registerFactory(() => GetDBController(BDConfigUseCase( repo: sl(),),));
   // sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),),));
   // sl.registerFactory(() => RegisterEvent(RegisterUseCase(sll()),));

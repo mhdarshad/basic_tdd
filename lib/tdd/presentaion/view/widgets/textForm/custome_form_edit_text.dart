@@ -85,10 +85,11 @@ class PhoneNumberContainer extends StatelessWidget {
 }
 class CustomeEdittext extends StatelessWidget {
   final String? labelText;
+  final TextEditingController? controller;
 
   const CustomeEdittext({
     this. labelText,
-    super.key,
+    super.key,  this.controller,
   });
 
   @override
@@ -96,9 +97,9 @@ class CustomeEdittext extends StatelessWidget {
     return  SizedBox(
       width: double.infinity,
       child: TextFormField(
-        controller: GetUserController.emailAddressController,
+        controller: controller,
         autofocus: true,
-        autofillHints: const [AutofillHints.email],
+        autofillHints: const [AutofillHints.name],
         obscureText: false,
         decoration: InputDecoration(
           labelText: labelText,

@@ -121,58 +121,65 @@ class CardListContaint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: FlutterFlowTheme.of(context).bodyLarge,
-                    ),
-                    Text(
-                      discription,
-                      style: FlutterFlowTheme.of(context).bodySmall.override(
-                        fontFamily: 'Readex Pro',
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                      ),
-                    ),
-                  ],
-                ),
+    return Card(
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(18))),
+      color: FlutterFlowTheme.of(context).secondaryBackground,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: CachedNetworkImage(
+                width: 100,
+                errorWidget: (context,data,_){
+                  return  Container();
+                },
+                fit: BoxFit.cover, imageUrl:'assets/dummy.jpg',
               ),
-              Container(
-                height: 32,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                alignment: const AlignmentDirectional(0, 0),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
-                  child: Text(
-                    price,
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+            ),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: FlutterFlowTheme.of(context).bodyLarge,
+                  ),
+                  Text(
+                    discription,
+                    style: FlutterFlowTheme.of(context).bodySmall.override(
                       fontFamily: 'Readex Pro',
-                      color: FlutterFlowTheme.of(context)
-                          .secondaryBackground,
+                      color: FlutterFlowTheme.of(context).secondaryText,
                     ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 32,
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).primaryText,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              alignment: const AlignmentDirectional(0, 0),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                child: Text(
+                  price,
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Readex Pro',
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

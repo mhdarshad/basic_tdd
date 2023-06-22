@@ -15,7 +15,7 @@ class ProjectExpansion extends StatelessWidget {
       width: double.infinity,
       color: const Color(0x00000000),
       child: ExpandableNotifier(
-        initialExpanded: false,
+        initialExpanded: true,
         child: ExpandablePanel(
           header: Text(
             title,

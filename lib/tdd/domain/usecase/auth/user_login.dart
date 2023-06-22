@@ -34,12 +34,37 @@ class OtpUseCase extends UseCase<UserAcsessData,LoginData>{
    return result.fold((l) => Left(l), (r) =>Right( UserAcsessData.fromJson(r)));
   }
 }
+class SingUpUseCase extends UseCase<UserAcsessData,SignUpData>{
+  DependencyRepostProvider repo;
+  SingUpUseCase({required this.repo});
+  @override
+  Future<Either<Failure, UserAcsessData>> call({required SignUpData data}) async{
+   final result =  await repo.getRequest(Params(uri: Uri.parse("api/flutter/signup"), methed: Methed.Post,
+        data: {
+          "name": "Mohammed Arshad",
+          "phone_code": "+971",
+          "phone": "553131570",
+          "email": "arshad@cloudmesoftss.com",
+          "password": "123456"
+        }));
+   return result.fold((l) => Left(l), (r) =>Right( UserAcsessData.fromJson(r)));
+  }
+}
 
 class LoginData extends AuthParamsAbstarct{
   final String username;
   final String password;
   final String key;
   LoginData({required this.username, required this.password, required this.key});
+}
+class SignUpData extends AuthParamsAbstarct{
+  final String userFirstname;
+  final String userSecondname;
+  final String emaile;
+  final String password;
+  final String dateOfBirth;
+  final String gender;
+  SignUpData({required this.userFirstname, required this.password, required this.dateOfBirth,required this.userSecondname, required this.gender, required this.emaile, });
 }
 class OTPData extends AuthParamsAbstarct{
   final String phone;
