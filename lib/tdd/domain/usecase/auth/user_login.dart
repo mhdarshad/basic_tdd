@@ -3,7 +3,7 @@ import 'package:cloud_me_v2/core/error/failuers.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/usecases/usecase.dart';
-import '../../../data/models/api/user/use_data.dart';
+import '../../../data/models/api/user/user_data.dart';
 import '../../repositories/repository_provider.dart';
 
 class LoginUseCase extends UseCase<UserAcsessData,LoginData>{

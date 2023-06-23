@@ -300,6 +300,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'tdd/presentaion/view/components/gym_page/check_out/check_out.dart';
+import 'tdd/presentaion/view/components/gym_page/payments/payment_confirm_container.dart';
 import 'tdd/presentaion/view/components/gym_page/select_trainer_container/select_trainer.dart';
 import 'tdd/presentaion/view/components/sign_up/sign_up_form.dart';
 import 'tdd/presentaion/view/screens/auth/auth.dart';
@@ -307,7 +308,7 @@ import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
 import 'tdd/presentaion/view/screens/auth/otp_login.dart';
 
 enum Routename{
-  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers
+  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers, paymentStatus
 }
 extension ListToString on List<String> {
   String toRequiredParamsString() {
@@ -331,6 +332,7 @@ extension GoNavigations on Routename{
       case Routename.signup: return  CUri("signup");
       case Routename.form:return  CUri("form");
       case Routename.trainers:return  CUri("trainer");
+      case Routename.paymentStatus:return CUri("payment/status");
     }
   }
 }
@@ -345,10 +347,13 @@ class PageControler{
     goRoute(Routename.signup,(BuildContext context, GoRouterState state)=> SignUpPage(key: state.pageKey,),routes: [
       goRoute(Routename.form,(BuildContext context, GoRouterState state)=> SignUpForm(key: state.pageKey,),isSubROught: true),
     ]),
-    goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page'],routes: [
+    goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page'],
+        routes: [
       goRoute(Routename.trainers,(BuildContext context, GoRouterState state)=> SelectTrainer(key: state.pageKey,planId:state.queryParameters['item_code']),isSubROught: true),
     ]),
-    goRoute(Routename.checkout,(BuildContext context, GoRouterState state)=>CheckOut(key: state.pageKey,)),
+    goRoute(Routename.checkout,(BuildContext context, GoRouterState state)=>CheckOut(key: state.pageKey,),routes: [
+      goRoute(Routename.paymentStatus,(BuildContext context, GoRouterState state)=> PaymentConfirmContainer(key: state.pageKey,status:state.queryParameters["status"]??'no_payment'),isSubROught: true),
+    ]),
   ];
 
   // Scaffold get CircularProgressIndicatore =>  Scaffold(appBar:AppBar(),body: const Center(child: CircularProgressIndicator()),);

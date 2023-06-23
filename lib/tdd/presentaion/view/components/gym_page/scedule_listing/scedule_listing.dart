@@ -102,21 +102,24 @@ class _SceduleListingState extends State<SceduleListing> {
     return  /*SfCalendar();*/ProjectScafold(child: // Generated code for this Column Widget...
     // Generated code for this Column Widget...
     SceduleContainer(
-      builder: (context,store,mutation) {
-        final scedule = store.scedules;
-        return StaffTimlineCalender(
-          /// eventViewBuilder: (context,data){
-          ///   final appointment = (data.appointments.first as Appointment);
-          ///   return GestureDetector(onTap:()=>print("isMoreAppointmentRegion ${appointment}"),child: Container(color: Colors.green,child: Center(child: Text(appointment.subject)),));
-          /// },
-            onTap: (event){
-              if(event.appointments?.isEmpty??true){
-                /// SanchoCalenderController.instance.changeView(CalendarView.schedule);
-                /// SanchoCalenderController.removeAppointment( appointment);
-                StaffTimlineCalenderController.setAppointment((event.resource?.id??"").toString(), Appointment(resourceIds:[event.resource!.id.toString()],subject: event.resource!.id.toString(),startTime: event.date!, endTime: event.date!.add(const Duration(hours: 2))));
-              }
-            }, usersData: scedule.map((e) => Person(id: e.id.toString(), name: e.title??'', brake: [], imageUrl: "imageUrl", appointments:  e.appointments?.map((a) => Appointment(startTime: DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day,"${a.startTime}".toDateTime?.hour??0,"${a.startTime}".toDateTime?.minute??0,), endTime:DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day,"${a.endTime}".toDateTime?.hour??0,"${a.endTime}".toDateTime?.minute??0,))).toList()??[])).toList());
-      }
+        builder: (context,store,mutation) {
+          final scedule = store.scedules;
+          return StaffTimlineCalender(
+            /// eventViewBuilder: (context,data){
+            ///   final appointment = (data.appointments.first as Appointment);
+            ///   return GestureDetector(onTap:()=>print("isMoreAppointmentRegion ${appointment}"),child: Container(color: Colors.green,child: Center(child: Text(appointment.subject)),));
+            /// },
+              onTap: (event){
+                if(event.appointments?.isEmpty??true){
+                  /// SanchoCalenderController.instance.changeView(CalendarView.schedule);
+                  /// SanchoCalenderController.removeAppointment( appointment);
+                  StaffTimlineCalenderController.setAppointment((event.resource?.id??"").toString(), Appointment(resourceIds:[event.resource!.id.toString()],subject: event.resource!.id.toString(),startTime: event.date!, endTime: event.date!.add(const Duration(hours: 2))));
+                }
+              },
+              usersData: scedule.map((e) => Person(id: e.id.toString(), name: e.title??'', brake: [], imageUrl: "imageUrl",
+                  appointments:  e.appointments?.map((a) => Appointment(startTime: DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day,"${a.startTime}".toDateTime?.hour??0,"${a.startTime}".toDateTime?.minute??0,),
+                      endTime:DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day,"${a.endTime}".toDateTime?.hour??0,"${a.endTime}".toDateTime?.minute??0,))).toList()??[])).toList());
+        }
     )
     );
   }

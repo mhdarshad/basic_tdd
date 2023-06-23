@@ -5,11 +5,14 @@ import 'package:cloud_me_v2/core/controller/json_controller/json_save.dart';
 import 'package:cloud_me_v2/core/cripto_algo.dart';
 import 'package:cloud_me_v2/tdd/domain/usecase/db/db_insert_usecase.dart';
 import 'package:cloud_me_v2/tdd/domain/usecase/product/product_usecase.dart';
+import 'package:cloud_me_v2/tdd/presentaion/modules/checkout/checkout_controller.dart';
+import 'package:cloud_me_v2/tdd/presentaion/modules/dashboard/dashboard_controller.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/product/product_controller.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart' if (dart.library.html) "core/network/data_connection_checker_web.dart";
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 
 
 import 'core/data/db_abstract.dart';
@@ -26,12 +29,15 @@ import 'tdd/data/datasource/remote_data_sources.dart';
 import 'tdd/data/repository/data_layer_repo_impl.dart';
 import 'tdd/domain/repositories/repository_provider.dart';
 import 'tdd/domain/usecase/auth/user_login.dart';
+import 'tdd/domain/usecase/dashboard/dashboard_usecase.dart';
 import 'tdd/domain/usecase/db/db_config_usecase.dart';
+import 'tdd/domain/usecase/genrateInvoice/trainer_usecase.dart';
 import 'tdd/domain/usecase/plans/plans_usecase.dart';
 import 'tdd/domain/usecase/scedule/scedule_usecase.dart';
 import 'tdd/domain/usecase/trainer/trainer_usecase.dart';
 import 'tdd/presentaion/modules/database_module/db_config_controller.dart';
 import 'tdd/presentaion/modules/database_module/do_congig_module.dart';
+import 'tdd/presentaion/modules/genrateInvoice/genrate_Invoice_controller.dart';
 import 'tdd/presentaion/modules/login/login_form_controller.dart';
 import 'tdd/presentaion/modules/plans/plans_list_controller.dart';
 import 'tdd/presentaion/modules/scedule/scedule_controller.dart';
@@ -55,13 +61,20 @@ _bloc(){
   sl.registerFactory(() => PlansListEvent(PlansUseCase( repo: sl(),),));
   sl.registerFactory(() => SceduleEvent(SceduleUseCase( repo: sl(),),));
   sl.registerFactory(() => TrainerEvent(TrainersUseCase( repo: sl(),),));
-  sl.registerFactory(() => TrainerEvent(TrainersUseCase( repo: sl(),),));
+  sl.registerFactory(() => DashboardEvent(DashBoardUseCase( repo: sl(),),));
+  sl.registerFactory(() => CheckoutEvent(DashBoardUseCase( repo: sl(),),));
+  sl.registerFactory(() => GenrateInvoiceEvent(GenrateInvoiceUseCase( repo: sl(),),));
   sl.registerFactory(() => GetUserController(
       LoginUseCase( repo: sl(),),
       OtpUseCase(repo:sl()),
       SingUpUseCase(repo: sl())
   ));
   sl.registerFactory(() => GetDBController(BDConfigUseCase( repo: sl(),),));
+  // TabbySDK().setup(
+  //   withApiKey: '', // Put here your Api key
+  //   environment: Environment.stage, // Or use Environment.production
+  // );
+
   // sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),),));
   // sl.registerFactory(() => RegisterEvent(RegisterUseCase(sll()),));
   // sl.registerFactory(() => RegisterBloc(customerRegisterUsecase: CustomerRegisterUsecase(repo: sll()), checkEmailUsecase: CheckEmailUsecase(repo: sll()), checkMobileUsecase: CheckMobileUsecase(repo: sll()),
@@ -127,7 +140,9 @@ _external()async {
   sl<Configration>().dbData = userDbConfig!=null?userDbConfig is String?jsonDecode(userDbConfig):userDbConfig:null;
   /// Checking the Configuration File Exist
      sl<Configration>().tocken = const String.fromEnvironment(Config.CLIENT_ID).encript;
-  print("Token: ${sl<Configration>().tocken}");
+  if (kDebugMode) {
+    print("Token: ${sl<Configration>().tocken}");
+  }
   if(sl<Configration>().dbData!=null){
     /// Providing the table name to fetch from SQL
     sl<Configration>().dbType = sl<Configration>().dbData!['db_type'];
@@ -143,7 +158,9 @@ _external()async {
       final data = await sl<SQLDBFunctions>().fetchAll();
       /// getting the token and Adding in Json Configuration File
       sl<Configration>().tocken = const String.fromEnvironment(Config.CLIENT_ID);
-      print("Token: ${sl<Configration>().tocken}");
+      if (kDebugMode) {
+        print("Token: ${sl<Configration>().tocken}");
+      }
     } on Exception catch (e) {
       //TODO: Need Log Implementation
       debugPrint('Need Login');

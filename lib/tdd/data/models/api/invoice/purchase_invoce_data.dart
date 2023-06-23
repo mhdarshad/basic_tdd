@@ -1,0 +1,215 @@
+class PurchaseInvoiceData {
+  String? cartCurrency;
+  String? cartID;
+  int? profileId;
+  String? tranCurrency;
+  String? cartAmount;
+  PaymentInfo? paymentInfo;
+  String? token;
+  int? serviceId;
+  bool? isPending;
+  String? transactionReference;
+  PaymentResult? paymentResult;
+  String? trace;
+  String? transactionType;
+  BillingDetailss? billingDetails;
+  String? tranTotal;
+  int? merchantId;
+  bool? isSuccess;
+  bool? isOnHold;
+  String? cartDescription;
+  bool? isAuthorized;
+  bool? isProcessed;
+
+  PurchaseInvoiceData(
+      {this.cartCurrency,
+        this.cartID,
+        this.profileId,
+        this.tranCurrency,
+        this.cartAmount,
+        this.paymentInfo,
+        this.token,
+        this.serviceId,
+        this.isPending,
+        this.transactionReference,
+        this.paymentResult,
+        this.trace,
+        this.transactionType,
+        this.billingDetails,
+        this.tranTotal,
+        this.merchantId,
+        this.isSuccess,
+        this.isOnHold,
+        this.cartDescription,
+        this.isAuthorized,
+        this.isProcessed});
+
+  PurchaseInvoiceData.fromJson(Map<String, dynamic> json) {
+    cartCurrency = json['cartCurrency'];
+    cartID = json['cartID'];
+    profileId = json['profileId'];
+    tranCurrency = json['tranCurrency'];
+    cartAmount = json['cartAmount'];
+    paymentInfo = json['paymentInfo'] != null
+        ? PaymentInfo.fromJson((json['paymentInfo']).map((key, value) => MapEntry(key.toString(), value  as dynamic)))
+        : null;
+    token = json['token'];
+    serviceId = json['serviceId'];
+    isPending = json['isPending'];
+    transactionReference = json['transactionReference'];
+    paymentResult = json['paymentResult'] != null
+        ? PaymentResult.fromJson(json['paymentResult'].map((key, value) => MapEntry(key.toString(), value  as dynamic)))
+        : null;
+    trace = json['trace'];
+    transactionType = json['transactionType'];
+    billingDetails = json['billingDetails'] != null
+        ? BillingDetailss.fromJson(json['billingDetails'] .map((key, value) => MapEntry(key.toString(), value  as dynamic)))
+        : null;
+    tranTotal = json['tranTotal'];
+    merchantId = json['merchantId'];
+    isSuccess = json['isSuccess'];
+    isOnHold = json['isOnHold'];
+    cartDescription = json['cartDescription'];
+    isAuthorized = json['isAuthorized'];
+    isProcessed = json['isProcessed'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['cartCurrency'] = cartCurrency;
+    data['cartID'] = cartID;
+    data['profileId'] = profileId;
+    data['tranCurrency'] = tranCurrency;
+    data['cartAmount'] = cartAmount;
+    if (paymentInfo != null) {
+      data['paymentInfo'] = paymentInfo!.toJson();
+    }
+    data['token'] = token;
+    data['serviceId'] = serviceId;
+    data['isPending'] = isPending;
+    data['transactionReference'] = transactionReference;
+    if (paymentResult != null) {
+      data['paymentResult'] = paymentResult!.toJson();
+    }
+    data['trace'] = trace;
+    data['transactionType'] = transactionType;
+    if (billingDetails != null) {
+      data['billingDetails'] = billingDetails!.toJson();
+    }
+    data['tranTotal'] = tranTotal;
+    data['merchantId'] = merchantId;
+    data['isSuccess'] = isSuccess;
+    data['isOnHold'] = isOnHold;
+    data['cartDescription'] = cartDescription;
+    data['isAuthorized'] = isAuthorized;
+    data['isProcessed'] = isProcessed;
+    return data;
+  }
+}
+
+class PaymentInfo {
+  String? paymentDescription;
+  String? cardType;
+  String? paymentMethod;
+  int? expiryMonth;
+  String? cardScheme;
+  int? expiryYear;
+
+  PaymentInfo(
+      {this.paymentDescription,
+        this.cardType,
+        this.paymentMethod,
+        this.expiryMonth,
+        this.cardScheme,
+        this.expiryYear});
+
+  PaymentInfo.fromJson(Map<dynamic, dynamic> json) {
+    paymentDescription = json['paymentDescription'];
+    cardType = json['cardType'];
+    paymentMethod = json['payment_method'];
+    expiryMonth = json['expiryMonth'];
+    cardScheme = json['cardScheme'];
+    expiryYear = json['expiryYear'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['paymentDescription'] = paymentDescription;
+    data['cardType'] = cardType;
+    data['payment_method'] = paymentMethod;
+    data['expiryMonth'] = expiryMonth;
+    data['cardScheme'] = cardScheme;
+    data['expiryYear'] = expiryYear;
+    return data;
+  }
+}
+
+class PaymentResult {
+  String? responseCode;
+  String? transactionTime;
+  String? responseMessage;
+  String? responseStatus;
+
+  PaymentResult(
+      {this.responseCode,
+        this.transactionTime,
+        this.responseMessage,
+        this.responseStatus});
+
+  PaymentResult.fromJson(Map<dynamic, dynamic> json) {
+    responseCode = json['responseCode'];
+    transactionTime = json['transactionTime'];
+    responseMessage = json['responseMessage'];
+    responseStatus = json['responseStatus'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['responseCode'] = responseCode;
+    data['transactionTime'] = transactionTime;
+    data['responseMessage'] = responseMessage;
+    data['responseStatus'] = responseStatus;
+    return data;
+  }
+}
+
+class BillingDetailss {
+  String? phone;
+  String? city;
+  String? email;
+  String? countryCode;
+  String? zip;
+  String? addressLine;
+  String? name;
+
+  BillingDetailss(
+      {this.phone,
+        this.city,
+        this.email,
+        this.countryCode,
+        this.zip,
+        this.addressLine,
+        this.name});
+
+  BillingDetailss.fromJson(Map<dynamic, dynamic> json) {
+    phone = json['phone'];
+    city = json['city'];
+    email = json['email'];
+    countryCode = json['countryCode'];
+    zip = json['zip'];
+    addressLine = json['addressLine'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['phone'] = phone;
+    data['city'] = city;
+    data['email'] = email;
+    data['countryCode'] = countryCode;
+    data['zip'] = zip;
+    data['addressLine'] = addressLine;
+    data['name'] = name;
+    return data;
+  }
+}

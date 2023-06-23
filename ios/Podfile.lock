@@ -2,16 +2,28 @@ PODS:
   - cryptography_flutter (0.2.0):
     - Flutter
   - Flutter (1.0.0)
+  - flutter_inappwebview (0.0.1):
+    - Flutter
+    - flutter_inappwebview/Core (= 0.0.1)
+    - OrderedSet (~> 5.0)
+  - flutter_inappwebview/Core (0.0.1):
+    - Flutter
+    - OrderedSet (~> 5.0)
   - flutter_local_notifications (0.0.1):
     - Flutter
+  - flutter_paytabs_bridge (2.4.0):
+    - Flutter
+    - PayTabsSDK (= 6.4.11)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - OrderedSet (5.0.0)
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - PayTabsSDK (6.4.11)
   - permission_handler_apple (9.1.0):
     - Flutter
   - shared_preferences_foundation (0.0.1):
@@ -41,7 +53,9 @@ PODS:
 DEPENDENCIES:
   - cryptography_flutter (from `.symlinks/plugins/cryptography_flutter/ios`)
   - Flutter (from `Flutter`)
+  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_paytabs_bridge (from `.symlinks/plugins/flutter_paytabs_bridge/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -53,6 +67,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - FMDB
+    - OrderedSet
+    - PayTabsSDK
     - sqlite3
 
 EXTERNAL SOURCES:
@@ -60,8 +76,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/cryptography_flutter/ios"
   Flutter:
     :path: Flutter
+  flutter_inappwebview:
+    :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_paytabs_bridge:
+    :path: ".symlinks/plugins/flutter_paytabs_bridge/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -80,10 +100,14 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   cryptography_flutter: 381bdacc984abcfbe3ca45ef7c76566ff061614c
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
+  flutter_paytabs_bridge: 466f082856dd1101872f07dfee2e3b1aad90cf32
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
+  PayTabsSDK: 14050f69274cdfbce0ea86c51b76642024f9f2c7
   permission_handler_apple: 8f116445eff3c0e7c65ad60f5fef5490aa94b4e4
   shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a

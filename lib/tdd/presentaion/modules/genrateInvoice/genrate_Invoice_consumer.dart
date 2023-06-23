@@ -2,25 +2,24 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/entities/vx_store.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'dashboard_controller.dart';
+import 'genrate_Invoice_controller.dart';
 
-class DashBoardConteainer extends StatelessWidget {
-  const DashBoardConteainer({super.key, required this.builder});
+class GentrateInvoiceConteainer extends StatelessWidget {
+  const GentrateInvoiceConteainer({super.key, required this.builder});
 
   final Widget Function(BuildContext context, ProjectStore store, VxStatus state) builder;
 
   @override
   Widget build(BuildContext context) {
     return VxConsumer<ProjectStore>(
-        notifications: {PlansListMutation: (ctx, store, {status}) {
+        notifications: {GentrateInvoiceMutation: (ctx, store, {status}) {
           if (status == VxStatus.error) {
-            // VxToast.show(
-            //     ctx, msg: (store as PlansListMutation).err ?? '');
+
           } else if (status == VxStatus.success) {
 
           }
-        }
-        }, mutations: const {PlansListMutation},
+        }},
+        mutations: const {GentrateInvoiceMutation},
         builder: (context, store, state) {
           switch (state!) {
             case VxStatus.none:
@@ -38,7 +37,6 @@ class DashBoardConteainer extends StatelessWidget {
           }
           return builder(context, store, state);
         }
-
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:cloud_me_v2/core/usecases/usecase.dart';
 import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/trainer/trainer_controller.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +7,13 @@ import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme
 import '../../../../../../injection_container.dart';
 import '../../../../modules/trainer/trainer_consumer.dart';
 
-class SelectTrainer extends StatefulWidget {
-  final String? planId;
-  const SelectTrainer({Key? key, this.planId}) : super(key: key);
+  class SelectTrainer extends StatefulWidget {
+    final String? planId;
+    const SelectTrainer({Key? key, this.planId}) : super(key: key);
 
-  @override
-  State<SelectTrainer> createState() => _SelectTrainerState();
-}
+    @override
+    State<SelectTrainer> createState() => _SelectTrainerState();
+  }
 
 class _SelectTrainerState extends State<SelectTrainer> {
   @override
@@ -27,7 +26,7 @@ class _SelectTrainerState extends State<SelectTrainer> {
   Widget build(BuildContext context) {
     return TrainerContainer(
       builder: (context,storage,state) {
-        final trainer = storage.trainerData?.personalTrainers;
+        final trainer = storage.trainerData;
         return GestureDetector(
           // onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
@@ -89,109 +88,112 @@ class _SelectTrainerState extends State<SelectTrainer> {
                       child: ListView(
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.vertical,
-                        children: trainer?.map((e) => Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
-                          child: Container(
-                            width: 100,
-                            decoration: BoxDecoration(
-                              color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 0,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  offset: const Offset(0, 1),
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(40),
-                                    child: Image.network(
-                                      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-                                      width: 60,
-                                      height: 60,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                              12, 0, 0, 0),
-                                          child: Text(
-                                            '${e.itemDescription}',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                              0, 4, 0, 0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
-                                                child: Text(
-                                                  '${e.ItemCode}',
-                                                  style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    4, 0, 0, 0),
-                                                child: Text(
-                                                  'name@domain.com',
-                                                  style: FlutterFlowTheme.of(
-                                                      context)
-                                                      .bodyMedium
-                                                      .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    color: FlutterFlowTheme.of(
-                                                        context)
-                                                        .primary,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Card(
-                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    elevation: 1,
-                                    shape: RoundedRectangleBorder(
+                        children: trainer?.map((e) => GestureDetector(
+                          onTap: ()=>navigate.push(context, name: Routename.checkout),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color:
+                                FlutterFlowTheme.of(context).secondaryBackground,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 0,
+                                    color: FlutterFlowTheme.of(context).alternate,
+                                    offset: const Offset(0, 1),
+                                  )
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    ClipRRect(
                                       borderRadius: BorderRadius.circular(40),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          4, 4, 4, 4),
-                                      child: Icon(
-                                        Icons.keyboard_arrow_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24,
+                                      child: Image.network(
+                                        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
+                                        width: 60,
+                                        height: 60,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                12, 0, 0, 0),
+                                            child: Text(
+                                              e.itemDescription,
+                                              style: FlutterFlowTheme.of(context)
+                                                  .bodyLarge,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                                0, 4, 0, 0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                      12, 0, 0, 0),
+                                                  child: Text(
+                                                    '${e.addonItem}',
+                                                    style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                  const EdgeInsetsDirectional.fromSTEB(
+                                                      4, 0, 0, 0),
+                                                  child: Text(
+                                                    'name@domain.com',
+                                                    style: FlutterFlowTheme.of(
+                                                        context)
+                                                        .bodyMedium
+                                                        .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color: FlutterFlowTheme.of(
+                                                          context)
+                                                          .primary,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Card(
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                      elevation: 1,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(40),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            4, 4, 4, 4),
+                                        child: Icon(
+                                          Icons.keyboard_arrow_right_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

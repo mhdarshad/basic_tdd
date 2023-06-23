@@ -3,4 +3,5 @@ class Configration{
   Map<String,dynamic>? dbData ;
   String? tocken;
   String? custTocken;
+  int? custId;
 }

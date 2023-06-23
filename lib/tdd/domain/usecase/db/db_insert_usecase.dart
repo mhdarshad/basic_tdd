@@ -5,7 +5,7 @@
 // import 'package:dartz/dartz.dart';
 //
 // import '../../../../core/usecases/usecase.dart';
-// import '../../../data/models/api/user/use_data.dart';
+// import '../../../data/models/api/user/user_data.dart';
 // import '../../../data/models/db/users.dart';
 // import '../../repositories/repository_provider.dart';
 //

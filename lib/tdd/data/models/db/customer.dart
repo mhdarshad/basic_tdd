@@ -1,4 +1,4 @@
-class Customer {
+class CustomerData {
   int? autoId;
   String? sId;
   String? name;
@@ -14,7 +14,7 @@ class Customer {
   String? serviceRouteName;
   String? serviceRouteEmirate;
 
-  Customer(
+  CustomerData(
       {this.autoId,
         this.sId,
         this.name,
@@ -30,7 +30,7 @@ class Customer {
         this.serviceRouteName,
         this.serviceRouteEmirate});
 
-  Customer.fromJson(Map<String, dynamic> json) {
+  CustomerData.fromJson(Map<String, dynamic> json) {
     autoId = json['auto_id'];
     sId = json['_id'];
     name = json['name'];

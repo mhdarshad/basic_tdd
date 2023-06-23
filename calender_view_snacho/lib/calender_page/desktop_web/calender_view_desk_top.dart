@@ -71,9 +71,7 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
               if(controller.isMonthViewClick(event)){
               }else if(controller.isScheduleViewClick(event)){
                 // controller.changeView(CalendarView.timelineDay);
-
               }else if(controller.isScheduleViewClickWeekHeader(event)){
-
                 // controller.changeView(CalendarView.timelineWeek);
               }
               if(widget.onTap!=null) {

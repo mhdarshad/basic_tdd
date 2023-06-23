@@ -8,20 +8,22 @@ import '../../../data/models/api/user/plans_data.dart';
 import '../../../presentaion/modules/trainer/trainer_controller.dart';
 import '../../repositories/repository_provider.dart';
 
-class TrainersUseCase extends UseCase<TranersList,PlanFetchData>{
+class TrainersUseCase extends UseCase<List<PersonalTrainerData>,PlanFetchData>{
   DependencyRepostProvider<dynamic> repo;
   TrainersUseCase({required this.repo});
   /// call meted for inserting product to db
 
   /// Use Case For Setup DB
   @override
-  Future<Either<Failure, TranersList>> call({required PlanFetchData data}) async{
-    final result =  await repo.getRequest(Params(uri: Uri.parse("trainers_list/${data.planId}"), methed: Methed.Get,));
+  Future<Either<Failure, List<PersonalTrainerData>>> call({required PlanFetchData data}) async{
+    final result =  await repo.getRequest(Params(uri: Uri.parse("available_trainers_for_plan"), methed: Methed.Post,data: {
+      "plan_id":data.planId
+    }));
     return result.fold((l) => Left(l), (r) {
       if (kDebugMode) {
         print(r);
       }
-      return  Right(TranersList.fromJson(r));
+      return  Right((r as List).map((e) => PersonalTrainerData.fromJson(e)).toList());
     });
   }
 }

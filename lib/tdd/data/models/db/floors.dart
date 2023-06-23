@@ -2,7 +2,7 @@ class Floor {
   int? autoId;
   String? sId;
   String? name;
-  Null? nameLang;
+  String? nameLang;
   int? sortOrder;
   String? locationId;
   String? locationName;
@@ -31,14 +31,14 @@ class Floor {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['auto_id'] = this.autoId;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['nameLang'] = this.nameLang;
-    data['sort_order'] = this.sortOrder;
-    data['location_id'] = this.locationId;
-    data['location_name'] = this.locationName;
-    data['business_id'] = this.businessId;
+    data['auto_id'] = autoId;
+    data['_id'] = sId;
+    data['name'] = name;
+    data['nameLang'] = nameLang;
+    data['sort_order'] = sortOrder;
+    data['location_id'] = locationId;
+    data['location_name'] = locationName;
+    data['business_id'] = businessId;
     return data;
   }
 }

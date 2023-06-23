@@ -1,11 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_me_v2/core/util/presentation/template/custom_scafold.dart';
+import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_icon_button.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_widgets.dart';
+import '../../../../../../injection_container.dart';
 import '../../../../../../rought_genrator.dart';
+import '../../../../modules/checkout/checkout_controller.dart';
 
 class CheckOut extends StatelessWidget {
   const CheckOut({Key? key}) : super(key: key);
@@ -16,150 +19,173 @@ class CheckOut extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Container(
-            width: double.infinity,
-            height: 400,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: const AlignmentDirectional(0, 0),
-                  child: Hero(
-                    tag: 'productShoe',
-                    transitionOnUserGestures: true,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: CachedNetworkImage(
-                        width: double.infinity,
-                        errorWidget: (context,data,_){
-                          return  Image.asset("widget.url");
-                        },
-                        fit: BoxFit.cover, imageUrl:'assets/dummy.jpg',
-                      ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 400,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              color: const Color(0x3A000000),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                buttonSize: 46,
-                                icon: const Icon(
-                                  Icons.arrow_back_rounded,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                                onPressed: () async {
-                                  navigate.pop(context);
-                                },
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: const AlignmentDirectional(0, 0),
+                          child: Hero(
+                            tag: 'productShoe',
+                            transitionOnUserGestures: true,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(0),
+                              child: Image.network(
+                                'https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover,
                               ),
                             ),
-                            Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              color: const Color(0x3A000000),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                buttonSize: 46,
-                                icon: const Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.white,
-                                  size: 24,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding:
+                                const EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Card(
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      color: const Color(0x3A000000),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        buttonSize: 46,
+                                        icon: const Icon(
+                                          Icons.arrow_back_rounded,
+                                          color: Colors.white,
+                                          size: 24,
+                                        ),
+                                        onPressed: () async {
+                                          navigate.pop(context);
+                                          // context.pop();
+                                        },
+                                      ),
+                                    ),
+                                    Card(
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      color: const Color(0x3A000000),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        buttonSize: 46,
+                                        icon: const Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.white,
+                                          size: 24,
+                                        ),
+                                        onPressed: () {
+                                          print('IconButton pressed ...');
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                onPressed: () {
-                                  print('IconButton pressed ...');
-                                },
                               ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Plan Name',
+                          style: FlutterFlowTheme.of(context).headlineMedium,
+                        ),
+                        Text(
+                          '156.00 AED',
+                          style: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .override(
+                            fontFamily: 'Outfit',
+                            color: FlutterFlowTheme.of(context).primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(24, 4, 24, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              'Trainer Name',
+                              style: FlutterFlowTheme.of(context).labelMedium,
                             ),
                           ],
                         ),
                       ),
+                      Text(
+                        'Price : 200.00 AED',
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                      ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Zion Limited',
-                  style: FlutterFlowTheme.of(context).headlineMedium,
-                ),
-                Text(
-                  '\$156.00',
-                  style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Outfit',
-                    color: FlutterFlowTheme.of(context).primary,
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          'DESCRIPTION',
+                          style: FlutterFlowTheme.of(context).bodySmall.override(
+                            fontFamily: 'Readex Pro',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(24, 4, 24, 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  'Retailed by Nike',
-                  style: FlutterFlowTheme.of(context).labelMedium,
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  'DESCRIPTION',
-                  style: FlutterFlowTheme.of(context).bodySmall.override(
-                    fontFamily: 'Readex Pro',
-                    fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(24, 4, 24, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'With a down-to-earth persona and abilities that are out of this world, Zion is unlike anybody else. On court, the gentle spirit who\'s all about family transforms into an unmatched force of unstoppable athleticism and speed.',
+                            style: FlutterFlowTheme.of(context).labelMedium,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(24, 4, 24, 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: Text(
-                    'With a down-to-earth persona and abilities that are out of this world, Zion is unlike anybody else. On court, the gentle spirit who\'s all about family transforms into an unmatched force of unstoppable athleticism and speed.',
-                    style: FlutterFlowTheme.of(context).labelMedium,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Container(
@@ -188,7 +214,79 @@ class CheckOut extends StatelessWidget {
                 children: [
                   FFButtonWidget(
                     onPressed: () {
-                      print('Button pressed ...');
+                      // List<PaymentSdkAPms> apms = [];
+                      // apms.add(PaymentSdkAPms.AMAN);
+                      // var billingDetails = BillingDetails(
+                      //     "John Smith",
+                      //     "email@domain.com",
+                      //     "+97311111111",
+                      //     "st. 12",
+                      //     "eg",
+                      //     "dubai",
+                      //     "dubai",
+                      //     "12345"
+                      // );
+                      // var shippingDetails = ShippingDetails(
+                      //     "John Smith",
+                      //     "email@domain.com",
+                      //     "+97311111111",
+                      //     "st. 12",
+                      //     "eg",
+                      //     "dubai",
+                      //     "dubai",
+                      //     "12345"
+                      // );
+                      // var configuration =  PaymentSdkConfigurationDetails(
+                      //     profileId: "001900",
+                      //     serverKey: "SHJNKWHWK2-J6L2JTTLKH-BKKZKNJH9W",
+                      //     clientKey: "CQKM7K-V7TM6G-BM677B-VRK97P",
+                      //     cartId: "12433",
+                      //     cartDescription: "Flowers",
+                      //     merchantName: "Flowers Store",
+                      //     screentTitle: "Pay with Card",
+                      //     amount: 20.0,
+                      //     showBillingInfo: true,
+                      //     forceShippingInfo: false,
+                      //     currencyCode: "AED",
+                      //     merchantCountryCode: "AE",
+                      //     billingDetails: billingDetails,
+                      //     shippingDetails: shippingDetails,
+                      //     alternativePaymentMethods: apms,
+                      //     linkBillingNameWithCardHolderName: true);
+                      //
+                      // var theme = IOSThemeConfigurations();
+                      // theme.logoImage = "assets/logo.png";
+                      // configuration.iOSThemeConfigurations = theme;
+                      // var savedCardInfo = PaymentSDKSavedCardInfo("4000000000000002", "card type");
+                      // FlutterPaytabsBridge.startCardPayment(configuration, (event) {
+                      //   if (event["status"] == "success") {
+                      //     var transactionDetails = event["data"];
+                      //     if (kDebugMode) {
+                      //       print(transactionDetails);
+                      //     }
+                      //     if (transactionDetails["isSuccess"]) {
+                      //       if (kDebugMode) {
+                      //         print("successful transaction");
+                      //       }
+                      //     } else {
+                      //       if (kDebugMode) {
+                      //         print("failed transaction");
+                      //       }
+                      //     }
+                      //   } else if (event["status"] == "error") {
+                      //     if (kDebugMode) {
+                      //       print("Error: $event");
+                      //     }
+                      //   } else if (event["status"] == "event") {
+                      //     if (kDebugMode) {
+                      //       print(event);
+                      //     }
+                      //   }
+                      // });
+                      // if (kDebugMode) {
+                      //   print('Button pressed ...');
+                      // }
+                      sl<CheckoutEvent>()(data: CheckoutData(user:stored.userdata, methode: PaymentMethode.card));
                     },
                     text: 'Pay Now',
                     icon: Icon(
@@ -204,7 +302,7 @@ class CheckOut extends StatelessWidget {
                       color: FlutterFlowTheme.of(context).primaryText,
                       textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Outfit',
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        color:FlutterFlowTheme.of(context).secondaryBackground,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -216,12 +314,20 @@ class CheckOut extends StatelessWidget {
                     ),
                   ),
                   FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async{
+                      TabbyWebView.showWebView(
+                        context: context,
+                        webUrl:(await sl<CheckoutEvent>().payTabby(data: CheckoutData(user:stored.userdata, methode: PaymentMethode.card))).availableProducts.installments!.webUrl,
+                        onResult: (WebViewResult resultCode) {
+                          if (kDebugMode) {
+                            print(resultCode.name);
+                          }
+                        },
+                      );
                     },
-                    text: 'Add to Cart',
+                    text: 'Tabby',
                     icon: const Icon(
-                      Icons.shopping_cart_outlined,
+                      Icons.payments,
                       size: 15,
                     ),
                     options: FFButtonOptions(
@@ -246,7 +352,7 @@ class CheckOut extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

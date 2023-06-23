@@ -41,7 +41,9 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(brightness: Brightness.dark),
           darkTheme: ThemeData(brightness: Brightness.dark),
           themeMode: _themeMode,
-            supportedLocales:[... languages.map((language) => Locale(language.languageCode!, language.countryCode)),...[
+            supportedLocales:[
+              ... languages.map((language) => Locale(language.languageCode!, language.countryCode)),
+              ...[
               const Locale("af"),
               const Locale("am"),
               const Locale("ar"),
@@ -112,7 +114,8 @@ class MyApp extends StatelessWidget {
               const Locale("uz"),
               const Locale("vi"),
               const Locale("zh")
-            ]],
+            ]
+            ],
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,

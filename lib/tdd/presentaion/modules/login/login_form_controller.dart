@@ -13,7 +13,7 @@ import '../../../../core/util/config/user_config.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../../core/util/presentation/flutter_flow/form_field_controller.dart';
 import '../../../../injection_container.dart';
-import '../../../data/models/api/user/use_data.dart';
+import '../../../data/models/api/user/user_data.dart';
 import '../../../domain/repositories/repository_provider.dart';
 import '../../../domain/usecase/db/db_insert_usecase.dart';
 import '../../../domain/usecase/auth/user_login.dart';
@@ -119,6 +119,8 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
         request.forEach((r) {
           final UserAcsessData result = r;
           sl<Configration>().custTocken = result.customerAuth.encript;
+          sl<Configration>().custId = result.customer.id;
+          store?.userdata =result.customer;
         });
       }else{
         errorToast("Credential mismatch");
