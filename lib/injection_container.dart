@@ -33,6 +33,7 @@ import 'tdd/domain/usecase/dashboard/dashboard_usecase.dart';
 import 'tdd/domain/usecase/db/db_config_usecase.dart';
 import 'tdd/domain/usecase/genrateInvoice/trainer_usecase.dart';
 import 'tdd/domain/usecase/plans/plans_usecase.dart';
+import 'tdd/domain/usecase/room_scedule/room_scedule_usecase.dart';
 import 'tdd/domain/usecase/scedule/scedule_usecase.dart';
 import 'tdd/domain/usecase/trainer/trainer_usecase.dart';
 import 'tdd/presentaion/modules/database_module/db_config_controller.dart';
@@ -40,6 +41,7 @@ import 'tdd/presentaion/modules/database_module/do_congig_module.dart';
 import 'tdd/presentaion/modules/genrateInvoice/genrate_Invoice_controller.dart';
 import 'tdd/presentaion/modules/login/login_form_controller.dart';
 import 'tdd/presentaion/modules/plans/plans_list_controller.dart';
+import 'tdd/presentaion/modules/room_scedule/room_scedule_controller.dart';
 import 'tdd/presentaion/modules/scedule/scedule_controller.dart';
 import 'tdd/presentaion/modules/trainer/trainer_controller.dart';
 
@@ -59,7 +61,8 @@ _bloc(){
 
   sl.registerFactory(() => ProductEvent(ProductUseCase( repo: sl(),),));
   sl.registerFactory(() => PlansListEvent(PlansUseCase( repo: sl(),),));
-  sl.registerFactory(() => SceduleEvent(SceduleUseCase( repo: sl(),),));
+  sl.registerFactory(() => RoomSceduleEvent(RoomSceduleUseCase( repo: sl(),)));
+  sl.registerFactory(() => SceduleEvent(SceduleUseCase( repo: sl(),),DashBoardUseCase( repo: sl(),)));
   sl.registerFactory(() => TrainerEvent(TrainersUseCase( repo: sl(),),));
   sl.registerFactory(() => DashboardEvent(DashBoardUseCase( repo: sl(),),));
   sl.registerFactory(() => CheckoutEvent(DashBoardUseCase( repo: sl(),),));

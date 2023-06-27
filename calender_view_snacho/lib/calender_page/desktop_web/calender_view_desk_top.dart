@@ -50,7 +50,7 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
               // CalendarView.timelineDay,
               // CalendarView.timelineWeek,
               // CalendarView.month,
-              CalendarView.schedule
+              CalendarView.month
             ],
             scheduleViewSettings:const ScheduleViewSettings(appointmentTextStyle:TextStyle(color: Colors.black),hideEmptyScheduleWeek: true,monthHeaderSettings: MonthHeaderSettings(height: 60,textAlign: TextAlign.center),weekHeaderSettings: WeekHeaderSettings()),
             // showNavigationArrow: true,

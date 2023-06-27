@@ -294,6 +294,8 @@
 //
 
 import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
+import 'package:cloud_me_v2/tdd/presentaion/modules/scedule/scedule_consumer.dart';
+import 'package:cloud_me_v2/tdd/presentaion/view/components/gym_page/room_creation/room_select.dart';
 import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -301,6 +303,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'tdd/presentaion/view/components/gym_page/check_out/check_out.dart';
 import 'tdd/presentaion/view/components/gym_page/payments/payment_confirm_container.dart';
+import 'tdd/presentaion/view/components/gym_page/scedule_listing/scedule_listing.dart';
 import 'tdd/presentaion/view/components/gym_page/select_trainer_container/select_trainer.dart';
 import 'tdd/presentaion/view/components/sign_up/sign_up_form.dart';
 import 'tdd/presentaion/view/screens/auth/auth.dart';
@@ -308,7 +311,7 @@ import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
 import 'tdd/presentaion/view/screens/auth/otp_login.dart';
 
 enum Routename{
-  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers, paymentStatus
+  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers, paymentStatus, scedule, room
 }
 extension ListToString on List<String> {
   String toRequiredParamsString() {
@@ -333,6 +336,8 @@ extension GoNavigations on Routename{
       case Routename.form:return  CUri("form");
       case Routename.trainers:return  CUri("trainer");
       case Routename.paymentStatus:return CUri("payment/status");
+      case Routename.scedule:return CUri("schedules");
+      case Routename.room:return CUri("room");
     }
   }
 }
@@ -349,16 +354,18 @@ class PageControler{
     ]),
     goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page'],
         routes: [
-      goRoute(Routename.trainers,(BuildContext context, GoRouterState state)=> SelectTrainer(key: state.pageKey,planId:state.queryParameters['item_code']),isSubROught: true),
-    ]),
+          goRoute(Routename.trainers,(BuildContext context, GoRouterState state)=> SelectTrainer(key: state.pageKey,planId:state.queryParameters['item_code']),isSubROught: true),
+          goRoute(Routename.scedule,(BuildContext context, GoRouterState state)=> SceduleListing(key: state.pageKey,planId:state.queryParameters['plan_id']),isSubROught: true,
+              routes: [
+                goRoute(Routename.room,(BuildContext context, GoRouterState state)=> RoomSelect(key: state.pageKey,roomId:state.queryParameters['room_id']),isSubROught: true,),
+              ]),
+        ]),
     goRoute(Routename.checkout,(BuildContext context, GoRouterState state)=>CheckOut(key: state.pageKey,),routes: [
       goRoute(Routename.paymentStatus,(BuildContext context, GoRouterState state)=> PaymentConfirmContainer(key: state.pageKey,status:state.queryParameters["status"]??'no_payment'),isSubROught: true),
     ]),
   ];
 
   // Scaffold get CircularProgressIndicatore =>  Scaffold(appBar:AppBar(),body: const Center(child: CircularProgressIndicator()),);
-
-
 
   ///A custom builder for this route.
   /// For example:
@@ -431,12 +438,13 @@ class Navigations {
     // }
     context.pushNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);
   }
-  String getCurrentRoute(){
-    return router.location;
-  }
-  pushReplace(BuildContext context,{required Routename name,Map<String, dynamic> parms = const <String, dynamic>{}, Map<String, dynamic> qparms = const <String, dynamic>{}}){
-    context.pushReplacementNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);
-  }
+
+  String getCurrentRoute()=>
+      router.location;
+
+  pushReplace(BuildContext context,{required Routename name,Map<String, dynamic> parms = const <String, dynamic>{}, Map<String, dynamic> qparms = const <String, dynamic>{}})=>
+      context.pushReplacementNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);
+
   pop(BuildContext context){
     if(GoRouter.of(context).canPop()) {
       router.pop();
@@ -444,6 +452,7 @@ class Navigations {
       context.go("/");
     }
   }
+
   popUntill(BuildContext context,{required Routename name,Map<String, dynamic> parms = const <String, dynamic>{}, Map<String, dynamic> qparms = const <String, dynamic>{}}){
     // if(parms!=null && qparms!=null){
     //   Map<String,String> qparms1={};
@@ -466,11 +475,16 @@ class Navigations {
     // }else{
     //   context.pushNamed(nUri(name!).name);
     // }
-    context.goNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);
+    context.goNamed(name.nUri.name,pathParameters: parms.map((key, value) =>
+        MapEntry(key, value.toString())),queryParameters: qparms);
+
   }
-  refresh(BuildContext context){
-    WidgetsBinding.instance.addPostFrameCallback((_) { context.go("/"); });
-  }
-  String toPath(Routename route)=>route.nUri.path;
+
+  refresh(BuildContext context)=>
+      WidgetsBinding.instance.addPostFrameCallback((_) { context.go("/"); });
+
+  String toPath(Routename route)=>
+      route.nUri.path;
+
 }
 final navigate = Navigations();

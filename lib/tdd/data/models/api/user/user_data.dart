@@ -65,9 +65,9 @@ class Customer {
   late final String email;
 
   Customer.fromJson(Map<String, dynamic> json){
-    id = json['id'];
+    id = json['id']??0;
     custName = json['cust_name'];
-    phone1 = json['phone1'];
+    phone1 = json['phone1']??'';
     countryCodePh1 = json['country_code_ph1'];
     userName = json['user_name'];
     email = json['email'];

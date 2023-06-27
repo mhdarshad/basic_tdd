@@ -62,6 +62,7 @@ dependencies:
   intl:
   encrypt:
   provider:
+  table_calendar:
   # Flutter Flow Support
   auto_size_text:
   font_awesome_flutter:

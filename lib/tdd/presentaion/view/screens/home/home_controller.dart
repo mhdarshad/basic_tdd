@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../components/gym_page/dash_boaard_conteainer/dash_board.dart';
 import '../../components/gym_page/plan_select_container/plan_select_container.dart';
+import '../../components/gym_page/scedule_listing/class_list.dart';
 import '../../components/gym_page/scedule_listing/scedule_listing.dart';
 
 class DashBoardController {
@@ -38,7 +39,7 @@ Map<BotemNavigations,Map<String,dynamic>> navigations= {
   BotemNavigations.scedule:{
     'icon':Icons.event_busy,
     'label':"Scedule",
-    'page':const SceduleListing()
+    'page':const ClassList()
   }
 };
 

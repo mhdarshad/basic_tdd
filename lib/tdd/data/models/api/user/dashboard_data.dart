@@ -5,14 +5,14 @@ import '../../db/customer.dart';
 import 'user_data.dart';
 
 class DashBoardData {
-  Customer? customer;
+  // Customer? customer;
   List<SubscribedPlans>? subscribedPlans;
   List<Scedule>? schedules;
 
-  DashBoardData({this.customer, this.subscribedPlans, this.schedules});
+  DashBoardData({this.subscribedPlans, this.schedules});
 
   DashBoardData.fromJson(Map<String, dynamic> json) {
-    customer = json['customer'];
+    // customer = Customer.fromJson(json['customer']);
     if (json['subscribed_plans'] != null) {
       subscribedPlans = <SubscribedPlans>[];
       json['subscribed_plans'].forEach((v) {
@@ -29,7 +29,7 @@ class DashBoardData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['customer'] = customer;
+    // data['customer'] = customer;
     if (subscribedPlans != null) {
       data['subscribed_plans'] =
           subscribedPlans!.map((v) => v.toJson()).toList();

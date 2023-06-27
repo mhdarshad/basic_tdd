@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_me_v2/tdd/data/models/api/invoice/purchase_invoce_data.dart';
+import 'package:cloud_me_v2/tdd/data/models/api/scdule/room_scedule.dart';
 import 'package:cloud_me_v2/tdd/data/models/api/scdule/scedule_api.dart';
 import 'package:cloud_me_v2/tdd/data/models/api/trainers/trainers_data.dart';
 import 'package:cloud_me_v2/tdd/data/models/api/user/dashboard_data.dart';
@@ -9,6 +10,7 @@ import 'package:cloud_me_v2/tdd/presentaion/modules/product/product_consumer.dar
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../data/models/api/user/user_data.dart';
+import 'plans/subscribed_plans_listing.dart';
 
 
 class ProjectStore extends VxStore{
@@ -18,10 +20,12 @@ class ProjectStore extends VxStore{
   List<PlanDatas> plans = [];
   Map<String,dynamic>? pathParameters;
  DashBoardData? dashboard;
-  List<Scedule> scedules = [];
+ List<Scedule> scedules = [];
  List<PersonalTrainerData>? trainerData;
   PurchaseInvoiceData? purchaseInvoiceData ;
  late Customer userdata;
+
+  RoomSceduels? rooms;
 
 }
 enum UpdatedFrom{

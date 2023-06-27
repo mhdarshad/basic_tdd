@@ -135,12 +135,12 @@ class _DashBoardState extends State<DashBoard> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  "Looks Like You Didn't Selected any Plans",
+                                  "Looks Like You Didn't Booked any Class",
                                   style: FlutterFlowTheme.of(context).bodyMedium,
                                 ),
                               ),
                               GestureDetector(
-                                onTap: ()=> navigate.push(context, name:Routename.home,parms:{'page':BotemNavigations.plans.name}),
+                                onTap: ()=> navigate.push(context, name:Routename.home,parms:{'page':BotemNavigations.scedule.name}),
                                 child: Container(
                                   height: 32,
                                   decoration: BoxDecoration(
@@ -151,7 +151,7 @@ class _DashBoardState extends State<DashBoard> {
                                   child: Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                                     child: Text(
-                                      "Select Plan",
+                                      "Book Class",
                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                         fontFamily: 'Readex Pro',
                                         color: FlutterFlowTheme.of(context).secondaryBackground,

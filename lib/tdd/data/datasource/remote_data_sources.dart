@@ -27,7 +27,7 @@ class RemoteDataSourceImpl implements RemoteDataSource{
   String? authtocken;
   String? custauthtocken;
 
-  RemoteDataSourceImpl({ required this.client});
+  RemoteDataSourceImpl({required this.client});
 
   @override
   Future<RepositoryModel> getRequest(Params param) => _getTriviaFromUrl(param);

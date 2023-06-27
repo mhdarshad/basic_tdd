@@ -6,7 +6,8 @@ class Scedule {
   int? planId;
   int? staffId;
   int? memberCount;
-  List<Days>? days;
+  Map<String,dynamic>? days;
+  String? room_id;
 
   Scedule(
       {this.id,
@@ -16,6 +17,7 @@ class Scedule {
         this.planId,
         this.staffId,
         this.memberCount,
+        this.room_id,
         this.days});
 
   Scedule.fromJson(Map<String, dynamic> json) {
@@ -34,13 +36,11 @@ class Scedule {
       });
     }
     planId = json['plan_id'];
+    room_id = json['room_id'];
     staffId = json['staff_id'];
     memberCount = json['member_count'];
     if (json['Days'] != null) {
-      days = <Days>[];
-      json['Days'].forEach((v) {
-        days!.add(Days.fromJson(v));
-      });
+      days  = json['Days'].first;
     }
   }
 
@@ -55,10 +55,11 @@ class Scedule {
       data['appointments'] = appointments!.map((v) => v.toJson()).toList();
     }
     data['plan_id'] = planId;
-    data['staff_id'] = staffId;
+    data['room_id'] = staffId;
+    data['staff_id'] = room_id;
     data['member_count'] = memberCount;
     if (days != null) {
-      data['Days'] = days!.map((v) => v.toJson()).toList();
+      data['Days'] = days;
     }
     return data;
   }

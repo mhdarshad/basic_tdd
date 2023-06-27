@@ -96,7 +96,8 @@ class MyApp extends StatelessWidget {
         if(event.appointments?.isEmpty??true){
           /// SnachoCalenderController.instance.changeView(CalendarView.schedule);
           /// SnachoCalenderController.removeAppointment( appointment);
-          StaffTimlineCalenderController.setAppointment(event.resource!.id.toString(), Appointment(resourceIds:[event.resource!.id.toString()],subject: event.resource!.id.toString(),startTime: event.date!, endTime: event.date!.add(const Duration(hours: 2))));
+          StaffTimlineCalenderController.setAppointment(event.resource!.id.toString(), Appointment(
+              resourceIds:[event.resource!.id.toString()],subject: event.resource!.id.toString(),startTime: event.date!, endTime: event.date!.add(const Duration(hours: 2))));
         }
       }, usersData: user)),
     );

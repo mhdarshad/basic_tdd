@@ -111,7 +111,6 @@ class _FlutterFlowIconButtonState extends State<FlutterFlowIconButton> {
               widget.hoverColor != null) {
             return widget.hoverColor;
           }
-
           return widget.fillColor;
         },
       ),
