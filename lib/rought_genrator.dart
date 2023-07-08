@@ -294,24 +294,28 @@
 //
 
 import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/scedule/scedule_consumer.dart';
 import 'package:cloud_me_v2/tdd/presentaion/view/components/gym_page/room_creation/room_select.dart';
 import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'core/util/config/user_config.dart';
+import 'injection_container.dart';
 import 'tdd/presentaion/view/components/gym_page/check_out/check_out.dart';
 import 'tdd/presentaion/view/components/gym_page/payments/payment_confirm_container.dart';
 import 'tdd/presentaion/view/components/gym_page/scedule_listing/scedule_listing.dart';
 import 'tdd/presentaion/view/components/gym_page/select_trainer_container/select_trainer.dart';
+import 'tdd/presentaion/view/components/profile/edit_profile.dart';
+import 'tdd/presentaion/view/components/profile/user_profile.dart';
 import 'tdd/presentaion/view/components/sign_up/sign_up_form.dart';
 import 'tdd/presentaion/view/screens/auth/auth.dart';
 import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
 import 'tdd/presentaion/view/screens/auth/otp_login.dart';
+import 'tdd/presentaion/view/screens/home/dash_board/plan_detail.dart';
 
 enum Routename{
-  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers, paymentStatus, scedule, room
+  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers, paymentStatus, scedule, room, profile, planDetail, editprofile
 }
 extension ListToString on List<String> {
   String toRequiredParamsString() {
@@ -330,6 +334,7 @@ extension GoNavigations on Routename{
       case Routename.login:return CUri("login");
       case Routename.config:return CUri("config");
       case Routename.kyc:  return  CUri("kyc");
+      case Routename.profile:  return  CUri("profile");
       case Routename.checkout:return  CUri("checkout");
       case Routename.editvenodreproduct: return  CUri("editvenodreproduct");
       case Routename.signup: return  CUri("signup");
@@ -338,6 +343,8 @@ extension GoNavigations on Routename{
       case Routename.paymentStatus:return CUri("payment/status");
       case Routename.scedule:return CUri("schedules");
       case Routename.room:return CUri("room");
+      case Routename.planDetail:return CUri("plan/details");
+      case Routename.editprofile:return CUri("edit");
     }
   }
 }
@@ -349,6 +356,10 @@ class PageControler{
     GoRoute(path: '/',redirect: (_,__)=>"/${Routename.login.nUri.name}"),
     goRoute(Routename.login,(BuildContext context, GoRouterState state)=> Auth(key: state.pageKey,)),
     goRoute(Routename.config,(BuildContext context, GoRouterState state)=> DbConfig(key: state.pageKey,)),
+    goRoute(Routename.profile,(BuildContext context, GoRouterState state)=> UserProfile(key: state.pageKey,),routes: [
+      goRoute(Routename.editprofile,(BuildContext context, GoRouterState state)=> EditProfile(key: state.pageKey,),isSubROught: true),
+    ]),
+    goRoute(Routename.planDetail,(BuildContext context, GoRouterState state)=> PlanDetail(key: state.pageKey,planId:state.queryParameters['plan_id'])),
     goRoute(Routename.signup,(BuildContext context, GoRouterState state)=> SignUpPage(key: state.pageKey,),routes: [
       goRoute(Routename.form,(BuildContext context, GoRouterState state)=> SignUpForm(key: state.pageKey,),isSubROught: true),
     ]),
@@ -387,16 +398,21 @@ class PageControler{
 final router = GoRouter(
   redirect: (context,state){
     print("path: ${state.location}");
-    return null;
-    // if((state.location !=  Routename.config.nUri.path) && (sl<Configration>().dbData ==null)){
-    //   print("no data");
-    //   return Routename.config.nUri.path;
-    // }
+    // return null;
+    if((state.location ==  Routename.home.nUri.path) && (sl<Configration>().custTocken ==null)){
+      print("no data");
+      return Routename.login.nUri.path;
+    }
+    if((state.location ==  Routename.login.nUri.path) && (sl<Configration>().custTocken !=null)){
+      print("no data");
+      return '${Routename.home.nUri.path}/dashboard';
+    }
 
     // if ((state.location !=  Routename.config.nUri.path) && (state.location !=  Routename.login.nUri.path) &&  (sl<Configration>().tocken ==null) ) {
     //   print("no data");
     //   return Routename.login.nUri.path;
     // }
+    return null;
   },
   initialLocation:"/login",
   debugLogDiagnostics:kDebugMode,

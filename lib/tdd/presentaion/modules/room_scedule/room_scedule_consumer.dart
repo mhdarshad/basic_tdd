@@ -1,3 +1,5 @@
+import 'package:cloud_me_v2/rought_genrator.dart';
+import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/vx_store.dart';
@@ -12,12 +14,24 @@ class RoomSceduleContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VxConsumer<ProjectStore>(
-        notifications: {RoomSceduleMutation: (ctx, store, {status}) {
+        notifications: {
+          RoomSceduleMutation: (ctx, store, {status}) {
           if (status == VxStatus.error) {
             // VxToast.show(
             //     ctx, msg: (store as PlansListMutation).err ?? '');
           } else if (status == VxStatus.success) {
 
+          }
+        },
+          BookMatMutation: (ctx, store, {status}) {
+            // print("mystaus: ${status}");
+          if (status == VxStatus.error) {
+            // VxToast.show(
+            //     ctx, msg: (store as BookMatMutation).err ?? '');
+          } else if (status == VxStatus.success) {
+            navigate.push(context, name: Routename.home,parms:{
+              'path':BotemNavigations.dashboard.name,
+            });
           }
         }
         }, mutations: const {RoomSceduleMutation},

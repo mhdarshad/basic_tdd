@@ -115,8 +115,9 @@ class CardListContaint extends StatelessWidget {
   final String title;
   final String discription;
   final String price;
+  final String image;
   const CardListContaint({
-    super.key, required this.title, required this.discription, required this.price,
+    super.key, required this.title, required this.discription, required this.price, required this.image,
   });
 
   @override
@@ -130,14 +131,18 @@ class CardListContaint extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                width: 100,
-                errorWidget: (context,data,_){
-                  return  Container();
-                },
-                fit: BoxFit.cover, imageUrl:'assets/dummy.jpg',
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  width: 80,
+                  imageUrl: image,
+                  errorWidget: (context,__,___){
+                    return Image.asset('assets/image/gymimage.jpg');
+                  },
+                  fit: BoxFit.cover
+                ),
               ),
             ),
             Expanded(
@@ -161,6 +166,7 @@ class CardListContaint extends StatelessWidget {
             ),
             Container(
               height: 32,
+              width: 80,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).primaryText,
                 borderRadius: BorderRadius.circular(12),

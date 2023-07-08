@@ -24,6 +24,13 @@ class LoginFormConsumer extends StatelessWidget {
               });
             }
           }
+          if((store).usecase  is OtpUseCase){
+            if(status == VxStatus.success){
+              navigate.push(context, name: Routename.home,parms: {
+                'page':BotemNavigations.dashboard.name
+              });
+            }
+          }
         }
       },
       builder: (context,store,_) {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/entities/vx_store.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'checkout_controller.dart';
+import 'transaction_sucsess_controller.dart';
 
 class CheckOutConteainer extends StatelessWidget {
   const CheckOutConteainer({super.key, required this.builder});
@@ -23,9 +24,9 @@ class CheckOutConteainer extends StatelessWidget {
             context.pop();
           } else if (status == VxStatus.success) {
             if (kDebugMode) {
-              print("State : ");
+              print("State :");
             }
-            final storeddata =stored.purchaseInvoiceData ;
+            final storeddata =stored.purchaseInvoiceData;
             if (kDebugMode) {
               print("Successfully Paid");
             }
@@ -33,7 +34,7 @@ class CheckOutConteainer extends StatelessWidget {
               "status":storeddata?.isSuccess??false?"paid":"unpaid"
             });
           }else if (status == VxStatus.loading){
-              VxToast.showLoading(context);
+              // VxToast.showLoading(context);
           }
         }},
         mutations: const {CheckOutMutation},

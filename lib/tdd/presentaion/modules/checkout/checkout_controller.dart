@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:cloud_me_v2/core/usecases/usecase.dart';
 import 'package:cloud_me_v2/tdd/data/models/api/invoice/purchase_invoce_data.dart';
+import 'package:cloud_me_v2/tdd/data/models/api/user/plans_data.dart';
 import 'package:cloud_me_v2/tdd/data/models/db/users.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_paytabs_bridge/BaseBillingShippingInfo.dart';
 import 'package:flutter_paytabs_bridge/IOSThemeConfiguration.dart';
 import 'package:flutter_paytabs_bridge/PaymentSdkApms.dart';
@@ -11,11 +13,16 @@ import 'package:flutter_paytabs_bridge/PaymentSdkConfigurationDetails.dart';
 import 'package:flutter_paytabs_bridge/PaymentSdkTokeniseType.dart';
 import 'package:flutter_paytabs_bridge/flutter_paytabs_bridge.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
+import '../../../../rought_genrator.dart';
+import '../../../data/models/api/trainers/trainers_data.dart';
 import '../../../data/models/api/user/user_data.dart';
+import '../../../domain/entities/vx_store.dart';
 import '../../../domain/usecase/dashboard/dashboard_usecase.dart';
+import 'transaction_sucsess_controller.dart';
 class CheckoutEvent extends LogicHandler<DashBoardUseCase, CheckoutData>{
   CheckoutEvent(super.usecase);
   Future<TabbySession> payTabby({required CheckoutData data}) async{
@@ -51,7 +58,7 @@ class CheckoutEvent extends LogicHandler<DashBoardUseCase, CheckoutData>{
       ]),
       orderHistory: [
         OrderHistoryItem(
-          purchasedAt: '2019-08-24T14:15:22Z',
+          purchasedAt: DateTime.now().toString(),
           amount: '10.00',
           paymentMethod: OrderHistoryItemPaymentMethod.card,
           status: OrderHistoryItemStatus.newOne,
@@ -67,18 +74,23 @@ class CheckoutEvent extends LogicHandler<DashBoardUseCase, CheckoutData>{
 
   }
   @override
-  call({required CheckoutData data}) {
+  call({required CheckoutData data, BuildContext? context}) {
     // TODO: implement call
-    return  CheckOutMutation(usecase, data);
+    return  CheckOutMutation(usecase, data,context!);
   }
 }
 
-class CheckOutMutation extends EventMutations<CheckoutData>  {
+class CheckOutMutation extends VxMutation<ProjectStore> {
   DashBoardUseCase usecase;
   CheckoutData data;
+  PersonalTrainerData? personalTrainerData;
+  Plans? plansData;
+  String? errerMessege;
+
+  BuildContext context;
   PaymentSdkConfigurationDetails get generateConfig {
     var billingDetails = BillingDetails(data.user.custName, data.user.email,
-        data.user.countryCodePh1+ data.user.phone1, "", "", "", "", "");
+        data.user.countryCodePh1+ data.user.phone1, "dubai", "United Arab Emirate", "Dubai", "DU", "");
     List<PaymentSdkAPms> apms = [];
     apms.add(PaymentSdkAPms.AMAN);
     var configuration = PaymentSdkConfigurationDetails(
@@ -89,11 +101,11 @@ class CheckOutMutation extends EventMutations<CheckoutData>  {
         cartDescription: "Flowers",
         merchantName: "Raising Gym",
         screentTitle: "Pay with Card",
-        amount: 20.0,
+        amount: (plansData?.itemPrice.toDouble()??0)+(personalTrainerData?.itprRetlPrice.toDouble()??0),
         showBillingInfo: true,
         forceShippingInfo: false,
         currencyCode: "AED",
-        merchantCountryCode: "AE",
+        merchantCountryCode: "ae",
         billingDetails: billingDetails,
         alternativePaymentMethods: apms,
         linkBillingNameWithCardHolderName: true
@@ -108,7 +120,7 @@ class CheckOutMutation extends EventMutations<CheckoutData>  {
     return configuration;
   }
 
-  CheckOutMutation(this.usecase, this. data) : super(data);
+  CheckOutMutation(this.usecase, this. data,this.context) ;
   payCard({required Function(Map<String, dynamic> data) onSucsess,
     required Function(Map<String, dynamic> data) onFailure,
     required Function(Map<String, dynamic> data) onPrecess}) async=> FlutterPaytabsBridge.startCardPayment(generateConfig, (event) {
@@ -119,11 +131,12 @@ class CheckOutMutation extends EventMutations<CheckoutData>  {
       if (kDebugMode) {
         print(jsonEncode(transactionDetails));
       }
-      if (transactionDetails["isSuccess"]) {
+      //t
+      if (transactionDetails["isSuccess"]??transactionDetails["p"]) {
         if (kDebugMode) {
           print("successful Transaction");
         }
-        if (transactionDetails["isPending"]) {
+        if (transactionDetails["isPending"]??transactionDetails["s"]) {
           if (kDebugMode) {
             print("transaction pending");
           }
@@ -153,27 +166,35 @@ class CheckOutMutation extends EventMutations<CheckoutData>  {
 
   @override
   perform() async {
+    personalTrainerData = store?.selectedtrainer;
+    plansData = store?.selectedPlans;
     switch(data.methode){
-
       case PaymentMethode.tabby:
-
         break;
       case PaymentMethode.card:
-       return await payCard(
+       final data = await payCard(
             onSucsess: (Map<String, dynamic> data) {
               if (kDebugMode) {
                 print("show Toast paid");
               }
-              // successToast("Paid");
+              print("show Toast ${data}");
               store?.purchaseInvoiceData = PurchaseInvoiceData.fromJson(data);
+              final storeddata =stored.purchaseInvoiceData;
+              navigate.push(context, name: Routename.paymentStatus,qparms: {
+                "status":storeddata?.isSuccess??false?"paid":"unpaid"
+              });
             },
             onFailure: (Map<String, dynamic> data) {
               store?.purchaseInvoiceData = PurchaseInvoiceData.fromJson(data);
-              errorToast("Error: $data");
+              errerMessege =/* PurchaseInvoiceData.fromJson(data).h?.responseMessage??*/'Unknown Error';
+              navigate.push(context, name: Routename.paymentStatus,qparms: {
+                "status":"unpaid"
+              });
             },
             onPrecess: (Map<String, dynamic> data) {
 
             });
+       print(data);
     }
   }
 }

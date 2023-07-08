@@ -23,7 +23,7 @@ class ProductData extends StatelessWidget {
     return Stack(
       children: [
         ImageViewWidget(image: image),
-        ProductDetailOverlay   (onProductTap: onProductTap, price: price, title: title)],
+        ProductDetailOverlay(onProductTap: onProductTap, price: price, title: title)],
     );
   }
 }
@@ -73,8 +73,7 @@ class ProductDetailOverlay extends StatelessWidget {
                           )),
                     ),
                   ],
-                )
-                    : const SizedBox(),
+                ): const SizedBox(),
                 Container(
                   margin: const EdgeInsets.only(bottom: 2),
                   alignment: Alignment.bottomCenter,

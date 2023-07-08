@@ -1,12 +1,12 @@
 class PurchaseInvoiceData {
   String? cartCurrency;
   String? cartID;
-  int? profileId;
-  String? tranCurrency;
-  String? cartAmount;
-  PaymentInfo? paymentInfo;
+  String? profileId;
+  String? tranCurrency;//e
+  String? cartAmount;//f
+  PaymentInfo? paymentInfo;//
   String? token;
-  int? serviceId;
+  String? serviceId;
   bool? isPending;
   String? transactionReference;
   PaymentResult? paymentResult;
@@ -14,8 +14,8 @@ class PurchaseInvoiceData {
   String? transactionType;
   BillingDetailss? billingDetails;
   String? tranTotal;
-  int? merchantId;
-  bool? isSuccess;
+  String? merchantId;//
+  bool? isSuccess;//
   bool? isOnHold;
   String? cartDescription;
   bool? isAuthorized;
@@ -47,14 +47,14 @@ class PurchaseInvoiceData {
   PurchaseInvoiceData.fromJson(Map<String, dynamic> json) {
     cartCurrency = json['cartCurrency'];
     cartID = json['cartID'];
-    profileId = json['profileId'];
+    profileId = json['profileId'].toString();
     tranCurrency = json['tranCurrency'];
     cartAmount = json['cartAmount'];
     paymentInfo = json['paymentInfo'] != null
         ? PaymentInfo.fromJson((json['paymentInfo']).map((key, value) => MapEntry(key.toString(), value  as dynamic)))
         : null;
     token = json['token'];
-    serviceId = json['serviceId'];
+    serviceId = json['serviceId'].toString();
     isPending = json['isPending'];
     transactionReference = json['transactionReference'];
     paymentResult = json['paymentResult'] != null
@@ -66,7 +66,7 @@ class PurchaseInvoiceData {
         ? BillingDetailss.fromJson(json['billingDetails'] .map((key, value) => MapEntry(key.toString(), value  as dynamic)))
         : null;
     tranTotal = json['tranTotal'];
-    merchantId = json['merchantId'];
+    merchantId = (json['merchantId']??json['a']).toString();
     isSuccess = json['isSuccess'];
     isOnHold = json['isOnHold'];
     cartDescription = json['cartDescription'];
@@ -108,12 +108,12 @@ class PurchaseInvoiceData {
 }
 
 class PaymentInfo {
-  String? paymentDescription;
+  String? paymentDescription;//
   String? cardType;
-  String? paymentMethod;
-  int? expiryMonth;
+  String? paymentMethod;//
+  String? expiryMonth;
   String? cardScheme;
-  int? expiryYear;
+  String? expiryYear;
 
   PaymentInfo(
       {this.paymentDescription,
@@ -127,9 +127,9 @@ class PaymentInfo {
     paymentDescription = json['paymentDescription'];
     cardType = json['cardType'];
     paymentMethod = json['payment_method'];
-    expiryMonth = json['expiryMonth'];
+    expiryMonth = json['expiryMonth'].toString();
     cardScheme = json['cardScheme'];
-    expiryYear = json['expiryYear'];
+    expiryYear = json['expiryYear'].toString();
   }
 
   Map<String, dynamic> toJson() {

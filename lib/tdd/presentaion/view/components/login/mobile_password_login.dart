@@ -2,6 +2,7 @@ import 'package:cloud_me_v2/core/util/presentation/flutter_flow/flutter_flow_uti
 import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/login/login_form_consumer.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:velocity_x/velocity_x.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_widgets.dart';
 import '../../../../../injection_container.dart';
@@ -35,7 +36,6 @@ class _LoginFormComponent2WidgetState extends State<LoginFormComponent2Widget> {
   @override
   void dispose() {
     GetUserController.dispose();
-
     super.dispose();
   }
 
@@ -50,16 +50,18 @@ class _LoginFormComponent2WidgetState extends State<LoginFormComponent2Widget> {
           LoginFormConsumer(
             builder: (context,store,state) {
               return CustomeButton(
+                loadingState:state == VxStatus.loading,
                 color:FlutterFlowTheme.of(context).primary,
                 borderColor: Colors.transparent,
                 onPressed: ()=>GetUserController.login(), text: 'Sign In',);
             }
           ),
           CustomeButton(
-            color:FlutterFlowTheme.of(context).secondaryBackground,
+            color: FlutterFlowTheme.of(context).secondaryBackground,
             borderColor:  FlutterFlowTheme.of(context).secondaryText,
             onPressed: () => navigate.pushReplace(context, name: Routename.form),
-            text: 'Sign Up',),
+            text: 'Sign Up',
+            loadingState: false,),
           // Column(
           //   mainAxisSize: MainAxisSize.max,
           //   children: [
@@ -104,10 +106,12 @@ class CustomeButton extends StatelessWidget {
   final Color? color;
   final Color? borderColor;
   final String text;
+
+  final bool loadingState;
   const CustomeButton({
     super.key,
     required this. onPressed,
-    this.color, this.borderColor, required this.text
+    this.color, this.borderColor, required this.text, required this.loadingState
   });
 
   @override
@@ -116,7 +120,7 @@ class CustomeButton extends StatelessWidget {
       alignment: const AlignmentDirectional(0.0, 0.0),
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
-        child: FFButtonWidget(
+        child:loadingState?const CircularProgressIndicator(): FFButtonWidget(
           onPressed: onPressed,
           text: text,
           options: FFButtonOptions(

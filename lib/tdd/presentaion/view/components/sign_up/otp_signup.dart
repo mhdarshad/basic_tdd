@@ -2,6 +2,7 @@
 import 'package:cloud_me_v2/core/util/presentation/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/login/login_form_consumer.dart';
+import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -89,17 +90,25 @@ class _SignupOtpState extends State<SignupOtp> {
               ):const SizedBox.shrink(),
               otpSent?LoginFormConsumer(
                   builder: (context,store,state) {
-                    return CustomeButton(
+                    return CustomeButton  (
                       color:FlutterFlowTheme.of(context).primary,
                       borderColor: Colors.transparent,
-                      onPressed: ()=>sl<GetUserController>().verifyOTP(), text: 'Verify',);
+                      onPressed: ()=>sl<GetUserController>().verifyOTP(),
+                      text: 'Verify',);
                   }
-              ): VxConsumer(
+              ):
+              VxConsumer(
                   mutations: const {GetUserEvents},
                   notifications: {
                     GetUserEvents:(ctx, store, {status}) {
                       if(status == VxStatus.success){
-                        navigate.pushReplace(context, name: Routename.home);
+                        if((store as GetUserEvents).otpVerified) {
+                          navigate.pushReplace(context, name: Routename.home,parms: {
+                            'page': BotemNavigations.dashboard.name
+                          });
+                        }
+                      }else if(status == VxStatus.error){
+                        GetUserController.initState(context);
                       }
                     }
                   },

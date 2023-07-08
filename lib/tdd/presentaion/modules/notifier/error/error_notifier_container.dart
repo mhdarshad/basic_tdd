@@ -18,14 +18,13 @@ class CustomNotifier extends StatelessWidget {
               // TODO: Handle this case.
               break;
             case NotificationType.toast_succses:
-              CToast.toast(ctx, msg: store.data.messege ?? '').success;
+              CToast.toast(ctx, msg: store.data.messege ).success;
               break;
             case NotificationType.toast_warning:
-              CToast.toast(ctx, msg: store.data.messege ?? '').warning;
+              CToast.toast(ctx, msg: store.data.messege ).warning;
               break;
             case NotificationType.toast_error:
-              CToast.toast(ctx, msg: store.data.messege ?? '').error;
-              // VxToast.show( ctx, msg: );
+              CToast.toast(ctx, msg: store.data.messege).error;
               break;
             case NotificationType.bottemSheet:
               // TODO: Handle this case.

@@ -1,10 +1,15 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_me_v2/rought_genrator.dart';
+import 'package:cloud_me_v2/tdd/presentaion/modules/database_module/db_config_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../core/util/config/user_config.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../core/util/presentation/template/custom_scafold.dart';
 
+import '../../../../../injection_container.dart';
 import '../../widgets/drawer/end_drawer.dart';
 import 'home_controller.dart';
 
@@ -52,16 +57,25 @@ class _DashBoardPageState extends State<DashBoardPage> {
         actions: [
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-            child: Container(
-              width: 60,
-              height: 60,
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: Image.network(
-                'https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTR8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
-                fit: BoxFit.cover,
+            child: GestureDetector(
+              onTap: (){
+                sl<Configration>().custTocken = null;
+                navigate.push(context, name: Routename.profile,);
+              },
+              child: Container(
+                width: 60,
+                height: 60,
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: CachedNetworkImage(
+                  imageUrl:'',
+                  fit: BoxFit.cover,
+                  errorWidget: (contxt,url,data){
+                    return Image.asset('assets/icons/profile.jpeg');
+                  },
+                ),
               ),
             ),
           ),

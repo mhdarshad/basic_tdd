@@ -60,6 +60,7 @@ class SubscribedPlans {
   String? startTime;
   String? durationTime;
   InvoiceDetail? invoiceDetail;
+  String? image;
 
   SubscribedPlans(
       {this.id,
@@ -79,13 +80,14 @@ class SubscribedPlans {
         this.sessions,
         this.startTime,
         this.durationTime,
+        this.image,
         this.invoiceDetail});
 
   SubscribedPlans.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     invoiceNo = json['invoice_no'];
     itemCode = json['item_code'];
-    invoiceReturnNo = json['invoice_return_no'];
+    invoiceReturnNo = json['invoice_return_no'].toString();
     custId = json['cust_id'];
     fromDate = json['from_date'];
     toDate = json['to_date'];
@@ -99,6 +101,7 @@ class SubscribedPlans {
     sessions = json['sessions'];
     startTime = json['start_time'];
     durationTime = json['duration_time'];
+    image = json['image'];
     invoiceDetail = json['invoice_detail'] != null
         ? InvoiceDetail.fromJson(json['invoice_detail'])
         : null;
@@ -122,6 +125,7 @@ class SubscribedPlans {
     data['detail_sno'] = detailSno;
     data['sessions'] = sessions;
     data['start_time'] = startTime;
+    data['image'] = image;
     data['duration_time'] = durationTime;
     if (invoiceDetail != null) {
       data['invoice_detail'] = invoiceDetail!.toJson();

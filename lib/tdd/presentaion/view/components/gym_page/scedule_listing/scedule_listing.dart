@@ -50,9 +50,9 @@ class _SceduleListingState extends State<SceduleListing> {
   Widget build(BuildContext context) {
 
 
-    return  /*SfCalendar();*/ProjectScafold(child: // Generated code for this Column Widget...
-    // Generated code for this Column Widget...
-    SceduleContainer(
+    return  /*SfCalendar();*/ProjectScafold(
+        appBar: AppBar(),
+        child:  SceduleContainer(
         builder: (context,store,mutation) {
           final scedule = store.scedules;
           // return Container();

@@ -1,5 +1,6 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_me_v2/core/usecases/usecase.dart';
 import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:cloud_me_v2/tdd/data/models/api/scdule/scedule_api.dart';
@@ -129,7 +130,7 @@ class _DashBoardState extends State<DashBoard> {
                               ),
                             ),
                           ],
-                        ):Center(
+                        ):(dashboard?.subscribedPlans!=null&&dashboard!.subscribedPlans!.isNotEmpty)?Center(
                           child: Column(
                             children: [
                               Padding(
@@ -162,14 +163,47 @@ class _DashBoardState extends State<DashBoard> {
                               )
                             ],
                           ),
+                        ):Center(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Looks Like You Didn't Purchased Any Plans",
+                                  style: FlutterFlowTheme.of(context).bodyMedium,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: ()=> navigate.push(context, name:Routename.home,parms:{'page':BotemNavigations.plans.name}),
+                                child: Container(
+                                  height: 32,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context).primaryText,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                                    child: Text(
+                                      "Select Plans",
+                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                        fontFamily: 'Readex Pro',
+                                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              if(dashboard?.schedules!=null&&dashboard!.schedules!.isNotEmpty)ScedulesListContainer(dashboard.schedules!),
-              if(dashboard?.subscribedPlans!=null&&dashboard!.subscribedPlans!.isNotEmpty)SubscribePlanWidget(dashboard.subscribedPlans!),
+              if(dashboard?.schedules!=null&&(dashboard!.schedules?.isNotEmpty??false))ScedulesListContainer(dashboard.schedules!),
+              if(dashboard?.subscribedPlans!=null&&(dashboard!.subscribedPlans?.isNotEmpty??false))SubscribePlanWidget(dashboard.subscribedPlans!),
             ],
           ),
         );
@@ -230,8 +264,8 @@ class ScedulesListContainer extends StatelessWidget {
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 1, 1, 1),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-                        child: Image.network(
-                          'https://images.unsplash.com/photo-1574914629385-46448b767aec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8bGF0dGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
+                        child: Image.asset(
+                          'assets/image/gymimage.jpg',
                           width: 70,
                           height: 100,
                           fit: BoxFit.cover,
@@ -254,7 +288,7 @@ class ScedulesListContainer extends StatelessWidget {
                               padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 4, 8, 0),
                               child: AutoSizeText(
-                                'Time: ${e.appointments!.first.startTime} to ${e.appointments!.first.endTime}',
+                                'Time: ${e.appointments?.first.startTime} to ${e.appointments?.first.endTime}',
                                 textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.of(context)
                                     .bodySmall
@@ -331,126 +365,136 @@ class SubscribePlanWidget extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             children: subscribedPlans.map((e) => Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                  boxShadow: const [
-                    BoxShadow(
-                      blurRadius: 7,
-                      color: Color(0x2F1D2429),
-                      offset: Offset(0, 3),
-                    )
-                  ],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.network(
-                          'https://images.unsplash.com/photo-1607109793514-3075a25f6040?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fHBvdXIlMjBvdmVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
-                          width: double.infinity,
-                          height: 140,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              e.invoiceDetail?.invoiceItemDiscription??"Selected Plan",
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineSmall
-                                  .override(
-                                fontFamily: 'Outfit',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'Sessions',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                fontFamily: 'Lexend Deca',
-                                color: const Color(0xFF57636C),
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              'from',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                fontFamily: 'Lexend Deca',
-                                color: const Color(0xFF57636C),
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              'to',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                fontFamily: 'Lexend Deca',
-                                color: const Color(0xFF57636C),
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '${e.sessions}',
-                                style:
-                                FlutterFlowTheme.of(context).titleLarge,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                '${e.fromDate}',
-                                style:
-                                FlutterFlowTheme.of(context).titleSmall,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                '${e.toDate}',
-                                style:
-                                FlutterFlowTheme.of(context).titleSmall,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 4),
+              child: GestureDetector(
+                onTap: (){
+                  navigate.push(context, name: Routename.planDetail,qparms: {
+                    "plan_id":e.itemCode.toString()
+                  });
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 7,
+                        color: Color(0x2F1D2429),
+                        offset: Offset(0, 3),
+                      )
                     ],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: CachedNetworkImage(
+                            imageUrl: e.image??'',
+                            errorWidget: (context,__,___){
+                              return Image.asset('assets/image/gymimage.jpg');
+                            },
+                            width: double.infinity,
+                            height: 140,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                e.invoiceDetail?.invoiceItemDiscription??"Selected Plan",
+                                style: FlutterFlowTheme.of(context)
+                                    .headlineSmall
+                                    .override(
+                                  fontFamily: 'Outfit',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Sessions',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: const Color(0xFF57636C),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                'from',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: const Color(0xFF57636C),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                'to',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: const Color(0xFF57636C),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '${e.sessions}',
+                                  style:
+                                  FlutterFlowTheme.of(context).titleLarge,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '${e.fromDate}',
+                                  style:
+                                  FlutterFlowTheme.of(context).titleSmall,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '${e.toDate}',
+                                  style:
+                                  FlutterFlowTheme.of(context).titleSmall,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

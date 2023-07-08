@@ -33,6 +33,7 @@ class _RoomSelectState extends State<RoomSelect> {
     return GestureDetector(
       onTap: () => {},
       child: Scaffold(
+        appBar: AppBar(),
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
           top: true,
@@ -40,7 +41,7 @@ class _RoomSelectState extends State<RoomSelect> {
             builder: (context,store,status) {
               final roomData = store.rooms;
              final size = MediaQuery.of(context).size;
-              return Column(
+              return (roomData?.roomDetails!=null&&roomData!.roomDetails!.isNotEmpty)?Column(
                 children: [
                   Expanded(
                     child: RotatedBox(
@@ -57,17 +58,17 @@ class _RoomSelectState extends State<RoomSelect> {
                                 child: CachedNetworkImage(
                                   width: double.infinity,
                                   height: double.infinity,
-                                  imageUrl:'https://cloudmedubai2020diag.blob.core.windows.net/cloudmeimages2020/storage${roomData?.roomDetails?.first.layout}',
+                                  imageUrl:roomData.roomDetails?.firstOrNull()!=null?'https://cloudmedubai2020diag.blob.core.windows.net/cloudmeimages2020/storage${roomData.roomDetails?.firstOrNull().layout}':'',
                                   fit: BoxFit.fill,
                                 ),
                               ),
-                                ...roomData?.roomSpotDetails?.map((e) => Positioned(
+                                ...roomData.roomSpotDetails?.map((e) => Positioned(
                                   top: (e.top.parseDouble??0)*.39,
                                   left: (e.left.parseDouble??0)*.54,
                                   child: GestureDetector(
                                     onTap: () {
                                       selectedRoom.value = e.index??"0";
-                                    selectedRoom.notifyListeners();
+                                      selectedRoom.notifyListeners();
                                     },
                                     child: Card(
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -87,25 +88,29 @@ class _RoomSelectState extends State<RoomSelect> {
                                 Positioned(
                                   bottom: 1,
                                   right: 1,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      // selectedRoom.value = e.index??"0";
-                                      // selectedRoom.notifyListeners();
-
-                                    },
-                                    child: Card(
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      color:FlutterFlowTheme.of(context).secondaryBackground,
-                                      elevation: 4,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                                        child: Text('Continue',style: FlutterFlowTheme.of(context).bodyMedium,
+                                  child: Builder(
+                                    builder: (context) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          // selectedRoom.value = e.index??"0";
+                                          // selectedRoom.notifyListeners();
+                                          sl<RoomSceduleEvent>().bookMat(context,room:selectedRoom.value,classId:store.scedules.where((element) => element.room_id == widget.roomId).firstOrNull().id.toString());
+                                        },
+                                        child: Card(
+                                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                                          color:FlutterFlowTheme.of(context).secondaryBackground,
+                                          elevation: 4,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+                                            child: Text('Continue',style: FlutterFlowTheme.of(context).bodyMedium,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
+                                      );
+                                    }
                                   ),
                                 )
                               ]
@@ -116,7 +121,7 @@ class _RoomSelectState extends State<RoomSelect> {
                     ),
                   ),
                 ],
-              );
+              ):const Center(child: Text("No Room Addded"),);
             },
           ),
         ),

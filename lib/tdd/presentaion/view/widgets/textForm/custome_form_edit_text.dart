@@ -76,8 +76,7 @@ class PhoneNumberContainer extends StatelessWidget {
           ),
           style: FlutterFlowTheme.of(context).bodyMedium,
           keyboardType: TextInputType.phone,
-          validator:
-          GetUserController.phoneNumberControllerValidator?.asValidator(context),
+          validator:GetUserController.phoneNumberControllerValidator?.asValidator(context),
         ),
       ),
     );

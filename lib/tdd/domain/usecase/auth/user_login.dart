@@ -3,6 +3,8 @@ import 'package:cloud_me_v2/core/error/failuers.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/usecases/usecase.dart';
+import '../../../../core/util/config/user_config.dart';
+import '../../../../injection_container.dart';
 import '../../../data/models/api/user/user_data.dart';
 import '../../repositories/repository_provider.dart';
 
@@ -29,7 +31,7 @@ class OtpUseCase extends UseCase<Map<String,dynamic>,OTPData>{
     if(data.otp!=null){
        result =  await repo.getRequest(Params(uri: Uri.parse("verify_otp"), methed: Methed.Post,
           data: {
-            'cus_id':data.phone,
+            'cus_id':sl<Configration>().custId,
             'otp':data.otp,
             // 'license_key':data.key,
           }));

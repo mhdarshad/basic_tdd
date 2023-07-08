@@ -6,13 +6,15 @@ import '../../../../tdd/presentaion/modules/notifier/error/error_notifier_contai
 import '../flutter_flow/flutter_flow_theme.dart';
 
 class ProjectScafold extends StatefulWidget {
-   ProjectScafold({
+   const ProjectScafold({
     super.key,
     required this.child,  this.displayLogoHead = false,
+     this.appBar,
   });
 
   final Widget child;
   final bool displayLogoHead;
+  final AppBar? appBar;
   static Map<String,AnimationInfo> animationsMap = {
     'containerOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -103,6 +105,7 @@ class _ProjectScafoldState extends State<ProjectScafold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: widget.appBar,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       body: Stack(
         // mainAxisSize: MainAxisSize.max,

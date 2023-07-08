@@ -26,7 +26,8 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
-    return ProjectScafold(displayLogoHead:true,child:Padding(
+    return ProjectScafold(displayLogoHead:true,
+    child:Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -134,9 +135,7 @@ class _SignUpFormState extends State<SignUpForm> {
                               children: [
                                 Text(
                                   store!=null?DateFormat('dd-MM-yyyy').format(store):'Date of Birth',
-                                  style: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
+                                  style: FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Lexend Deca',
                                     color:
                                     FlutterFlowTheme.of(context).secondaryText,
@@ -210,7 +209,21 @@ class _SignUpFormState extends State<SignUpForm> {
               text: 'Sign Up',
             ),
           ),
-        // Padding(
+          GestureDetector(
+            onTap: (){
+              navigate.pop(context);
+            },
+            child: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 24),
+              child: Text(
+                'Sign in',
+                textAlign: TextAlign.center,
+                style: FlutterFlowTheme.of(context).labelMedium,
+              ),
+            ),
+          )
+
+          // Padding(
           //             padding: const EdgeInsets.all(8.0),
           //             child: ProjectExpansion(
           //               title: 'Personal Details',

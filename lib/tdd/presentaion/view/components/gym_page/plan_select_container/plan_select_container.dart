@@ -30,9 +30,17 @@ class _PlanSelectListState extends State<PlanSelectList> {
       builder: (BuildContext context, ProjectStore store, VxStatus state) {
         return ListView(
           children:  store.plans.map((e) =>
-             PlansListing(title: e.groupName??'', children: e.plans.map((e) =>  GestureDetector(onTap:()=>navigate.push(context, name: Routename.trainers,qparms: {
-               'item_code':e.itemCode.toString()
-             },parms: stored.pathParameters??{}),child: CardListContaint(title:e.itemDescription, discription: e.itemDescription, price: e.itemPrice.toString(),))).toList(),),
+              PlansListing(title: e.groupName??'', children: e.plans.map((e) =>  GestureDetector(onTap:() {
+                store.selectedPlans = e;
+                if(e.register_trainer==1){
+                  navigate.push(context,
+                      name: Routename.trainers,
+                      qparms: {'item_code': e.itemCode.toString()},
+                      parms: stored.pathParameters ?? {});
+                }else{
+                  navigate.push(context, name: Routename.checkout);
+                }
+              },child: CardListContaint(title:e.itemDescription, discription: e.itemDescription, price: e.itemPrice.toString(), image: e.image??'',))).toList(),),
           ).toList() ,
         );
       },

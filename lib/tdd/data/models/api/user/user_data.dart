@@ -31,19 +31,24 @@ class UserAcsessData {
   UserAcsessData({
     required this.customer,
     required this.customerAuth,
+    required this.customerID,
   });
+
   late final Customer customer;
-  late final String customerAuth;
+  late final String? customerAuth;
+  late final int? customerID;
 
   UserAcsessData.fromJson(Map<String, dynamic> json){
     customer = Customer.fromJson(json['customer']);
     customerAuth = json['customer_auth'];
+    customerID = json['customer_id'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['customer'] = customer.toJson();
     _data['customer_auth'] = customerAuth;
+    _data['customer_id'] = customerID;
     return _data;
   }
 }

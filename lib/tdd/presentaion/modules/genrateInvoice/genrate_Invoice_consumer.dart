@@ -1,3 +1,4 @@
+import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/vx_store.dart';
@@ -5,9 +6,11 @@ import 'package:velocity_x/velocity_x.dart';
 import 'genrate_Invoice_controller.dart';
 
 class GentrateInvoiceConteainer extends StatelessWidget {
-  const GentrateInvoiceConteainer({super.key, required this.builder});
+  const GentrateInvoiceConteainer({super.key, required this.builder, required this.errorBuilder, required this.initialState});
 
   final Widget Function(BuildContext context, ProjectStore store, VxStatus state) builder;
+  final Widget Function(BuildContext context, ProjectStore store, VxStatus state) errorBuilder;
+  final Widget Function(BuildContext context, ProjectStore store, VxStatus state) initialState;
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +27,17 @@ class GentrateInvoiceConteainer extends StatelessWidget {
           switch (state!) {
             case VxStatus.none:
             // TODO: Handle this case.
-              break;
+            return initialState(context,store,state);
             case VxStatus.loading:
             // TODO: Handle this case.
-              break;
+            return const Center(child: CircularProgressIndicator(),);
             case VxStatus.success:
             // TODO: Handle this case.
-              break;
+              return builder(context, store, state);
             case VxStatus.error:
-            // TODO: Handle this case.
-              break;
+              return errorBuilder(context, store, state);
           }
-          return builder(context, store, state);
+
         }
     );
   }

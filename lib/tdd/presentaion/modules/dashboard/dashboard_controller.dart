@@ -13,7 +13,6 @@ class   DashboardEvent extends LogicHandler<UseCaseData, NoPrams>{
     // TODO: implement call
  return  PlansListMutation(usecase, data);
   }
-
 }
 class PlansListMutation extends EventMutations<NoPrams>  {
   UseCaseData usecase;
@@ -22,7 +21,6 @@ class PlansListMutation extends EventMutations<NoPrams>  {
   @override
   perform() async {
     final request = await usecase(data:data);
-
     if(!request.isLeft()){
       if (kDebugMode) {
         print("logged in");

@@ -39,7 +39,7 @@ Map<BotemNavigations,Map<String,dynamic>> navigations= {
   BotemNavigations.scedule:{
     'icon':Icons.event_busy,
     'label':"Scedule",
-    'page':const ClassList()
+    'page':const SceduleListing()
   }
 };
 

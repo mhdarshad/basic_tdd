@@ -16,7 +16,6 @@ class PlansUseCase extends UseCase<List<PlanDatas>,NoPrams>{
   Future<Either<Failure, List<PlanDatas>>> call({required NoPrams data}) async{
     final result =  await repo.getRequest(Params(uri: Uri.parse("all_plan"), methed: Methed.Get));
     return result.fold((l) => Left(l), (r) {
-
       return  Right((r as List).map((e) => PlanDatas.fromJson(e)).toList());
     });
   }

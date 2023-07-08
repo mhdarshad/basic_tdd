@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_me_v2/tdd/data/models/api/invoice/purchase_invoce_data.dart';
+import 'package:cloud_me_v2/tdd/data/models/api/pland/plans_trainer_data.dart';
 import 'package:cloud_me_v2/tdd/data/models/api/scdule/room_scedule.dart';
 import 'package:cloud_me_v2/tdd/data/models/api/scdule/scedule_api.dart';
 import 'package:cloud_me_v2/tdd/data/models/api/trainers/trainers_data.dart';
@@ -18,14 +19,18 @@ class ProjectStore extends VxStore{
   String? user_type ;
 
   List<PlanDatas> plans = [];
+ Plans? selectedPlans;
   Map<String,dynamic>? pathParameters;
  DashBoardData? dashboard;
  List<Scedule> scedules = [];
  List<PersonalTrainerData>? trainerData;
+ PersonalTrainerData? selectedtrainer;
   PurchaseInvoiceData? purchaseInvoiceData ;
  late Customer userdata;
 
   RoomSceduels? rooms;
+
+  PlansAndTrainerData? plandata;
 
 }
 enum UpdatedFrom{

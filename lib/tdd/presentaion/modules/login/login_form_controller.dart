@@ -2,11 +2,13 @@
 
 import 'package:cloud_me_v2/core/cripto_algo.dart';
 import 'package:cloud_me_v2/rought_genrator.dart';
+import 'package:cloud_me_v2/tdd/data/models/exception_modle.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../../../core/error/exceptions.dart';
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/config/user_config.dart';
@@ -99,33 +101,44 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
 class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
   UseCase usecase;
   GetUserEvents(this.usecase, AuthParamsAbstarct data) : super(data);
-
+  bool otpVerified= false;
   @override
   perform() async {
     final request = await usecase(data:data);
 
-    if(usecase  is OtpUseCase ){
-      request.forEach((r) {
-        if (kDebugMode) {
-          print(r['error']);
-        }
-      });
+    if(usecase  is OtpUseCase ) {
+      if (!request.isLeft()) {
+        request.forEach((r) {
+          if (kDebugMode) {
+            otpVerified = true;
+            print("customer ID: ${r['customer_id']}");
+            sl<Configration>().custId =r['customer_id'];
+          }
+        });
+      }
+      else{
+        errorToast("Invalid OTP");
+        request.leftMap((l) =>throw l);
+      }
       return;
-    } else if (usecase is LoginUseCase){
+    }
+    else if (usecase is LoginUseCase){
       if(!request.isLeft()){
         if (kDebugMode) {
           print("logged in");
         }
         request.forEach((r) {
           final UserAcsessData result = r;
-          sl<Configration>().custTocken = result.customerAuth.encript;
-          sl<Configration>().custId = result.customer.id;
-          store?.userdata =result.customer;
+          sl<Configration>().custTocken = result.customerAuth?.encript;
+          sl<Configration>().custId = result.customerID;
+          store?.userdata = result.customer;
         });
       }else{
         errorToast("Credential mismatch");
+        request.leftMap((l) => throw l);
       }
-    }else if (usecase is SingUpUseCase){
+    }
+    else if (usecase is SingUpUseCase){
       if(!request.isLeft()){
         if (kDebugMode) {
           print("logged in");
@@ -134,9 +147,14 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
           if (kDebugMode) {
             print(r);
           }
+          final UserAcsessData result = r;
+          sl<Configration>().custTocken = result.customerAuth?.encript;
+          sl<Configration>().custId = result.customer.id;
+          store?.userdata = result.customer;
         });
-      }else{
+      } else{
         errorToast("Credential mismatch");
+        request.leftMap((l) =>throw ServerExceptions(400,ExceptiomModle(message: "Phone Number Already Exist",errors: {})));
       }
     }
   }

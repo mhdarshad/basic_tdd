@@ -20,3 +20,13 @@ class RoomSceduleUseCase extends UseCase<RoomSceduels,String>{
     return result.fold((l) => Left(l), (r) => Right(RoomSceduels.fromJson(r)));
   }
 }
+class BookMatUseCase extends UseCase<bool,Map<String,dynamic>>{
+  DependencyRepostProvider<dynamic> repo;
+  BookMatUseCase({required this.repo});
+
+  @override
+  Future<Either<Failure, bool>> call({required Map<String,dynamic> data}) async{
+    final result =  await repo.getRequest(Params(uri: Uri.parse("change_customer_mat_book"), methed: Methed.Post,data: data));
+    return result.fold((l) => Left(l), (r) => const Right(true));
+  }
+}

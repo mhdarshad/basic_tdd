@@ -15,7 +15,7 @@ class SceduleUseCase extends UseCase<List<Scedule>,NoPrams>{
 
   @override
   Future<Either<Failure, List<Scedule>>> call({required NoPrams data}) async{
-    final result =  await repo.getRequest(Params(uri: Uri.parse("schedule_list"), methed: Methed.Post,
+    final result =  await repo.getRequest(Params(uri: Uri.parse("customer_schedule_list"), methed: Methed.Post,
     data: {
       "cus_id":sl<Configration>().custId
     }));

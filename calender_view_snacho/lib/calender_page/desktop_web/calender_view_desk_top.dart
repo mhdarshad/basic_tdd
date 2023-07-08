@@ -32,10 +32,10 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: ValueListenableBuilder<bool>(
-          valueListenable: controller.isShowFab,
-          builder: (context,value,_)=>value?FloatingActionButton(onPressed: ()=>controller.onClickFabButton(),child: const Icon(Icons.edit_calendar),):const SizedBox.shrink(),
-        ),
+        // floatingActionButton: ValueListenableBuilder<bool>(
+        //   valueListenable: controller.isShowFab,
+        //   builder: (context,value,_)=>value?FloatingActionButton(onPressed: ()=>controller.onClickFabButton(),child: const Icon(Icons.edit_calendar),):const SizedBox.shrink(),
+        // ),
         body:  SfCalendar(
             controller: controller.controller,
             allowDragAndDrop: true,
@@ -50,7 +50,7 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
               // CalendarView.timelineDay,
               // CalendarView.timelineWeek,
               // CalendarView.month,
-              CalendarView.month
+              // CalendarView.month
             ],
             scheduleViewSettings:const ScheduleViewSettings(appointmentTextStyle:TextStyle(color: Colors.black),hideEmptyScheduleWeek: true,monthHeaderSettings: MonthHeaderSettings(height: 60,textAlign: TextAlign.center),weekHeaderSettings: WeekHeaderSettings()),
             // showNavigationArrow: true,

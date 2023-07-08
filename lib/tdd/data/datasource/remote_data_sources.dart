@@ -119,7 +119,7 @@ class RemoteDataSourceImpl implements RemoteDataSource{
       }
       debugPrint("Json Value");
       late Map<String,String> headers = {};
-      headers['Content-Type'] = "application/x-www-form-urlencoded";
+      headers['Content-Type'] = "application/json";
       headers['Accept'] = "application/json";
       if(custauthtocken!=null)headers['X-Customer-Auth'] = '$custauthtocken';
       if(authtocken!=null)headers['Authorization'] = 'Bearer $authtocken';
@@ -127,7 +127,7 @@ class RemoteDataSourceImpl implements RemoteDataSource{
       if(param.methed == Methed.Post){
         responsejs = await http.post(Uri.parse('$baseurl${param.uri}$meadiater'),
             headers: headers,
-            body: param.data!.map((key, value) => MapEntry(key, value.toString()))
+            body: jsonEncode(param.data!.map((key, value) => MapEntry(key, value)))
         );
       }
       else  if(param.methed == Methed.Get){

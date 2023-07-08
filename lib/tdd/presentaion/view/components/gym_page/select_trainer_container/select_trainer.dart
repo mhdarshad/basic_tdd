@@ -1,26 +1,47 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_me_v2/rought_genrator.dart';
+import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/trainer/trainer_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_icon_button.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../injection_container.dart';
+import '../../../../../data/models/api/trainers/trainers_data.dart';
 import '../../../../modules/trainer/trainer_consumer.dart';
 
-  class SelectTrainer extends StatefulWidget {
+  class SelectTrainer extends StatelessWidget {
     final String? planId;
     const SelectTrainer({Key? key, this.planId}) : super(key: key);
 
-    @override
-    State<SelectTrainer> createState() => _SelectTrainerState();
-  }
-
-class _SelectTrainerState extends State<SelectTrainer> {
   @override
+  Widget build(BuildContext context) {
+    return TrainersListtCOntroller(planId,onSelecttrainer: (e){
+      stored.selectedtrainer = e;
+      navigate.push(context, name: Routename.checkout);
+    },);
+  }
+}
+
+class TrainersListtCOntroller extends StatefulWidget {
+  final Function(PersonalTrainerData e) onSelecttrainer;
+  final String? planId;
+
+  const TrainersListtCOntroller(this.planId,{
+    super.key,
+    required this.onSelecttrainer
+  });
+
+  @override
+  State<TrainersListtCOntroller> createState() => _TrainersListtCOntrollerState();
+}
+
+class _TrainersListtCOntrollerState extends State<TrainersListtCOntroller> {
+ @override
   void initState() {
     // TODO: implement initState
-    sl<TrainerEvent>()(data:  PlanFetchData(planId:widget.planId));
-    super.initState();
+   sl<TrainerEvent>()(data:  PlanFetchData(planId:widget.planId));
+   super.initState();
   }
   @override
   Widget build(BuildContext context) {
@@ -89,7 +110,7 @@ class _SelectTrainerState extends State<SelectTrainer> {
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.vertical,
                         children: trainer?.map((e) => GestureDetector(
-                          onTap: ()=>navigate.push(context, name: Routename.checkout),
+                          onTap: () =>widget.onSelecttrainer(e),
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
                             child: Container(
@@ -112,11 +133,14 @@ class _SelectTrainerState extends State<SelectTrainer> {
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(40),
-                                      child: Image.network(
-                                        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
+                                      child: CachedNetworkImage(
+                                        imageUrl:'${e.image}',
+                                        fit: BoxFit.cover,
                                         width: 60,
                                         height: 60,
-                                        fit: BoxFit.cover,
+                                        errorWidget: (contxt,url,data){
+                                          return Image.asset('assets/icons/profile.jpeg');
+                                        },
                                       ),
                                     ),
                                     Expanded(
@@ -144,7 +168,7 @@ class _SelectTrainerState extends State<SelectTrainer> {
                                                   const EdgeInsetsDirectional.fromSTEB(
                                                       12, 0, 0, 0),
                                                   child: Text(
-                                                    '${e.addonItem}',
+                                                    e.itemDescriptionName,
                                                     style:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium,
@@ -155,7 +179,7 @@ class _SelectTrainerState extends State<SelectTrainer> {
                                                   const EdgeInsetsDirectional.fromSTEB(
                                                       4, 0, 0, 0),
                                                   child: Text(
-                                                    'name@domain.com',
+                                                    e.email??'',
                                                     style: FlutterFlowTheme.of(
                                                         context)
                                                         .bodyMedium
@@ -171,6 +195,17 @@ class _SelectTrainerState extends State<SelectTrainer> {
                                             ),
                                           ),
                                         ],
+                                      ),
+                                    ),
+                                    if(e.itprRetlPrice!=0)
+                                    Container(
+                                      width: 100,
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 0),
+                                      child: Text(
+                                        "${e.itprRetlPrice.toString()} AED",
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyLarge,
                                       ),
                                     ),
                                     Card(
@@ -207,7 +242,6 @@ class _SelectTrainerState extends State<SelectTrainer> {
           ),
         );
       }
-    )
-    ;
+    );
   }
 }

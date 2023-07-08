@@ -28,22 +28,30 @@ import 'tdd/data/datasource/local_sql_data_source.dart';
 import 'tdd/data/datasource/remote_data_sources.dart';
 import 'tdd/data/repository/data_layer_repo_impl.dart';
 import 'tdd/domain/repositories/repository_provider.dart';
+import 'tdd/domain/usecase/attadence_transfer/attadence_usecase.dart';
 import 'tdd/domain/usecase/auth/user_login.dart';
 import 'tdd/domain/usecase/dashboard/dashboard_usecase.dart';
 import 'tdd/domain/usecase/db/db_config_usecase.dart';
+import 'tdd/domain/usecase/edit_profile/edit_profile_usecase.dart';
 import 'tdd/domain/usecase/genrateInvoice/trainer_usecase.dart';
+import 'tdd/domain/usecase/plan_and_trainer_detail/plan_and_trainer_usecase.dart';
 import 'tdd/domain/usecase/plans/plans_usecase.dart';
 import 'tdd/domain/usecase/room_scedule/room_scedule_usecase.dart';
 import 'tdd/domain/usecase/scedule/scedule_usecase.dart';
 import 'tdd/domain/usecase/trainer/trainer_usecase.dart';
+import 'tdd/domain/usecase/update_trainer_usecase/update_trainer_usecase.dart';
+import 'tdd/presentaion/modules/attaindence/Attaidence_controller.dart';
 import 'tdd/presentaion/modules/database_module/db_config_controller.dart';
 import 'tdd/presentaion/modules/database_module/do_congig_module.dart';
+import 'tdd/presentaion/modules/edit_profile/edit_profile_module_controller.dart';
 import 'tdd/presentaion/modules/genrateInvoice/genrate_Invoice_controller.dart';
 import 'tdd/presentaion/modules/login/login_form_controller.dart';
+import 'tdd/presentaion/modules/plan_trainer_data/plan_trainer_detail_controller.dart';
 import 'tdd/presentaion/modules/plans/plans_list_controller.dart';
 import 'tdd/presentaion/modules/room_scedule/room_scedule_controller.dart';
 import 'tdd/presentaion/modules/scedule/scedule_controller.dart';
 import 'tdd/presentaion/modules/trainer/trainer_controller.dart';
+import 'tdd/presentaion/modules/update_trainer/updateTrainer_controller.dart';
 
 
 final sl = GetIt.instance;
@@ -61,12 +69,16 @@ _bloc(){
 
   sl.registerFactory(() => ProductEvent(ProductUseCase( repo: sl(),),));
   sl.registerFactory(() => PlansListEvent(PlansUseCase( repo: sl(),),));
-  sl.registerFactory(() => RoomSceduleEvent(RoomSceduleUseCase( repo: sl(),)));
+  sl.registerFactory(() => AttaidenceEvent(AttaidenceUseCase( repo: sl(),),));
+  sl.registerFactory(() => RoomSceduleEvent(RoomSceduleUseCase( repo: sl(),),BookMatUseCase(repo: sl())));
   sl.registerFactory(() => SceduleEvent(SceduleUseCase( repo: sl(),),DashBoardUseCase( repo: sl(),)));
   sl.registerFactory(() => TrainerEvent(TrainersUseCase( repo: sl(),),));
   sl.registerFactory(() => DashboardEvent(DashBoardUseCase( repo: sl(),),));
   sl.registerFactory(() => CheckoutEvent(DashBoardUseCase( repo: sl(),),));
   sl.registerFactory(() => GenrateInvoiceEvent(GenrateInvoiceUseCase( repo: sl(),),));
+  sl.registerFactory(() => EditProfileModuleEvent(EditProfileModuleUseCase( repo: sl(),),));
+  sl.registerFactory(() => PlanTrainerDetailEvent(PlanTrainerDetailUseCase( repo: sl(),),));
+  sl.registerFactory(() => UpdatetrainerEvent(UpdatetrainerUseCase( repo: sl(),),));
   sl.registerFactory(() => GetUserController(
       LoginUseCase( repo: sl(),),
       OtpUseCase(repo:sl()),
