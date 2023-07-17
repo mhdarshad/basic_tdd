@@ -48,18 +48,14 @@ class PurchaseInvoiceData {
     cartCurrency = json['cartCurrency'];
     cartID = json['cartID'];
     profileId = json['profileId'].toString();
-    tranCurrency = json['tranCurrency'];
-    cartAmount = json['cartAmount'];
-    paymentInfo = json['paymentInfo'] != null
-        ? PaymentInfo.fromJson((json['paymentInfo']).map((key, value) => MapEntry(key.toString(), value  as dynamic)))
-        : null;
+    tranCurrency = json['tranCurrency']??json['e'];
+    cartAmount = json['cartAmount']??json['f'];
+    paymentInfo =  PaymentInfo.fromJson((json['paymentInfo']??json['i']).map((key, value) => MapEntry(key.toString(), value  as dynamic)));
     token = json['token'];
     serviceId = json['serviceId'].toString();
     isPending = json['isPending'];
     transactionReference = json['transactionReference'];
-    paymentResult = json['paymentResult'] != null
-        ? PaymentResult.fromJson(json['paymentResult'].map((key, value) => MapEntry(key.toString(), value  as dynamic)))
-        : null;
+    paymentResult =  PaymentResult.fromJson((json['paymentResult']??json['h']).map((key, value) => MapEntry(key.toString(), value  as dynamic)));
     trace = json['trace'];
     transactionType = json['transactionType'];
     billingDetails = json['billingDetails'] != null
@@ -67,7 +63,7 @@ class PurchaseInvoiceData {
         : null;
     tranTotal = json['tranTotal'];
     merchantId = (json['merchantId']??json['a']).toString();
-    isSuccess = json['isSuccess'];
+    isSuccess = json['isSuccess']??json['p'];
     isOnHold = json['isOnHold'];
     cartDescription = json['cartDescription'];
     isAuthorized = json['isAuthorized'];
@@ -124,12 +120,12 @@ class PaymentInfo {
         this.expiryYear});
 
   PaymentInfo.fromJson(Map<dynamic, dynamic> json) {
-    paymentDescription = json['paymentDescription'];
-    cardType = json['cardType'];
-    paymentMethod = json['payment_method'];
+    paymentDescription = json['paymentDescription']??json['c'];
+    cardType = json['cardType']??json['a'];
+    paymentMethod = json['payment_method']??json['d'];
     expiryMonth = json['expiryMonth'].toString();
-    cardScheme = json['cardScheme'];
-    expiryYear = json['expiryYear'].toString();
+    cardScheme = json['cardScheme']??json['e'];
+    expiryYear = (json['expiryYear']??json['f']).toString();
   }
 
   Map<String, dynamic> toJson() {

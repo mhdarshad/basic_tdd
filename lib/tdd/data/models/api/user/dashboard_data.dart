@@ -5,14 +5,16 @@ import '../../db/customer.dart';
 import 'user_data.dart';
 
 class DashBoardData {
-  // Customer? customer;
+  Customer? customer;
   List<SubscribedPlans>? subscribedPlans;
   List<Scedule>? schedules;
 
   DashBoardData({this.subscribedPlans, this.schedules});
 
   DashBoardData.fromJson(Map<String, dynamic> json) {
-    // customer = Customer.fromJson(json['customer']);
+    if(json['customer']!=null) {
+      customer = Customer.fromJson(json['customer']);
+    }
     if (json['subscribed_plans'] != null) {
       subscribedPlans = <SubscribedPlans>[];
       json['subscribed_plans'].forEach((v) {
@@ -29,7 +31,7 @@ class DashBoardData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    // data['customer'] = customer;
+    data['customer'] = customer;
     if (subscribedPlans != null) {
       data['subscribed_plans'] =
           subscribedPlans!.map((v) => v.toJson()).toList();
@@ -101,7 +103,7 @@ class SubscribedPlans {
     sessions = json['sessions'];
     startTime = json['start_time'];
     durationTime = json['duration_time'];
-    image = json['image'];
+    image = json['small_image'];
     invoiceDetail = json['invoice_detail'] != null
         ? InvoiceDetail.fromJson(json['invoice_detail'])
         : null;
@@ -125,7 +127,7 @@ class SubscribedPlans {
     data['detail_sno'] = detailSno;
     data['sessions'] = sessions;
     data['start_time'] = startTime;
-    data['image'] = image;
+    data['small_image'] = image;
     data['duration_time'] = durationTime;
     if (invoiceDetail != null) {
       data['invoice_detail'] = invoiceDetail!.toJson();

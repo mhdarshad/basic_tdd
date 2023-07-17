@@ -12,12 +12,15 @@ class EditProfileModuleUseCase {
   EditProfileModuleUseCase({required this.repo});
   call({required EditProfileModuleDatas data}) async {
     final result =  await repo.getRequest(Params(uri: Uri.parse("customer_profile_edit"), methed: Methed.Post,data: {
-      "cus_id":"${sl<Configration>().custId}",
+        "cus_id": "${sl<Configration>().custId}",
         "cust_name" : data.name,
         "cust_country" : data.contry,
-        "cust_add":data.address,
+        "cust_add": data.address,
         "cust_state" : data.state,
-        "emirates_id" :data.emeratesId
+        "emirates_id" :data.emeratesId,
+        "cust_emergency_number" :data.emergencyNumber,
+        "cust_emergency_address" :data.emergencyAddress,
+        "cust_image" :data.profilePic,
     }));
     return result.fold((l) => Left(l), (r) {
       if (kDebugMode) {

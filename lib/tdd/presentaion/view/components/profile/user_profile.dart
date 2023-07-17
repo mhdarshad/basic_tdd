@@ -5,6 +5,7 @@ import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
 import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:tekartik_common_utils/common_utils_import.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/util/config/user_config.dart';
@@ -35,7 +36,7 @@ class UserProfile extends StatelessWidget {
           ),
           onPressed: () {
            navigate.pushReplace(context, name: Routename.home,parms: {
-             'page':BotemNavigations.dashboard.name
+             'page':BottemNavigationsData.dashboard.name
            });
           },
         ),
@@ -89,10 +90,11 @@ class UserProfile extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                             child: CachedNetworkImage(
                               imageUrl:
-                              'https://img.freepik.com/free-icon/user_318-563642.jpg?w=360',
+                              stored.userdata?.custImage??'',
                               width: 60,
                               height: 60,
                               fit: BoxFit.cover,
+                              errorWidget: (context,url,_)=>Image.asset('assets/icons/user_profile.png'),
                             ),
                           ),
                         ),
@@ -105,14 +107,14 @@ class UserProfile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              stored.userdata.custName,
+                              stored.userdata?.custName??'',
                               style: FlutterFlowTheme.of(context).headlineSmall,
                             ),
                             Padding(
                               padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                               child: Text(
-                                stored.userdata.email,
+                                stored.userdata?.email??'',
                                 style: FlutterFlowTheme.of(context).labelSmall,
                               ),
                             ),
@@ -280,6 +282,12 @@ class UserProfile extends StatelessWidget {
             // ),
             ListIconButton(icon:Icons.account_circle_outlined,text:'Edit Profile',onClick:() async {
               navigate.push(context, name: Routename.editprofile);
+            },),
+            ListIconButton(icon:Icons.person,text:'Professional Details',onClick:() async {
+              navigate.push(context, name: Routename.officialDetails);
+            },),
+            ListIconButton(icon:Icons.credit_card,text:'Emirate id Details',onClick:() async {
+              navigate.push(context, name: Routename.editEmiratesid);
             },),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),

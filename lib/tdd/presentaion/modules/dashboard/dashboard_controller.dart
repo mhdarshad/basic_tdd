@@ -24,9 +24,13 @@ class PlansListMutation extends EventMutations<NoPrams>  {
     if(!request.isLeft()){
       if (kDebugMode) {
         print("logged in");
+
       }
       request.forEach((r) {
         store?.dashboard = r;
+        if(r.customer!=null) {
+          store?.userdata = r.customer;
+        }
       });
     }
   }

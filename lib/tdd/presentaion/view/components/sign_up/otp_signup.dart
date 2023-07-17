@@ -7,9 +7,11 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../../../core/util/config/user_config.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_widgets.dart';
 import '../../../../../injection_container.dart';
+import '../../../../domain/usecase/auth/user_login.dart';
 import '../../../modules/login/login_form_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -49,7 +51,19 @@ class _SignupOtpState extends State<SignupOtp> {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              IconButton(onPressed: (){
+                if(otpSent){
+                      GetUserController.showOtp.value = false;
+                      GetUserController.showOtp.notifyListeners();
+                    }else{
+                  navigate.pop(context);
+                }
+                  }, icon: const Icon(Icons.arrow_back),),
               PhoneEditText(isReadOnly: otpSent,),
+              if(otpSent)
+              TextButton(onPressed: (){
+                sl<GetUserController>().otpReSend();
+              }, child: const Text("Resend OTP!")),
               otpSent?Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 32),
                 child: PinCodeTextField(
@@ -104,8 +118,13 @@ class _SignupOtpState extends State<SignupOtp> {
                       if(status == VxStatus.success){
                         if((store as GetUserEvents).otpVerified) {
                           navigate.pushReplace(context, name: Routename.home,parms: {
-                            'page': BotemNavigations.dashboard.name
+                            'page': BottemNavigationsData.dashboard.name
                           });
+                        }else{
+                          print("Sucsess");
+                          if((store).usecase is SingUpUseCase&&sl<Configration>().cid !=null) {
+                            GetUserController.setOtpvalue(true);
+                          }
                         }
                       }else if(status == VxStatus.error){
                         GetUserController.initState(context);

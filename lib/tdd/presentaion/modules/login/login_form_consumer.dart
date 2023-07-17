@@ -19,15 +19,15 @@ class LoginFormConsumer extends StatelessWidget {
         GetUserEvents:(context,store, {VxStatus? status}){
           if((store as GetUserEvents).usecase  is LoginUseCase){
             if(status == VxStatus.success){
-              navigate.push(context, name: Routename.home,parms: {
-                'page':BotemNavigations.dashboard.name
+              navigate.pushReplace(context, name: Routename.home,parms: {
+                'page':BottemNavigationsData.dashboard.name
               });
             }
           }
           if((store).usecase  is OtpUseCase){
             if(status == VxStatus.success){
-              navigate.push(context, name: Routename.home,parms: {
-                'page':BotemNavigations.dashboard.name
+              navigate.pushReplace(context, name: Routename.home,parms: {
+                'page':BottemNavigationsData.dashboard.name
               });
             }
           }

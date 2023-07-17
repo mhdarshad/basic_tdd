@@ -23,6 +23,7 @@ import 'core/util/config/user_config.dart';
 import 'core/util/input_data_converter.dart';
 import 'package:http/http.dart' as http;
 
+import 'core/util/presentation/constants/ic_constants.dart';
 import 'tdd/data/datasource/local_data_source.dart';
 import 'tdd/data/datasource/local_sql_data_source.dart';
 import 'tdd/data/datasource/remote_data_sources.dart';
@@ -157,6 +158,12 @@ _external()async {
      sl<Configration>().tocken = const String.fromEnvironment(Config.CLIENT_ID).encript;
   if (kDebugMode) {
     print("Token: ${sl<Configration>().tocken}");
+  }
+  if(sl<SharedPreferences>().containsKey(SFkeys.token)){
+    sl<Configration>().custTocken = sl<SharedPreferences>().getString(SFkeys.token);
+  }
+  if(sl<SharedPreferences>().containsKey(SFkeys.UID)){
+    sl<Configration>().custId =  sl<SharedPreferences>().getString(SFkeys.UID);
   }
   if(sl<Configration>().dbData!=null){
     /// Providing the table name to fetch from SQL

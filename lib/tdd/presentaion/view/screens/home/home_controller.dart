@@ -9,7 +9,7 @@ import '../../components/gym_page/scedule_listing/scedule_listing.dart';
 class DashBoardController {
   static List<BottomNavigationBarItem> navigationItems = navigations.keys.map((e) => bottomNavigationBarItem(e)).toList();
 
- static BottomNavigationBarItem bottomNavigationBarItem(BotemNavigations item) {
+ static BottomNavigationBarItem bottomNavigationBarItem(BottemNavigationsData item) {
    return  BottomNavigationBarItem(icon: Icon(navigations[item]!['icon'] as IconData),label: navigations[item]!['label'] as String);
  }
 
@@ -25,24 +25,24 @@ class DashBoardController {
    return navigations[navigations.keys.toList().where((element) => element.name == pageName).first]?['page'] as Widget;
   }
 }
-Map<BotemNavigations,Map<String,dynamic>> navigations= {
-  BotemNavigations.dashboard:{
+Map<BottemNavigationsData,Map<String,dynamic>> navigations= {
+  BottemNavigationsData.dashboard:{
     'icon':Icons.home,
     'label':"DashBoard",
     'page':const DashBoard()
   },
-  BotemNavigations.plans:{
+  BottemNavigationsData.plans:{
     'icon':Icons.event_busy,
     'label':"Plan",
     'page':const PlanSelectList()
   },
-  BotemNavigations.scedule:{
+  BottemNavigationsData.scedule:{
     'icon':Icons.event_busy,
     'label':"Scedule",
     'page':const SceduleListing()
   }
 };
 
-enum BotemNavigations{
+enum BottemNavigationsData{
   dashboard,plans,scedule
 }

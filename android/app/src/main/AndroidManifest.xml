@@ -2,7 +2,7 @@
     package="com.cloudme.cloud_me_v2">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="cloud_me_v2"
+        android:label="Raising Gym"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

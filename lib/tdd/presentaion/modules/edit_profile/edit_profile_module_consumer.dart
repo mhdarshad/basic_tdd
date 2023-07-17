@@ -1,3 +1,5 @@
+import 'package:cloud_me_v2/rought_genrator.dart';
+import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/vx_store.dart';
@@ -16,7 +18,9 @@ class EditProfileModuleContainer extends StatelessWidget {
           if (status == VxStatus.error) {
             VxToast.show(ctx, msg: (store as EditProfileModuleMutation).err ?? '');
           } else if (status == VxStatus.success) {
-
+            navigate.push(context, name: Routename.home,parms: {
+              'page':BottemNavigationsData.dashboard.name
+            });
           }
         }
         }, mutations: const {EditProfileModuleMutation},

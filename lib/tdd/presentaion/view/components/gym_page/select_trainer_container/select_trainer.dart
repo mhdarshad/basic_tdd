@@ -26,10 +26,11 @@ import '../../../../modules/trainer/trainer_consumer.dart';
 class TrainersListtCOntroller extends StatefulWidget {
   final Function(PersonalTrainerData e) onSelecttrainer;
   final String? planId;
+  final int? selectedtrainerId;
 
   const TrainersListtCOntroller(this.planId,{
     super.key,
-    required this.onSelecttrainer
+    required this.onSelecttrainer, this. selectedtrainerId
   });
 
   @override
@@ -47,7 +48,7 @@ class _TrainersListtCOntrollerState extends State<TrainersListtCOntroller> {
   Widget build(BuildContext context) {
     return TrainerContainer(
       builder: (context,storage,state) {
-        final trainer = storage.trainerData;
+        final trainer = storage.trainerData?.where((element) => element.addonItem!=(widget.selectedtrainerId));
         return GestureDetector(
           // onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(

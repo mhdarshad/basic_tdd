@@ -66,7 +66,7 @@ class BookMatMutation extends EventMutations<Map<String,dynamic>>  {
       }
       successToast("Booked Success");
       request.forEach((r) => navigate.pushReplace(context, name: Routename.home,parms: {
-        'page':BotemNavigations.scedule.name
+        'page':BottemNavigationsData.scedule.name
       }));
       return;
     }else{

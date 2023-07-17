@@ -1,12 +1,14 @@
 
 
 import 'package:cloud_me_v2/core/cripto_algo.dart';
+import 'package:cloud_me_v2/core/util/presentation/constants/ic_constants.dart';
 import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:cloud_me_v2/tdd/data/models/exception_modle.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/event/event_hanling.dart';
@@ -74,14 +76,12 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
     sl<GetUserController>()(data:LoginData(username: phoneNumberController?.text??'', password:  passwordController?.text??"", key: "key") );
   }
   signUp(){
-    showOtp.value = true;
-    showOtp.notifyListeners();
     return GetUserEvents(signUpUseCase, SignUpData(userFirstname: firstNameController?.text??'',userSecondname:lastNameController?.text??"", password:  passwordController?.text??"",  dateOfBirth: dateController.value.toString(),  gender: dropDownValue.value??'', emaile: emailAddressController?.text??'', phone: phoneNumberController?.value.text??'', phoneCode: contryCode));
   }
 
   static void initState(BuildContext context) {
     passwordVisibility.value = false;
-    contryCode = '+91' ;
+    contryCode = '+971' ;
     phoneNumberController ??= TextEditingController();
     pinCodeController = TextEditingController();
     passwordController ??= TextEditingController();
@@ -96,6 +96,13 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
   }
 
   verifyOTP() => GetUserEvents(verifyOtpUseCase,OTPData(phone: phoneNumberController?.text??'',otp: pinCodeController?.text));
+
+  static void setOtpvalue(bool bool) {
+    showOtp.value = true;
+    showOtp.notifyListeners();
+  }
+
+  void otpReSend() => GetUserEvents(verifyOtpUseCase,OTPData(phone: phoneNumberController?.text??''));
 }
 
 class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
@@ -109,11 +116,12 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
     if(usecase  is OtpUseCase ) {
       if (!request.isLeft()) {
         request.forEach((r) {
+          otpVerified = true;
           if (kDebugMode) {
-            otpVerified = true;
             print("customer ID: ${r['customer_id']}");
-            sl<Configration>().custId =r['customer_id'];
           }
+          sl<Configration>().custTocken = r['customer_auth'].toString().encript;
+          sl<Configration>().custId =r['customer_id'].toString();
         });
       }
       else{
@@ -129,13 +137,15 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
         }
         request.forEach((r) {
           final UserAcsessData result = r;
+          sl<SharedPreferences>().setString(SFkeys.token, result.customerAuth?.encript??'');
+          sl<SharedPreferences>().setString(SFkeys.UID, result.customerID.toString());
+          sl<Configration>().custId = result.customerID.toString();
           sl<Configration>().custTocken = result.customerAuth?.encript;
-          sl<Configration>().custId = result.customerID;
           store?.userdata = result.customer;
         });
       }else{
         errorToast("Credential mismatch");
-        request.leftMap((l) => throw l);
+        // request.leftMap((l) => throw l);
       }
     }
     else if (usecase is SingUpUseCase){
@@ -149,12 +159,13 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
           }
           final UserAcsessData result = r;
           sl<Configration>().custTocken = result.customerAuth?.encript;
-          sl<Configration>().custId = result.customer.id;
+          sl<Configration>().cid = result.customer.id;
           store?.userdata = result.customer;
         });
       } else{
-        errorToast("Credential mismatch");
-        request.leftMap((l) =>throw ServerExceptions(400,ExceptiomModle(message: "Phone Number Already Exist",errors: {})));
+        sl<Configration>().cid = null;
+        errorToast("Phone number already registered");
+        // throw ServerExceptions(400,ExceptiomModle(message: "Phone number already registered",errors: {}));
       }
     }
   }

@@ -156,13 +156,6 @@ class StatusWidget extends StatelessWidget {
                             style: FlutterFlowTheme.of(context).bodyLarge,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                          child: Text(
-                            '\$425.24',
-                            style: FlutterFlowTheme.of(context).labelMedium,
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -183,7 +176,7 @@ class StatusWidget extends StatelessWidget {
                     if (kDebugMode) {
                       print('Button pressed ...');
                       navigate.pushReplace(context, name: Routename.home,parms: {
-                        'page':BotemNavigations.dashboard.name
+                        'page':BottemNavigationsData.dashboard.name
                       });
                     }
                   },

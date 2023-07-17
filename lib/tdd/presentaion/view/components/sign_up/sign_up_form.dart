@@ -205,7 +205,7 @@ class _SignUpFormState extends State<SignUpForm> {
             child: CustomeButton(
               color:FlutterFlowTheme.of(context).primary,
               borderColor: Colors.transparent,
-              onPressed: () => navigate.pushReplace(context, name: Routename.signup),
+              onPressed: () => navigate.push(context, name: Routename.signup),
               text: 'Sign Up',
             ),
           ),

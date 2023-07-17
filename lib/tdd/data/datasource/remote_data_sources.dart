@@ -106,16 +106,14 @@ class RemoteDataSourceImpl implements RemoteDataSource{
         meadiater = "?";
         param.data?.forEach((key, value) {
           if(!meadiater.substring(meadiater.length - 1).contains("?")) {
-            meadiater = meadiater+"&";
+            meadiater = "$meadiater&";
           }
-          meadiater = meadiater+key+"="+'$value';
+          meadiater = "$meadiater$key=$value";
         });
-        debugPrint("$baseurl${param.uri}$meadiater");
+        print("$baseurl${param.uri}$meadiater");
         // final String url = "https://manage.grocbay.com/api/app-manager/get-functionality/${param.uri}";
       }else {
-        if (kDebugMode) {
-          debugPrint("$baseurl${param.uri}${param.data!.map((key, value) => MapEntry(key, value.toString())).toString()}");
-        }
+        print("$baseurl${param.uri}${param.data!.map((key, value) => MapEntry(key, value.toString())).toString()}");
       }
       debugPrint("Json Value");
       late Map<String,String> headers = {};
@@ -138,6 +136,7 @@ class RemoteDataSourceImpl implements RemoteDataSource{
             body: param.data!.map((key, value) => MapEntry(key, value.toString())));
       }
       else  if(param.methed == Methed.Delete){
+
         responsejs = await http.delete(Uri.parse('$baseurl${param.uri}$meadiater'),headers: headers,
           /* body: param.data!.map((key, value) => MapEntry(key, value.toString()))*/
         );
@@ -149,12 +148,15 @@ class RemoteDataSourceImpl implements RemoteDataSource{
       debugPrint("status code ${responses.statusCode }");
       debugPrint("$baseurl${param.uri} parms${param.data.toString()}");*/
       if (responsejs.statusCode == 200) {
-        debugPrint("status: ${responsejs.statusCode} data: ${responsejs.body}");
+        print("status: ${responsejs.statusCode} data: ${responsejs.body}");
         final response = responsejs.body;
-        debugPrint(json.decode(response).toString());
+        if((json.decode(response)["flags"] is Map))
+        if((json.decode(response)["flags"]['signed_out'] as bool?)??true){
+
+        }
         if(json.decode(response)["status"] == 'success'){
           ///if Response is writern [{}]
-          debugPrint("resp type: []");
+          print("resp type: []");
           return RepositoryModel.fromJson(json.decode(response));
 
         }else{
@@ -167,14 +169,12 @@ class RemoteDataSourceImpl implements RemoteDataSource{
           // return RepositoryModel.fromJson(json.decode(response));
         }
       } else {
-        if (kDebugMode) {
-          print("status: ${responsejs.statusCode} error: ${responsejs.body}");
-        }
+        print("status: ${responsejs.statusCode} error: ${responsejs.body}");
         // print(await responses.stream.bytesToString());
         throw ServerExceptions(responsejs.statusCode,ExceptiomModle(message: json.decode(responsejs.body)['messege'],errors: json.decode(responsejs.body)['errors']));
       }
     } on Exception catch (e) {
-      debugPrint("Error while fetching server data: $e");
+      print("Error while fetching server data: $e");
       if(authtocken==null){
         throw ServerExceptions(500,ExceptiomModle(message:'Invalid Authorized For Access'));
       }
@@ -182,5 +182,4 @@ class RemoteDataSourceImpl implements RemoteDataSource{
       // TODO
     }
   }
-
 }

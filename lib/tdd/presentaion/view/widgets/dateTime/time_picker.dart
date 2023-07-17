@@ -38,14 +38,32 @@ class DateRangePicker extends StatelessWidget {
                     color: FlutterFlowTheme.of(context).secondaryText,
                     size: 24,
                   ),
-                  Text(
-                    store!=null?'From : ${DateFormat('dd-MM-yyyy').format(store)} \nTo : ${DateFormat('dd-MM-yyyy').format(store.add(duration))} ':'From : ${DateFormat('dd-MM-yyyy').format(initialTime)} \nTo : ${DateFormat('dd-MM-yyyy').format(initialTime.add(duration))} ',
-                    style: FlutterFlowTheme.of(context).titleSmall.override(
-                      fontFamily: 'Lexend Deca',
-                      color:FlutterFlowTheme.of(context).secondaryText,
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                    ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            store!=null?'From \nTo :':'From : \nTo :  ',
+                            style: FlutterFlowTheme.of(context).titleSmall.override(
+                              fontFamily: 'Lexend Deca',
+                              color:FlutterFlowTheme.of(context).secondaryText,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          Text(
+                            store!=null?'${DateFormat('dd-MM-yyyy').format(store)} \n ${DateFormat('dd-MM-yyyy').format(store.add(duration))} ':'${DateFormat('dd-MM-yyyy').format(initialTime)} \n${DateFormat('dd-MM-yyyy').format(initialTime.add(duration))} ',
+                            style: FlutterFlowTheme.of(context).titleSmall.override(
+                              fontFamily: 'Lexend Deca',
+                              color:FlutterFlowTheme.of(context).secondaryText,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               );

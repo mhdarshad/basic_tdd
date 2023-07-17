@@ -1,3 +1,6 @@
+import 'package:cloud_me_v2/rought_genrator.dart';
+import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
@@ -8,24 +11,23 @@ class UpdatetrainerEvent
   UpdatetrainerEvent(super.usecase);
 
   @override
-  call({required UpdatetrainerDatas data}) {
+  call({required UpdatetrainerDatas data, BuildContext? context}) {
     // TODO: implement call
-    return UpdatetrainerMutation(usecase, data);
+    return UpdatetrainerMutation(usecase,context!, data);
   }
 }
 
 class UpdatetrainerMutation extends EventMutations<UpdatetrainerDatas> {
   UpdatetrainerUseCase usecase;
   String? err;
-  UpdatetrainerMutation(this.usecase, UpdatetrainerDatas data) : super(data);
+  BuildContext? context;
+  UpdatetrainerMutation(this.usecase,this.context, UpdatetrainerDatas data) : super(data);
 
   @override
   perform() async {
     final request = await usecase(data: data);
     if (!request.isLeft()) {
-      if (kDebugMode) {
-        print("logged in");
-      }
+     navigate.pushReplace(context!, name: Routename.home,parms: {'page':BottemNavigationsData.dashboard.name});
       request.forEach((r) {
 
       });

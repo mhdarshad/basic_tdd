@@ -302,20 +302,22 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'core/util/config/user_config.dart';
 import 'injection_container.dart';
+import 'tdd/presentaion/modules/edit_profile/edit_profile_module_controller.dart';
 import 'tdd/presentaion/view/components/gym_page/check_out/check_out.dart';
 import 'tdd/presentaion/view/components/gym_page/payments/payment_confirm_container.dart';
 import 'tdd/presentaion/view/components/gym_page/scedule_listing/scedule_listing.dart';
 import 'tdd/presentaion/view/components/gym_page/select_trainer_container/select_trainer.dart';
-import 'tdd/presentaion/view/components/profile/edit_profile.dart';
+import 'tdd/presentaion/view/components/profile/image_upload_container/edit_profile.dart';
 import 'tdd/presentaion/view/components/profile/user_profile.dart';
 import 'tdd/presentaion/view/components/sign_up/sign_up_form.dart';
+import 'tdd/presentaion/view/components/view_scedule_page/view_scedule_detail.dart';
 import 'tdd/presentaion/view/screens/auth/auth.dart';
 import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
 import 'tdd/presentaion/view/screens/auth/otp_login.dart';
 import 'tdd/presentaion/view/screens/home/dash_board/plan_detail.dart';
 
 enum Routename{
-  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers, paymentStatus, scedule, room, profile, planDetail, editprofile
+  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers, paymentStatus, scedule, room, profile, planDetail, editprofile, officialDetails, editEmiratesid, sceduleDetais
 }
 extension ListToString on List<String> {
   String toRequiredParamsString() {
@@ -340,11 +342,14 @@ extension GoNavigations on Routename{
       case Routename.signup: return  CUri("signup");
       case Routename.form:return  CUri("form");
       case Routename.trainers:return  CUri("trainer");
-      case Routename.paymentStatus:return CUri("payment/status");
+      case Routename.paymentStatus:return CUri("status/payment");
       case Routename.scedule:return CUri("schedules");
       case Routename.room:return CUri("room");
-      case Routename.planDetail:return CUri("plan/details");
-      case Routename.editprofile:return CUri("edit");
+      case Routename.planDetail:return CUri("details/plan");
+      case Routename.editprofile:return CUri("edit/profile");
+      case Routename.officialDetails:return CUri("edit/professional");
+      case Routename.editEmiratesid:return CUri("edit/verification");
+      case Routename.sceduleDetais:return CUri('view/schedule');
     }
   }
 }
@@ -352,23 +357,26 @@ extension GoNavigations on Routename{
 ///   return Object.entries(imEnd).map(([key, value]) => `${key}=${value}`).join('&');
 /// };
 class PageControler{
-  get routs =>[
+ static get routs =>[
     GoRoute(path: '/',redirect: (_,__)=>"/${Routename.login.nUri.name}"),
     goRoute(Routename.login,(BuildContext context, GoRouterState state)=> Auth(key: state.pageKey,)),
     goRoute(Routename.config,(BuildContext context, GoRouterState state)=> DbConfig(key: state.pageKey,)),
     goRoute(Routename.profile,(BuildContext context, GoRouterState state)=> UserProfile(key: state.pageKey,),routes: [
-      goRoute(Routename.editprofile,(BuildContext context, GoRouterState state)=> EditProfile(key: state.pageKey,),isSubROught: true),
+      goRoute(Routename.editprofile,(BuildContext context, GoRouterState state)=> EditProfile(key: state.pageKey, methode: EditMethode.personal,),isSubROught: true),
+      goRoute(Routename.officialDetails,(BuildContext context, GoRouterState state)=> EditProfile(key: state.pageKey,methode: EditMethode.professional),isSubROught: true),
+      goRoute(Routename.editEmiratesid,(BuildContext context, GoRouterState state)=> EditProfile(key: state.pageKey,methode: EditMethode.emiratesid),isSubROught: true),
     ]),
     goRoute(Routename.planDetail,(BuildContext context, GoRouterState state)=> PlanDetail(key: state.pageKey,planId:state.queryParameters['plan_id'])),
     goRoute(Routename.signup,(BuildContext context, GoRouterState state)=> SignUpPage(key: state.pageKey,),routes: [
       goRoute(Routename.form,(BuildContext context, GoRouterState state)=> SignUpForm(key: state.pageKey,),isSubROught: true),
     ]),
-    goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page'],
+   goRoute(Routename.sceduleDetais,(BuildContext context, GoRouterState state)=> ViewSceduleDetail(key: state.pageKey,sceduleId:state.queryParameters['class_id'])),
+   goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page'],
         routes: [
           goRoute(Routename.trainers,(BuildContext context, GoRouterState state)=> SelectTrainer(key: state.pageKey,planId:state.queryParameters['item_code']),isSubROught: true),
           goRoute(Routename.scedule,(BuildContext context, GoRouterState state)=> SceduleListing(key: state.pageKey,planId:state.queryParameters['plan_id']),isSubROught: true,
               routes: [
-                goRoute(Routename.room,(BuildContext context, GoRouterState state)=> RoomSelect(key: state.pageKey,roomId:state.queryParameters['room_id']),isSubROught: true,),
+                goRoute(Routename.room,(BuildContext context, GoRouterState state)=> RoomSelect(key: state.pageKey,roomId:state.queryParameters['room_id'],classId:state.queryParameters['class_id'],),isSubROught: true,),
               ]),
         ]),
     goRoute(Routename.checkout,(BuildContext context, GoRouterState state)=>CheckOut(key: state.pageKey,),routes: [
@@ -387,7 +395,7 @@ class PageControler{
   ///   ),
   /// )
 
-  GoRoute goRoute(Routename route,Widget Function(BuildContext context,
+  static GoRoute goRoute(Routename route,Widget Function(BuildContext context,
       GoRouterState state) widget,
       {List<String>? params, List<RouteBase>? routes,bool isSubROught = false}) => GoRoute(name:route.nUri.name,path: "${isSubROught?route.nUri.path.replaceFirst('/', ''):route.nUri.path}${(params??[]).toRequiredParamsString()}",routes:routes??const <RouteBase>[],builder: (BuildContext context, GoRouterState state) {
     stored.pathParameters = state.pathParameters;
@@ -399,10 +407,11 @@ final router = GoRouter(
   redirect: (context,state){
     print("path: ${state.location}");
     // return null;
-    if((state.location ==  Routename.home.nUri.path) && (sl<Configration>().custTocken ==null)){
+    if((state.location ==  '/home/dashboard') && (sl<Configration>().custTocken ==null)){
       print("no data");
       return Routename.login.nUri.path;
     }
+    print("custTocken ${sl<Configration>().custTocken}");
     if((state.location ==  Routename.login.nUri.path) && (sl<Configration>().custTocken !=null)){
       print("no data");
       return '${Routename.home.nUri.path}/dashboard';
@@ -416,7 +425,7 @@ final router = GoRouter(
   },
   initialLocation:"/login",
   debugLogDiagnostics:kDebugMode,
-  routes: PageControler().routs,
+  routes: PageControler.routs,
 );
 
 enum NavigatoreTyp{

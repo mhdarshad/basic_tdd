@@ -80,8 +80,11 @@ class RoomSpotDetails {
   String? top;
   String? left;
   String? status;
-  Null? createdAt;
-  Null? updatedAt;
+  String? createdAt;
+  String? updatedAt;
+  String? matStatus;
+  Null? bookingCusId;
+  String? custName;
 
   RoomSpotDetails(
       {this.id,
@@ -91,7 +94,10 @@ class RoomSpotDetails {
         this.left,
         this.status,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt,
+        this.matStatus,
+        this.bookingCusId,
+        this.custName});
 
   RoomSpotDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -102,10 +108,13 @@ class RoomSpotDetails {
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    matStatus = json['mat_status'];
+    bookingCusId = json['booking_cus_id'];
+    custName = json['cust_name'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['room_sno'] = this.roomSno;
     data['index'] = this.index;
@@ -114,6 +123,10 @@ class RoomSpotDetails {
     data['status'] = this.status;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['mat_status'] = this.matStatus;
+    data['booking_cus_id'] = this.bookingCusId;
+    data['cust_name'] = this.custName;
     return data;
   }
 }
+

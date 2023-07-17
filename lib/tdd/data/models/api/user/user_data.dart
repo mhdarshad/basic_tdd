@@ -36,56 +36,116 @@ class UserAcsessData {
 
   late final Customer customer;
   late final String? customerAuth;
-  late final int? customerID;
+  late final String? customerID;
 
   UserAcsessData.fromJson(Map<String, dynamic> json){
     customer = Customer.fromJson(json['customer']);
     customerAuth = json['customer_auth'];
-    customerID = json['customer_id'];
+    customerID = json['customer_id'].toString();
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['customer'] = customer.toJson();
     _data['customer_auth'] = customerAuth;
-    _data['customer_id'] = customerID;
+    _data['customer_id'] = customerID.toString();
     return _data;
   }
 }
 
 class Customer {
-  Customer({
-    required this.id,
-    required this.custName,
-    required this.phone1,
-    required this.countryCodePh1,
-    required this.userName,
-    required this.email,
-  });
-  late final int id;
-  late final String custName;
-  late final String phone1;
-  late final String countryCodePh1;
-  late final String userName;
-  late final String email;
+  String? memCode;
+  String? custName;
+  String? custLastName;
+  String? custGender;
+  int? custId;
+  int? id;
+  String? custMob;
+  String? custAdd1;
+  String? email;
+  String? custNationality;
+  String? custState;
+  String? dateOfBrith;
+  String? company;
+  String? custCountry;
+  String? custImage;
+  String? emiratesId;
+  String? custEmergencyName;
+  String? custEmergencyRelation;
+  String? custEmergencyNumber;
+  String? custEmergencyAddress;
+  String? remarks;
 
-  Customer.fromJson(Map<String, dynamic> json){
-    id = json['id']??0;
+  Customer(
+      {this.memCode,
+        this.custName,
+        this.custLastName,
+        this.custGender,
+        this.custId,
+        this.custMob,
+        this.custAdd1,
+        this.email,
+        this.custNationality,
+        this.custState,
+        this.dateOfBrith,
+        this.company,
+        this.custCountry,
+        this.custImage,
+        this.emiratesId,
+        this.custEmergencyName,
+        this.custEmergencyRelation,
+        this.id,
+        this.custEmergencyNumber,
+        this.custEmergencyAddress,
+        this.remarks});
+
+  Customer.fromJson(Map<String, dynamic> json) {
+    memCode = json['mem_code'];
+    id = json['id'];
     custName = json['cust_name'];
-    phone1 = json['phone1']??'';
-    countryCodePh1 = json['country_code_ph1'];
-    userName = json['user_name'];
+    custLastName = json['cust_last_name'];
+    custGender = json['cust_gender'];
+    custId = json['cust_id'];
+    custMob = json['cust_mob'];
+    custAdd1 = json['cust_add1'];
     email = json['email'];
+    custNationality = json['cust_nationality'];
+    custState = json['cust_state'];
+    dateOfBrith = json['Date_of_brith'];
+    company = json['Company'];
+    custCountry = json['cust_country'];
+    custImage = json['cust_image'];
+    emiratesId = json['emirates_id'];
+    custEmergencyName = json['cust_emergency_name'];
+    custEmergencyRelation = json['cust_emergency_relation'];
+    custEmergencyNumber = json['cust_emergency_number'];
+    custEmergencyAddress = json['cust_emergency_address'];
+    remarks = json['remarks'];
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['cust_name'] = custName;
-    _data['phone1'] = phone1;
-    _data['country_code_ph1'] = countryCodePh1;
-    _data['user_name'] = userName;
-    _data['email'] = email;
-    return _data;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['mem_code'] = this.memCode;
+    data['id'] = this.id;
+    data['cust_name'] = this.custName;
+    data['cust_last_name'] = this.custLastName;
+    data['cust_gender'] = this.custGender;
+    data['cust_id'] = this.custId;
+    data['cust_mob'] = this.custMob;
+    data['cust_add1'] = this.custAdd1;
+    data['email'] = this.email;
+    data['cust_nationality'] = this.custNationality;
+    data['cust_state'] = this.custState;
+    data['Date_of_brith'] = this.dateOfBrith;
+    data['Company'] = this.company;
+    data['cust_country'] = this.custCountry;
+    data['cust_image'] = this.custImage;
+    data['emirates_id'] = this.emiratesId;
+    data['cust_emergency_name'] = this.custEmergencyName;
+    data['cust_emergency_relation'] = this.custEmergencyRelation;
+    data['cust_emergency_number'] = this.custEmergencyNumber;
+    data['cust_emergency_address'] = this.custEmergencyAddress;
+    data['remarks'] = this.remarks;
+    return data;
   }
 }

@@ -4,6 +4,7 @@ import 'package:cloud_me_v2/core/error/exceptions.dart';
 import 'package:cloud_me_v2/core/usecases/usecase.dart';
 import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_paytabs_bridge/BaseBillingShippingInfo.dart';
 import 'package:flutter_paytabs_bridge/IOSThemeConfiguration.dart';
@@ -183,7 +184,7 @@ class GentrateInvoiceMutation extends EventMutations<Map<String,dynamic>>  {
             "delivery_date": null,
             "stiching_charge": "0",
             "plan_start": DateFormat('dd/MM/yyyy').format(SceduleUserDetailModel.dateController.value??DateTime.now()),
-            "expiry_date": DateFormat('dd/MM/yyyy').format(SceduleUserDetailModel.dateController.value?.add(Duration(days: store?.selectedPlans?.noOfDays??0))??DateTime.now()),
+            "expiry_date": DateFormat('dd/MM/yyyy').format(SceduleUserDetailModel.dateController.value?.add(Duration(days:  (store?.selectedPlans?.noOfDays??0)+DateUtils.getDaysInMonth(DateTime.now().year, store?.selectedPlans?.noOfMonths??0)))??DateTime.now()),
             "trainer_code": store?.selectedtrainer?.addonItem,
             "trainer_price": store?.selectedtrainer?.itprRetlPrice,
             "multiple_salesman": "100002",
@@ -197,8 +198,8 @@ class GentrateInvoiceMutation extends EventMutations<Map<String,dynamic>>  {
         ],
         "appointmentdetails": [
           {
-            "Cust_id": "${store?.userdata.id}",
-            "Cust_name": "${store?.userdata.custName}",
+            "Cust_id": "${store?.userdata?.memCode}",
+            "Cust_name": "${store?.userdata?.custName}",
             "Start": null,
             "End": null,
             "Staff": null

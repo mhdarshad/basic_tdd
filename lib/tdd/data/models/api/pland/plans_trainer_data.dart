@@ -9,19 +9,19 @@ class PlansAndTrainerData {
     if (json['plans'] != null) {
       plans = <PlanData>[];
       json['plans'].forEach((v) {
-        plans!.add(new PlanData.fromJson(v));
+        plans!.add(PlanData.fromJson(v));
       });
     }
     if (json['trainer_details'] != null) {
       trainerDetails = <TrainerDetails>[];
       json['trainer_details'].forEach((v) {
-        trainerDetails!.add(new TrainerDetails.fromJson(v));
+        trainerDetails!.add(TrainerDetails.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.plans != null) {
       data['plans'] = this.plans!.map((v) => v.toJson()).toList();
     }
@@ -86,7 +86,7 @@ class PlanData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['group_name'] = this.groupName;
     data['item_code'] = this.itemCode;
     data['item_description'] = this.itemDescription;
@@ -106,47 +106,59 @@ class PlanData {
   }
 }
 
+
 class TrainerDetails {
+  int? invoiceNo;
   int? addonItem;
-  int? iTPRRETLPRICE;
-  String? itemDescription;
+  int? parentItem;
   int? qty;
-  Null? itemDescName;
-  String? trainerMail;
-  Null? sessions;
-  Null? noOfMonths;
+  int? cost;
+  Null? price;
+  int? nett;
+  String? updatedAt;
+  int? trCode;
+  String? trName;
+  var image;
+  var trainerMail;
 
   TrainerDetails(
-      {this.addonItem,
-        this.iTPRRETLPRICE,
-        this.itemDescription,
+      {this.invoiceNo,
+        this.addonItem,
+        this.parentItem,
         this.qty,
-        this.itemDescName,
-        this.trainerMail,
-        this.sessions,
-        this.noOfMonths});
+        this.cost,
+        this.price,
+        this.nett,
+        this.updatedAt,
+        this.trCode,
+        this.trName});
 
   TrainerDetails.fromJson(Map<String, dynamic> json) {
+    invoiceNo = json['invoice_no'];
     addonItem = json['addon_item'];
-    iTPRRETLPRICE = json['ITPR_RETL_PRICE'];
-    itemDescription = json['item_Description'];
+    parentItem = json['parent_item'];
     qty = json['qty'];
-    itemDescName = json['item_desc_name'];
-    trainerMail = json['trainer_mail'];
-    sessions = json['sessions'];
-    noOfMonths = json['no_of_months'];
+    cost = json['cost'];
+    price = json['price'];
+    nett = json['nett'];
+    updatedAt = json['updated_at'];
+    trCode = json['tr_code'];
+    trName = json['tr_name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['invoice_no'] = this.invoiceNo;
     data['addon_item'] = this.addonItem;
-    data['ITPR_RETL_PRICE'] = this.iTPRRETLPRICE;
-    data['item_Description'] = this.itemDescription;
+    data['parent_item'] = this.parentItem;
     data['qty'] = this.qty;
-    data['item_desc_name'] = this.itemDescName;
-    data['trainer_mail'] = this.trainerMail;
-    data['sessions'] = this.sessions;
-    data['no_of_months'] = this.noOfMonths;
+    data['cost'] = this.cost;
+    data['price'] = this.price;
+    data['nett'] = this.nett;
+    data['updated_at'] = this.updatedAt;
+    data['tr_code'] = this.trCode;
+    data['tr_name'] = this.trName;
     return data;
   }
 }
+

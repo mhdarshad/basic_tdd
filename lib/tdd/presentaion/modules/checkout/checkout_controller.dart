@@ -30,9 +30,9 @@ class CheckoutEvent extends LogicHandler<DashBoardUseCase, CheckoutData>{
       amount: '340',
       currency: Currency.aed,
       buyer: Buyer(
-        email: data.user.email,
-        phone: data.user.countryCodePh1+data.user.phone1,
-        name: data.user.custName,
+        email: data.user.email??'',
+        phone: data.user.custMob??'',
+        name: data.user.custName??'',
         dob: '2019-08-24',
       ),
       buyerHistory: BuyerHistory(
@@ -89,8 +89,7 @@ class CheckOutMutation extends VxMutation<ProjectStore> {
 
   BuildContext context;
   PaymentSdkConfigurationDetails get generateConfig {
-    var billingDetails = BillingDetails(data.user.custName, data.user.email,
-        data.user.countryCodePh1+ data.user.phone1, "dubai", "United Arab Emirate", "Dubai", "DU", "");
+    var billingDetails = BillingDetails("Mohammed Arshad", data.user.email??'', "${data.user.custMob}", data.user.custAdd1??'', data.user.custCountry??'', data.user.custState??'',  data.user.custState??'', "");
     List<PaymentSdkAPms> apms = [];
     apms.add(PaymentSdkAPms.AMAN);
     var configuration = PaymentSdkConfigurationDetails(
@@ -112,9 +111,7 @@ class CheckOutMutation extends VxMutation<ProjectStore> {
     );
 
     var theme = IOSThemeConfigurations();
-
     theme.logoImage = "assets/logo.png";
-
     configuration.iOSThemeConfigurations = theme;
     configuration.tokeniseType = PaymentSdkTokeniseType.MERCHANT_MANDATORY;
     return configuration;
@@ -124,22 +121,16 @@ class CheckOutMutation extends VxMutation<ProjectStore> {
   payCard({required Function(Map<String, dynamic> data) onSucsess,
     required Function(Map<String, dynamic> data) onFailure,
     required Function(Map<String, dynamic> data) onPrecess}) async=> FlutterPaytabsBridge.startCardPayment(generateConfig, (event) {
+
     if (event["status"] == "success") {
       // Handle transaction details here.
       Map<String,dynamic> transactionDetails = (event["data"] as Map<Object?,Object?>).map((key, value) => MapEntry(key.toString(), value));
-
-      if (kDebugMode) {
-        print(jsonEncode(transactionDetails));
-      }
+      print(jsonEncode(transactionDetails));
       //t
       if (transactionDetails["isSuccess"]??transactionDetails["p"]) {
-        if (kDebugMode) {
-          print("successful Transaction");
-        }
+        print("successful Transaction");
         if (transactionDetails["isPending"]??transactionDetails["s"]) {
-          if (kDebugMode) {
-            print("transaction pending");
-          }
+          print("transaction pending");
           onPrecess(transactionDetails);
         }
         onSucsess(transactionDetails);
@@ -177,7 +168,7 @@ class CheckOutMutation extends VxMutation<ProjectStore> {
               if (kDebugMode) {
                 print("show Toast paid");
               }
-              print("show Toast ${data}");
+              print("show Toast $data");
               store?.purchaseInvoiceData = PurchaseInvoiceData.fromJson(data);
               final storeddata =stored.purchaseInvoiceData;
               navigate.push(context, name: Routename.paymentStatus,qparms: {

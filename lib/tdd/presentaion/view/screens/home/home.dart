@@ -1,6 +1,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_me_v2/rought_genrator.dart';
+import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/database_module/db_config_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
             padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
             child: GestureDetector(
               onTap: (){
-                sl<Configration>().custTocken = null;
+                // sl<Configration>().custTocken = null;
                 navigate.push(context, name: Routename.profile,);
               },
               child: Container(
@@ -70,7 +71,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   shape: BoxShape.circle,
                 ),
                 child: CachedNetworkImage(
-                  imageUrl:'',
+                  imageUrl:stored.userdata?.custImage??'',
                   fit: BoxFit.cover,
                   errorWidget: (contxt,url,data){
                     return Image.asset('assets/icons/profile.jpeg');
@@ -85,9 +86,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
       ),
       endDrawer: EndDrawer(),
       bottomNavigationBar: BottomNavigationBar(items: DashBoardController.navigationItems,
-      currentIndex: DashBoardController.setNavigationIndex(widget.pageName??BotemNavigations.dashboard.name),
+      currentIndex: DashBoardController.setNavigationIndex(widget.pageName??BottemNavigationsData.dashboard.name),
         onTap:(index) =>DashBoardController.onTapavigation(context,index),),
-      body: SafeArea(child:  ProjectScafold(child: DashBoardController.getPageOnWidget(widget.pageName??BotemNavigations.dashboard.name)),));
+      body: SafeArea(child:  ProjectScafold(child: DashBoardController.getPageOnWidget(widget.pageName??BottemNavigationsData.dashboard.name)),));
   }
 }
 

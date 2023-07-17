@@ -26,7 +26,7 @@ class ProjectStore extends VxStore{
  List<PersonalTrainerData>? trainerData;
  PersonalTrainerData? selectedtrainer;
   PurchaseInvoiceData? purchaseInvoiceData ;
- late Customer userdata;
+  Customer? userdata;
 
   RoomSceduels? rooms;
 

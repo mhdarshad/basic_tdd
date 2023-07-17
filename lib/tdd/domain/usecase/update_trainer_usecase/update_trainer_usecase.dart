@@ -1,3 +1,4 @@
+import 'package:cloud_me_v2/core/util/config/user_config.dart';
 import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_paytabs_bridge/flutter_paytabs_bridge.dart';
 import '../../../../core/error/failuers.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/presentation/flutter_flow/flutter_flow_util.dart';
+import '../../../../injection_container.dart';
 import '../../../data/models/api/invoice/purchase_invoce_data.dart';
 import '../../../presentaion/modules/update_trainer/updateTrainer_controller.dart';
 import '../../repositories/repository_provider.dart';
@@ -22,9 +24,10 @@ class UpdatetrainerUseCase  extends UseCase<bool,UpdatetrainerDatas>{
   UpdatetrainerUseCase({required this.repo});
   /// call meted for inserting product to db
   PaymentSdkConfigurationDetails get generateConfig {
-    var billingDetails = BillingDetails(stored.userdata.custName, stored.userdata.email,stored.userdata.countryCodePh1+ stored.userdata.phone1, "dubai", "United Arab Emirate", "Dubai", "DU", "");
+    var billingDetails = BillingDetails(stored.userdata?.custName??'', stored.userdata?.email??'',stored.userdata?.custMob??'', "dubai", "United Arab Emirate", "Dubai", "DU", "");
     List<PaymentSdkAPms> apms = [];
     apms.add(PaymentSdkAPms.AMAN);
+    print("amount to pay:${(stored.selectedtrainer??'')}");
     var configuration = PaymentSdkConfigurationDetails(
         profileId: "122214",
         serverKey: "SLJNKWHW6K-J6L2JTTLNT-9JNWWJ2GKJ",
@@ -91,28 +94,91 @@ class UpdatetrainerUseCase  extends UseCase<bool,UpdatetrainerDatas>{
 
   /// Use Case For Setup DB
   @override
-  Future<Either<Failure,bool>> call({required UpdatetrainerDatas data}) async{
+  Future<Either<Failure,bool>> call({required UpdatetrainerDatas data, dynamic Function(int,Either<Failure, dynamic>)? returnStatus}) async{
     return await payCard(
-        onSucsess: (Map<String, dynamic> data) {
+        onSucsess: (Map<String, dynamic> invoice) async{
           if (kDebugMode) {
             print("show Toast paid");
           }
-          purchaseInvoiceData = PurchaseInvoiceData.fromJson(data);
-        },
-        onFailure: (Map<String, dynamic> data) {
-          purchaseInvoiceData = PurchaseInvoiceData.fromJson(data);
-        },
-        onPrecess: (Map<String, dynamic> invoice) async{
+          List<GymInvoiceData> right = [];
+          purchaseInvoiceData = PurchaseInvoiceData.fromJson(invoice);
+          final planData = stored.plandata?.plans?.first;
+          final paymentDetail =  await repo.getRequest(Params(uri: Uri.parse("get_change_trainer_details/${planData?.itemCode}"), methed: Methed.Get));
+          final pdata = paymentDetail.map((r) => (r as List).map((e) => GymInvoiceData.fromJson(e)).toList().where((element) => element.custId.toString() == sl<Configration>().custId).toList());
+         right = pdata.foldRight<List<GymInvoiceData>>(right, (r, previous) => [...previous,...r]);
+         if (kDebugMode) {
+           print(right.map((e) => e.toJson()));
+         }
           final result =  await repo.getRequest(Params(uri: Uri.parse("update_trainer"), methed: Methed.Post,data: {
-                "invoice_no":purchaseInvoiceData?.merchantId,
-                "trainer_id":data.transctionId
-              }));
-          return result.fold((l) => Left(l), (r) {
+            "invoice_no":right.first.invoiceNo,
+            "trainer_id":right.first.trainerId
+          }));
+         if(returnStatus!=null) {
+           returnStatus(1,result.fold((l) => Left(l), (r) {
             if (kDebugMode) {
               print(r);
             }
             return  const Right(true);
-          });
+          }));
+         }
+        },
+        onFailure: (Map<String, dynamic> invoice) {
+          purchaseInvoiceData = PurchaseInvoiceData.fromJson(invoice);
+          // returnStatus!(0,result.fold((l) => Left(l), (r) {
+          //   if (kDebugMode) {
+          //     print(r);
+          //   }
+          //   return  const Right(true);
+          // }));
+        },
+        onPrecess: (Map<String, dynamic> invoice) async{
+          if (kDebugMode) {
+            print("show Toast paid");
+          }
+          List<GymInvoiceData> right = [];
+          purchaseInvoiceData = PurchaseInvoiceData.fromJson(invoice);
+          final planData = stored.plandata?.plans?.first;
+          final paymentDetail =  await repo.getRequest(Params(uri: Uri.parse("get_change_trainer_details/${planData?.itemCode}"), methed: Methed.Get));
+          final pdata = paymentDetail.map((r) => (r as List).map((e) => GymInvoiceData.fromJson(e)).toList().where((element) => element.custId.toString() == sl<Configration>().custId).toList());
+          right = pdata.foldRight<List<GymInvoiceData>>(right, (r, previous) => [...previous,...r]);
+          if (kDebugMode) {
+            print(right.map((e) => e.toJson()));
+          }
+          final result =  await repo.getRequest(Params(uri: Uri.parse("update_trainer"), methed: Methed.Post,data: {
+            "invoice_no":right.first.invoiceNo,
+            "trainer_id":right.first.trainerId
+          }));
+          returnStatus!(1,result.fold((l) => Left(l), (r) {
+            if (kDebugMode) {
+              print(r);
+            }
+            return  const Right(true);
+          }));
         });
+  }
+}
+class GymInvoiceData {
+  int? custId;
+  int? invoiceNo;
+  String? trainerName;
+  int? trainerId;
+
+  GymInvoiceData(
+      {this.custId, this.invoiceNo, this.trainerName, this.trainerId});
+
+  GymInvoiceData.fromJson(Map<String, dynamic> json) {
+    custId = json['cust_id'];
+    invoiceNo = json['invoice_no'];
+    trainerName = json['trainer_name'];
+    trainerId = json['trainer_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['cust_id'] = this.custId;
+    data['invoice_no'] = this.invoiceNo;
+    data['trainer_name'] = this.trainerName;
+    data['trainer_id'] = this.trainerId;
+    return data;
   }
 }

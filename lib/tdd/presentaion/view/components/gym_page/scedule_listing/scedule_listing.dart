@@ -15,10 +15,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:velocity_x/velocity_x.dart';
 // import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../injection_container.dart';
+import '../../../../../domain/entities/contry_data.dart';
+import '../../../../modules/edit_profile/edit_profile_module_controller.dart';
+import '../../../../modules/scedule_module/scedule_module_controller.dart';
 import '../../../widgets/calender_view/calender_page/controller/calender_controller.dart';
 import '../../../widgets/calender_view/calender_page/desktop_web/calender_view_desk_top.dart';
 extension CalenderFormat on List<String>{
@@ -50,11 +54,24 @@ class _SceduleListingState extends State<SceduleListing> {
   Widget build(BuildContext context) {
 
 
-    return  /*SfCalendar();*/ProjectScafold(
-        appBar: AppBar(),
+    return  ProjectScafold(
+        appBar: AppBar(actions:  [
+          //TODO:: Add Filter
+          // DropDownContainer(data: ["Class","Plan","Trainer",],builder: (context,data){
+          //   return Text(data);
+          // },onSelect: (value){
+          //
+          // }),
+          // DropDownContainer(data: ["Class","Plan","Trainer",],builder: (context,data){
+          //   return Text(data);
+          // },onSelect: (value){
+          //
+          // }),
+        ],),
         child:  SceduleContainer(
         builder: (context,store,mutation) {
           final scedule = store.scedules;
+          scedule.filter((sceduleData)=> sceduleData.planId.toString() == '');
           // return Container();
           return StaffTimlineCalender(
              // eventViewBuilder: (context,data){
@@ -237,9 +254,11 @@ class _SceduleListingState extends State<SceduleListing> {
                   print("room id : ${event.appointments?.first.id}");
                 }
                 navigate.push(context, name: Routename.room,parms: params,qparms: {
-                  'room_id':scedule.where((element) => element.id == event.appointments?.first.id).firstOrNull?.room_id.toString()
+                  'room_id':scedule.where((element) => element.id == event.appointments?.first.id).firstOrNull().room_id.toString(),
+                  'class_id':scedule.where((element) => element.id == event.appointments?.first.id).firstOrNull().id.toString()
                 });
                 },
+              calView: CalendarView.schedule,
               usersData: scedule.map((e) {
                 e.days?.removeWhere((key, value) => value==null);
                 final startDate = DateFormat('yyyy-MM-dd').parse(e.date!.first.startDate!);
@@ -269,5 +288,33 @@ class _SceduleListingState extends State<SceduleListing> {
         }
     )
     );
+  }
+
+  Widget DropDownContainer<T>(
+      {
+        required List<T> data ,
+      required Widget Function(BuildContext, T) builder,
+      required Function(T?) onSelect}) {
+    ValueNotifier<T?> dropDownAdapter = ValueNotifier(null);
+    return data.isNotEmpty?Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 8),
+          child: ValueListenableBuilder<T?>(
+              valueListenable: dropDownAdapter,
+              builder: (context,store,_) {
+                print("store:$store");
+                return DropdownButton<T>(
+                    onChanged: (value) {
+                      dropDownAdapter.value = value;
+                      dropDownAdapter.notifyListeners();
+                      onSelect(value);
+                    },
+                    value: store??data.first,
+                    items: data.map((e) => DropdownMenuItem<T>(
+                      value:e,
+                      child: builder(context,e),
+                )).toList());
+              }
+          ),
+        ):SizedBox.shrink();
   }
 }

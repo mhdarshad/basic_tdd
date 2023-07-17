@@ -9,11 +9,12 @@ import '../controller/calender_controller.dart';
 class StaffTimlineCalender extends StatefulWidget {
 
   final List<Person> usersData;
+  final CalendarView calView;
   final Function(CalendarTapDetails)? onTap;
   final Function(AppointmentDragUpdateDetails)? onDraged;
   final Function(AppointmentResizeEndDetails)? onAppointmentResizeed;
   final Widget Function(BuildContext, CalendarAppointmentDetails)? eventViewBuilder;
-  const StaffTimlineCalender({Key? key, required this.usersData, this.onTap, this.onDraged, this.onAppointmentResizeed, this.eventViewBuilder}): super(key: key);
+  const StaffTimlineCalender({Key? key, required this.usersData, this.onTap, this.onDraged, this.onAppointmentResizeed, this.eventViewBuilder,this.calView = CalendarView.schedule}): super(key: key);
 
   @override
   State<StaffTimlineCalender> createState() => _StaffTimlineCalenderState();
@@ -22,11 +23,11 @@ class StaffTimlineCalender extends StatefulWidget {
 }
 
 class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
-  final StaffTimlineCalenderController controller = StaffTimlineCalenderController.instance;
+  final StaffTimlineCalenderController stafTimeline = StaffTimlineCalenderController.instance;
   @override
   void initState() {
-    controller.addStaffs = widget.usersData;
-    controller.initalize();
+    stafTimeline.addStaffs = widget.usersData;
+    stafTimeline.initalize();
     super.initState();
   }
   @override
@@ -37,7 +38,7 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
         //   builder: (context,value,_)=>value?FloatingActionButton(onPressed: ()=>controller.onClickFabButton(),child: const Icon(Icons.edit_calendar),):const SizedBox.shrink(),
         // ),
         body:  SfCalendar(
-            controller: controller.controller,
+            controller: stafTimeline.controller,
             allowDragAndDrop: true,
             allowAppointmentResize: true,
             onAppointmentResizeEnd: widget.onAppointmentResizeed,
@@ -52,9 +53,49 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
               // CalendarView.month,
               // CalendarView.month
             ],
+            monthCellBuilder: (context,cell)=>Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Container(
+                // margin: const EdgeInsets.all(100.0),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                      Radius.circular(40)
+                  ),
+                  border: Border.all(
+                    width: 3,
+                    color: Colors.green,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                child: Column(mainAxisAlignment:MainAxisAlignment.spaceAround,
+                  children:  [
+                  Expanded(flex:2,
+                      child: Center(child: Text("${cell.date.day}",style: const TextStyle(fontSize: 20),))),
+                    Expanded(child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: const BorderRadius.only(
+                              bottomLeft:Radius.circular(40),
+                              bottomRight:Radius.circular(40)
+                          ),
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.green,
+                            style: BorderStyle.solid,
+                          ),
+                        ),child:  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("${cell.appointments.length}"),
+                          ],
+                        ))
+                    )
+                ],),
+              ),
+            ),
             scheduleViewSettings:const ScheduleViewSettings(appointmentTextStyle:TextStyle(color: Colors.black),hideEmptyScheduleWeek: true,monthHeaderSettings: MonthHeaderSettings(height: 60,textAlign: TextAlign.center),weekHeaderSettings: WeekHeaderSettings()),
             // showNavigationArrow: true,
-            dragAndDropSettings: controller.draganddropSettings,
+            dragAndDropSettings: stafTimeline.draganddropSettings,
             onDragStart: (arguments){
               if (kDebugMode) {
                 print("Drag Started");
@@ -68,22 +109,23 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
             appointmentBuilder:widget.eventViewBuilder,
             onDragUpdate: widget.onDraged,
             onTap:(event) {
-              if(controller.isMonthViewClick(event)){
-              }else if(controller.isScheduleViewClick(event)){
+              if(stafTimeline.isMonthViewClick(event)){
                 // controller.changeView(CalendarView.timelineDay);
-              }else if(controller.isScheduleViewClickWeekHeader(event)){
+              }else if(stafTimeline.isScheduleViewClick(event)){
+                // controller.changeView(CalendarView.timelineDay);
+              }else if(stafTimeline.isScheduleViewClickWeekHeader(event)){
                 // controller.changeView(CalendarView.timelineWeek);
               }
               if(widget.onTap!=null) {
                 widget.onTap!(event);
               }
             },
-            view: CalendarView.schedule,
+            view: widget.calView,
             firstDayOfWeek: 1,
             showDatePickerButton: true,
             timeSlotViewSettings: const TimeSlotViewSettings(startHour: 0, endHour: 24,nonWorkingDays: <int>[DateTime.friday, DateTime.saturday]),
-            dataSource: controller.events,
-            specialRegions: controller.brakeTime /// Un Available Time Regions
+            dataSource: stafTimeline.events,
+            specialRegions: stafTimeline.brakeTime /// Un Available Time Regions
         ));
   }
 }

@@ -31,7 +31,7 @@ class OtpUseCase extends UseCase<Map<String,dynamic>,OTPData>{
     if(data.otp!=null){
        result =  await repo.getRequest(Params(uri: Uri.parse("verify_otp"), methed: Methed.Post,
           data: {
-            'cus_id':sl<Configration>().custId,
+            'cus_id':sl<Configration>().cid,
             'otp':data.otp,
             // 'license_key':data.key,
           }));

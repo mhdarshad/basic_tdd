@@ -1,20 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_me_v2/core/util/calculations/calculation.dart';
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/room_scedule/room_scedule_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sizer/flutter_sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../injection_container.dart';
 import '../../../../modules/room_scedule/room_scedule_consumer.dart';
-import '../../../../modules/scedule/scedule_controller.dart';
+import '../../../widgets/dailog/confirm_class_allert_dailog.dart';
 
 class RoomSelect extends StatefulWidget {
   final String? roomId;
+  final String? classId;
 
-  const RoomSelect({Key? key, this. roomId}) : super(key: key);
+  const RoomSelect({Key? key, this. roomId, this. classId}) : super(key: key);
 
   @override
   State<RoomSelect> createState() => _RoomSelectState();
@@ -67,12 +66,13 @@ class _RoomSelectState extends State<RoomSelect> {
                                   left: (e.left.parseDouble??0)*.54,
                                   child: GestureDetector(
                                     onTap: () {
-                                      selectedRoom.value = e.index??"0";
+                                      if(e.matStatus == 'booking')return;
+                                      selectedRoom.value = e.index ?? "0";
                                       selectedRoom.notifyListeners();
                                     },
                                     child: Card(
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      color:data==e.index?Colors.green: FlutterFlowTheme.of(context).secondaryBackground,
+                                      color:(data==e.index)?Colors.green:(e.matStatus == 'booking')?Colors.grey: FlutterFlowTheme.of(context).secondaryBackground,
                                       elevation: 4,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
@@ -94,7 +94,8 @@ class _RoomSelectState extends State<RoomSelect> {
                                         onTap: () {
                                           // selectedRoom.value = e.index??"0";
                                           // selectedRoom.notifyListeners();
-                                          sl<RoomSceduleEvent>().bookMat(context,room:selectedRoom.value,classId:store.scedules.where((element) => element.room_id == widget.roomId).firstOrNull().id.toString());
+                                          showDialog(context: context, builder:(context)=> ClassBookingInfoDailog(selectedRoom: widget.roomId,classId:widget.classId));
+                                          // sl<RoomSceduleEvent>().bookMat(context,room:selectedRoom.value,classId:store.scedules.where((element) => element.room_id == widget.roomId).firstOrNull().id.toString());
                                         },
                                         child: Card(
                                           clipBehavior: Clip.antiAliasWithSaveLayer,

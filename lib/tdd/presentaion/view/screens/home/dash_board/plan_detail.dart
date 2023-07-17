@@ -10,6 +10,7 @@ import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_icon_
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_widgets.dart';
 import '../../../../../../injection_container.dart';
+import '../../../../../domain/entities/vx_store.dart';
 import '../../../../modules/plan_trainer_data/plan_trainer_detail_consumer.dart';
 import '../../../../modules/plan_trainer_data/plan_trainer_detail_controller.dart';
 import '../../../../modules/update_trainer/updateTrainer_consumer.dart';
@@ -58,7 +59,7 @@ class _PlanDetailState extends State<PlanDetail> {
             },
           ),
           title: Text(
-            'Article Title',
+            'Plan Detail',
             style: FlutterFlowTheme.of(context).bodyLarge,
           ),
           actions: const [],
@@ -70,13 +71,12 @@ class _PlanDetailState extends State<PlanDetail> {
           child: PlanTrainerDetailContainer(
             builder: (context,store,status) {
               final planData = store.plandata?.plans?.first;
-              final trainerData = store.plandata?.trainerDetails?.firstOrNull;
+              final trainerData = store.plandata?.trainerDetails?.where((element) => element.parentItem.toString() == planData?.itemCode.toString()).firstOrNull;
               return Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  (trainerData!=null)
-                  ?Padding(
+                  (trainerData!=null)?Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -99,7 +99,7 @@ class _PlanDetailState extends State<PlanDetail> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: CachedNetworkImage(
-                                  imageUrl:'',
+                                  imageUrl:trainerData.image??'',
                                   fit: BoxFit.cover,
                                   width: 60,
                                   height: 60,
@@ -120,7 +120,7 @@ class _PlanDetailState extends State<PlanDetail> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  trainerData.itemDescription??'',
+                                  trainerData.trName??'',
                                   style: FlutterFlowTheme.of(context).bodyLarge,
                                 ),
                                 Padding(
@@ -140,7 +140,7 @@ class _PlanDetailState extends State<PlanDetail> {
                             showDialog(context: context, builder: (context){
                               return UpdatetrainerContainer(
                                 builder: (context,store,status) {
-                                  return TrainersListtCOntroller(planData?.itemCode.toString(),onSelecttrainer: (e)=> onSelectTrainer(e),);
+                                  return TrainersListtCOntroller(planData?.itemCode.toString(),onSelecttrainer: (e)=> onSelectTrainer(e),selectedtrainerId:trainerData.addonItem);
                                 }
                               );
                                // SelectTrainer(planId:(planData?.itemCode??'0').toString());
@@ -167,10 +167,14 @@ class _PlanDetailState extends State<PlanDetail> {
                         ),
                       ],
                     ),
-                  ):Center(
+                  )
+                      :Center(
                     child: MaterialButton(onPressed: (){
                       showDialog(context: context, builder: (context){
-                        return TrainersListtCOntroller(planData?.itemCode.toString(),onSelecttrainer: (e)=> onSelectTrainer(e),);
+                        return TrainersListtCOntroller(
+                          planData?.itemCode.toString(),
+                          onSelecttrainer: (e)=> onSelectTrainer(e),
+                        );
                         // SelectTrainer(planId:(planData?.itemCode??'0').toString());
                       });
                     },elevation: 8,child:  Row(
@@ -363,9 +367,10 @@ class _PlanDetailState extends State<PlanDetail> {
 
   void onSelectTrainer(PersonalTrainerData e) {
     if(e.itprRetlPrice!=0){
-      sl<UpdatetrainerEvent>()(data: UpdatetrainerDatas(invoiceNumber: "00000000000", transctionId: e.addonItem.toString()));
+      stored.selectedtrainer = e;
+      sl<UpdatetrainerEvent>()(context:context,data: UpdatetrainerDatas(invoiceNumber: "00000000000", transctionId: e.addonItem.toString()));
     }else{
-      sl<UpdatetrainerEvent>()(data: UpdatetrainerDatas(invoiceNumber: "00000000000", transctionId: e.addonItem.toString()));
+      sl<UpdatetrainerEvent>()(context:context,data: UpdatetrainerDatas(invoiceNumber: "00000000000", transctionId: e.addonItem.toString()));
     }
   }
 }

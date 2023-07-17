@@ -4,6 +4,7 @@ import 'package:cloud_me_v2/core/util/presentation/template/custom_scafold.dart'
 import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:in_date_utils/in_date_utils.dart';
 import 'package:tabby_flutter_inapp_sdk/tabby_flutter_inapp_sdk.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_icon_button.dart';
@@ -15,6 +16,7 @@ import '../../../../modules/checkout/checkout_consumer.dart';
 import '../../../../modules/checkout/checkout_controller.dart';
 import '../../../widgets/dateTime/time_picker.dart';
 
+
 class CheckOut extends StatelessWidget {
   const CheckOut({Key? key}) : super(key: key);
 
@@ -22,6 +24,7 @@ class CheckOut extends StatelessWidget {
   Widget build(BuildContext context) {
     final planData = stored.selectedPlans;
     final trainerData = stored.selectedtrainer;
+
     return  ProjectScafold(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -89,26 +92,26 @@ class CheckOut extends StatelessWidget {
                                         },
                                       ),
                                     ),
-                                    Card(
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      color: const Color(0x3A000000),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: FlutterFlowIconButton(
-                                        borderColor: Colors.transparent,
-                                        borderRadius: 30,
-                                        buttonSize: 46,
-                                        icon: const Icon(
-                                          Icons.favorite_border,
-                                          color: Colors.white,
-                                          size: 24,
-                                        ),
-                                        onPressed: () {
-                                          print('IconButton pressed ...');
-                                        },
-                                      ),
-                                    ),
+                                    // Card(
+                                    //   clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    //   color: const Color(0x3A000000),
+                                    //   shape: RoundedRectangleBorder(
+                                    //     borderRadius: BorderRadius.circular(8),
+                                    //   ),
+                                    //   child: FlutterFlowIconButton(
+                                    //     borderColor: Colors.transparent,
+                                    //     borderRadius: 30,
+                                    //     buttonSize: 46,
+                                    //     icon: const Icon(
+                                    //       Icons.favorite_border,
+                                    //       color: Colors.white,
+                                    //       size: 24,
+                                    //     ),
+                                    //     onPressed: () {
+                                    //       print('IconButton pressed ...');
+                                    //     },
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -149,7 +152,7 @@ class CheckOut extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(40),
                           child: CachedNetworkImage(
-                            imageUrl:'',
+                            imageUrl:trainerData?.image??'',
                             fit: BoxFit.cover,
                             width: 60,
                             height: 60,
@@ -171,10 +174,13 @@ class CheckOut extends StatelessWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DateRangePicker(from: TimeStatus.to, initialTime:DateTime.now(), duration:Duration(days:  planData?.noOfDays??0,)),
-                    ),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: DateRangePicker(from: TimeStatus.to, initialTime:DateTime.now(),
+                            duration:Duration(days:  (planData?.noOfDays??0)+DateUtils.getDaysInMonth(DateTime.now().year, planData?.noOfMonths??0),
+                            )),
+                      ),
                     ],
                   ),
                   Padding(
@@ -201,7 +207,11 @@ class CheckOut extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${planData?.itemDescription}',
+                              'Plan name: ${planData?.itemDescription}',
+                              style: FlutterFlowTheme.of(context).labelMedium,
+                            ),
+                            Text(
+                              'Plan Description: ${planData?.sec_item_description}',
                               style: FlutterFlowTheme.of(context).labelMedium,
                             ),
                             Text(
@@ -209,11 +219,11 @@ class CheckOut extends StatelessWidget {
                               style: FlutterFlowTheme.of(context).labelMedium,
                             ),
                             Text(
-                              'Days: ${planData?.noOfDays??'N/A'}',
+                              'Days: ${planData?.noOfDays??'N/A'} Days',
                               style: FlutterFlowTheme.of(context).labelMedium,
                             ),
                             Text(
-                              'Months: ${planData?.noOfMonths??'N/A'}',
+                              'Months: ${planData?.noOfMonths??'N/A'} Month',
                               style: FlutterFlowTheme.of(context).labelMedium,
                             ),
                           ],
@@ -254,79 +264,7 @@ class CheckOut extends StatelessWidget {
                     children: [
                       FFButtonWidget(
                         onPressed: () {
-                          // List<PaymentSdkAPms> apms = [];
-                          // apms.add(PaymentSdkAPms.AMAN);
-                          // var billingDetails = BillingDetails(
-                          //     "John Smith",
-                          //     "email@domain.com",
-                          //     "+97311111111",
-                          //     "st. 12",
-                          //     "eg",
-                          //     "dubai",
-                          //     "dubai",
-                          //     "12345"
-                          // );
-                          // var shippingDetails = ShippingDetails(
-                          //     "John Smith",
-                          //     "email@domain.com",
-                          //     "+97311111111",
-                          //     "st. 12",
-                          //     "eg",
-                          //     "dubai",
-                          //     "dubai",
-                          //     "12345"
-                          // );
-                          // var configuration =  PaymentSdkConfigurationDetails(
-                          //     profileId: "001900",
-                          //     serverKey: "SHJNKWHWK2-J6L2JTTLKH-BKKZKNJH9W",
-                          //     clientKey: "CQKM7K-V7TM6G-BM677B-VRK97P",
-                          //     cartId: "12433",
-                          //     cartDescription: "Flowers",
-                          //     merchantName: "Flowers Store",
-                          //     screentTitle: "Pay with Card",
-                          //     amount: 20.0,
-                          //     showBillingInfo: true,
-                          //     forceShippingInfo: false,
-                          //     currencyCode: "AED",
-                          //     merchantCountryCode: "AE",
-                          //     billingDetails: billingDetails,
-                          //     shippingDetails: shippingDetails,
-                          //     alternativePaymentMethods: apms,
-                          //     linkBillingNameWithCardHolderName: true);
-                          //
-                          // var theme = IOSThemeConfigurations();
-                          // theme.logoImage = "assets/logo.png";
-                          // configuration.iOSThemeConfigurations = theme;
-                          // var savedCardInfo = PaymentSDKSavedCardInfo("4000000000000002", "card type");
-                          // FlutterPaytabsBridge.startCardPayment(configuration, (event) {
-                          //   if (event["status"] == "success") {
-                          //     var transactionDetails = event["data"];
-                          //     if (kDebugMode) {
-                          //       print(transactionDetails);
-                          //     }
-                          //     if (transactionDetails["isSuccess"]) {
-                          //       if (kDebugMode) {
-                          //         print("successful transaction");
-                          //       }
-                          //     } else {
-                          //       if (kDebugMode) {
-                          //         print("failed transaction");
-                          //       }
-                          //     }
-                          //   } else if (event["status"] == "error") {
-                          //     if (kDebugMode) {
-                          //       print("Error: $event");
-                          //     }
-                          //   } else if (event["status"] == "event") {
-                          //     if (kDebugMode) {
-                          //       print(event);
-                          //     }
-                          //   }
-                          // });
-                          // if (kDebugMode) {
-                          //   print('Button pressed ...');
-                          // }
-                          sl<CheckoutEvent>()(data: CheckoutData(user:stored.userdata, methode: PaymentMethode.card),context: context);
+                          sl<CheckoutEvent>()(data: CheckoutData(user:stored.userdata!, methode: PaymentMethode.card),context: context);
                         },
                         text: 'Pay Now',
                         icon: Icon(
@@ -357,7 +295,7 @@ class CheckOut extends StatelessWidget {
                         onPressed: () async{
                           TabbyWebView.showWebView(
                             context: context,
-                            webUrl:(await sl<CheckoutEvent>().payTabby(data: CheckoutData(user:stored.userdata, methode: PaymentMethode.card))).availableProducts.installments!.webUrl,
+                            webUrl:(await sl<CheckoutEvent>().payTabby(data: CheckoutData(user:stored.userdata!, methode: PaymentMethode.card))).availableProducts.installments!.webUrl,
                             onResult: (WebViewResult resultCode) {
                               if (kDebugMode) {
                                 print(resultCode.name);

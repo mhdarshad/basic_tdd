@@ -27,7 +27,7 @@ class PhoneNumberContainer extends StatelessWidget {
           obscureText: false,
           decoration: InputDecoration(
             labelText: labelText,
-            prefix:  CountryCodePicker(
+            prefix:  CountryCodePicker(enabled: false,
               backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
               padding: EdgeInsets.zero,
               onChanged: print,
