@@ -6,7 +6,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../calender_view_modle/calender_view_modle.dart';
 import '../controller/calender_controller.dart';
 
-class StaffTimlineCalender extends StatefulWidget {
+class StaffTimlineCalender2 extends StatefulWidget {
 
   final List<Person> usersData;
   final CalendarView calView;
@@ -15,26 +15,21 @@ class StaffTimlineCalender extends StatefulWidget {
   final Function(AppointmentResizeEndDetails)? onAppointmentResizeed;
   final StaffTimlineCalenderController controller;
   final Widget Function(BuildContext, CalendarAppointmentDetails)? eventViewBuilder;
-  const StaffTimlineCalender(this.controller,{Key? key, required this.usersData, this.onTap, this.onDraged, this.onAppointmentResizeed, this.eventViewBuilder,required this.calView,  }): super(key: key);
+  const StaffTimlineCalender2(this.controller,{Key? key, required this.usersData, this.onTap, this.onDraged, this.onAppointmentResizeed, this.eventViewBuilder,required this.calView,  }): super(key: key);
 
   @override
-  State<StaffTimlineCalender> createState() => _StaffTimlineCalenderState();
+  State<StaffTimlineCalender2> createState() => _StaffTimlineCalenderState();
 
   changeCalenderView() {}
 }
 
-class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
-   late final StaffTimlineCalenderController stafTimeline = StaffTimlineCalenderController.instance;
+class _StaffTimlineCalenderState extends State<StaffTimlineCalender2> {
+   final StaffTimlineCalenderController stafTimeline = StaffTimlineCalenderController.instance;
   @override
   void initState() {
     // stafTimeline = widget.controller;
     stafTimeline.addStaffs = widget.usersData;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // do something
-      stafTimeline.controller.view = widget.calView;
-      print("Build Completed");
-    });
-
+    stafTimeline.controller.view = widget.calView;
     stafTimeline.initalize();
     super.initState();
   }

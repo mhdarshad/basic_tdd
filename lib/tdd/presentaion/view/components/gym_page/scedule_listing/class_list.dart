@@ -23,7 +23,7 @@ class _ClassListState extends State<ClassList> {
 @override
   void initState() {
     // TODO: implement initState
-  sl<SceduleEvent>()(data: NoPrams());
+  sl<SceduleEvent>()(data: null);
   super.initState();
   }
   @override

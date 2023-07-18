@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_me_v2/core/util/calculations/calculation.dart';
 import 'package:cloud_me_v2/core/util/presentation/template/custom_scafold.dart';
+import 'package:cloud_me_v2/tdd/data/models/api/user/plans_data.dart';
 import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class CheckOut extends StatelessWidget {
   Widget build(BuildContext context) {
     final planData = stored.selectedPlans;
     final trainerData = stored.selectedtrainer;
-
     return  ProjectScafold(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -178,7 +178,7 @@ class CheckOut extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: DateRangePicker(from: TimeStatus.to, initialTime:DateTime.now(),
-                            duration:Duration(days:  (planData?.noOfDays??0)+DateUtils.getDaysInMonth(DateTime.now().year, planData?.noOfMonths??0),
+                            duration:Duration(days:  daysData(planData),
                             )),
                       ),
                     ],
@@ -336,5 +336,13 @@ class CheckOut extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  int daysData(Plans? planData) {
+    int month = 0;
+    if(((planData?.noOfMonths!=null)&&(planData?.noOfMonths!=0))){
+    month = (DateUtils.getDaysInMonth(DateTime.now().year, planData?.noOfMonths??0));
+  }
+    return (planData?.noOfDays??0)+month;
   }
 }

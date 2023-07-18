@@ -72,7 +72,7 @@ _bloc(){
   sl.registerFactory(() => PlansListEvent(PlansUseCase( repo: sl(),),));
   sl.registerFactory(() => AttaidenceEvent(AttaidenceUseCase( repo: sl(),),));
   sl.registerFactory(() => RoomSceduleEvent(RoomSceduleUseCase( repo: sl(),),BookMatUseCase(repo: sl())));
-  sl.registerFactory(() => SceduleEvent(SceduleUseCase( repo: sl(),),DashBoardUseCase( repo: sl(),)));
+  sl.registerFactory(() => SceduleEvent(SceduleUseCase( repo: sl(),),DashBoardUseCase( repo: sl(),),TrainersUseCase(repo: sl())));
   sl.registerFactory(() => TrainerEvent(TrainersUseCase( repo: sl(),),));
   sl.registerFactory(() => DashboardEvent(DashBoardUseCase( repo: sl(),),));
   sl.registerFactory(() => CheckoutEvent(DashBoardUseCase( repo: sl(),),));
@@ -80,11 +80,7 @@ _bloc(){
   sl.registerFactory(() => EditProfileModuleEvent(EditProfileModuleUseCase( repo: sl(),),));
   sl.registerFactory(() => PlanTrainerDetailEvent(PlanTrainerDetailUseCase( repo: sl(),),));
   sl.registerFactory(() => UpdatetrainerEvent(UpdatetrainerUseCase( repo: sl(),),));
-  sl.registerFactory(() => GetUserController(
-      LoginUseCase( repo: sl(),),
-      OtpUseCase(repo:sl()),
-      SingUpUseCase(repo: sl())
-  ));
+  sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),), OtpUseCase(repo:sl()), SingUpUseCase(repo: sl()) ));
   sl.registerFactory(() => GetDBController(BDConfigUseCase( repo: sl(),),));
   // TabbySDK().setup(
   //   withApiKey: '', // Put here your Api key

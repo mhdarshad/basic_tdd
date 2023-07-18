@@ -5,22 +5,24 @@ import 'package:velocity_x/velocity_x.dart';
 import 'scedule_controller.dart';
 
 class SceduleContainer extends StatelessWidget {
-  const SceduleContainer({super.key, required this.builder});
+  const SceduleContainer({super.key, required this.builder, this.onSucsess});
 
   final Widget Function(BuildContext context, ProjectStore store, VxStatus state) builder;
-
+  final Function(ProjectStore store)? onSucsess;
   @override
   Widget build(BuildContext context) {
     return VxConsumer<ProjectStore>(
-        notifications: {SceduleMutation: (ctx, store, {status}) {
+        notifications: {SceduleListMutation: (ctx, store, {status}) {
           if (status == VxStatus.error) {
             // VxToast.show(
             //     ctx, msg: (store as PlansListMutation).err ?? '');
           } else if (status == VxStatus.success) {
-
+            if(onSucsess!=null){
+              onSucsess!(stored);
+            }
           }
         }
-        }, mutations: const {SceduleMutation},
+        }, mutations: const {SceduleListMutation},
         builder: (context, store, state) {
           switch (state!) {
             case VxStatus.none:
@@ -28,6 +30,7 @@ class SceduleContainer extends StatelessWidget {
               break;
             case VxStatus.loading:
             // TODO: Handle this case.
+            return const Center(child: CircularProgressIndicator());
               break;
             case VxStatus.success:
             // TODO: Handle this case.

@@ -83,7 +83,7 @@ class RoomSpotDetails {
   String? createdAt;
   String? updatedAt;
   String? matStatus;
-  Null? bookingCusId;
+  String? bookingCusId;
   String? custName;
 
   RoomSpotDetails(

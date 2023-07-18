@@ -13,7 +13,6 @@ import '../../../domain/repositories/repository_provider.dart';
 class SceduleModuleEvent
     extends LogicHandler<SceduleModuleUseCase, SceduleModuleDatas> {
   static ValueListenable<String?> classList = ValueNotifier(null);
-
   SceduleModuleEvent(super.usecase);
 
   @override
@@ -52,7 +51,8 @@ class SceduleModuleUseCase extends UseCase<List<Scedule>,NoPrams>{
     final result =  await repo.getRequest(Params(uri: Uri.parse("customer_schedule_list"), methed: Methed.Post,
         data: {
           "cus_id":sl<Configration>().custId
-        }));
+        }
+    ));
     return result.fold((l) => Left(l), (r) {
       return  Right((r as List).map((e) => Scedule.fromJson(e)).toList());
     });

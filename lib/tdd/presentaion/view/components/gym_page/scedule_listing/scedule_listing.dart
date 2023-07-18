@@ -47,26 +47,45 @@ class _SceduleListingState extends State<SceduleListing> {
   @override
   void initState() {
     // TODO: implement initState
-    sl<SceduleEvent>()(data: NoPrams());
+    sl<SceduleEvent>()(data: null);
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
 
-
     return  ProjectScafold(
         appBar: AppBar(actions:  [
           //TODO:: Add Filter
-          // DropDownContainer(data: ["Class","Plan","Trainer",],builder: (context,data){
-          //   return Text(data);
-          // },onSelect: (value){
-          //
-          // }),
-          // DropDownContainer(data: ["Class","Plan","Trainer",],builder: (context,data){
-          //   return Text(data);
-          // },onSelect: (value){
-          //
-          // }),
+          Row(
+            children: [
+              const Text("Filter:"),
+              DropDownContainer(hint:"Select Filter",data: SceduleEvent.filterData,builder: (context,data){
+                return Text(data);
+              },onSelect: (value){
+                sl<SceduleEvent>().getFilterData(value);
+              }),
+            ],
+          ),
+          ValueListenableBuilder(
+              valueListenable: SceduleEvent.filterFor,
+              builder: (context,value,_) {
+                return Row(
+                children: [
+                  if(value!=null)
+                  DropDownContainer<Map<String,dynamic>?>(
+                      hint:'Select ${value['title']??''}',
+                      data: value['data'],
+                      builder: (context,data){
+                    return Text(data?['name']??'');
+                  },
+                      onSelect: (fvalue){
+                        print("Selected Value${fvalue?['name']} and its Id: ${fvalue?['id']}");
+                        sl<SceduleEvent>()(data: FilterData(value['key'], (fvalue?['id']).toString()));
+                  }),
+                ],
+              );
+            }
+          ),
         ],),
         child:  SceduleContainer(
         builder: (context,store,mutation) {
@@ -74,6 +93,7 @@ class _SceduleListingState extends State<SceduleListing> {
           scedule.filter((sceduleData)=> sceduleData.planId.toString() == '');
           // return Container();
           return StaffTimlineCalender(
+              StaffTimlineCalenderController.instance,
              // eventViewBuilder: (context,data){
              //   final appointment = (data.appointments.first as Appointment);
              //   return GestureDetector(onTap:()=>print("isMoreAppointmentRegion ${appointment}"),child: Padding(
@@ -293,6 +313,7 @@ class _SceduleListingState extends State<SceduleListing> {
   Widget DropDownContainer<T>(
       {
         required List<T> data ,
+        String hint = "Select ",
       required Widget Function(BuildContext, T) builder,
       required Function(T?) onSelect}) {
     ValueNotifier<T?> dropDownAdapter = ValueNotifier(null);
@@ -303,18 +324,19 @@ class _SceduleListingState extends State<SceduleListing> {
               builder: (context,store,_) {
                 print("store:$store");
                 return DropdownButton<T>(
+                  hint:  Text(hint),
                     onChanged: (value) {
                       dropDownAdapter.value = value;
                       dropDownAdapter.notifyListeners();
                       onSelect(value);
                     },
-                    value: store??data.first,
+                    value: store,
                     items: data.map((e) => DropdownMenuItem<T>(
                       value:e,
                       child: builder(context,e),
                 )).toList());
               }
           ),
-        ):SizedBox.shrink();
+        ):const SizedBox.shrink();
   }
 }

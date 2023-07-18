@@ -7,21 +7,27 @@ import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/config/user_config.dart';
 import '../../../../injection_container.dart';
 import '../../../data/models/api/scdule/scedule_api.dart';
+import '../../../presentaion/modules/scedule/scedule_controller.dart';
 import '../../repositories/repository_provider.dart';
 
-class SceduleUseCase extends UseCase<List<Scedule>,NoPrams>{
+class SceduleUseCase extends UseCase<List<Scedule>,FilterData?>{
   DependencyRepostProvider<dynamic> repo;
   SceduleUseCase({required this.repo});
 
   @override
-  Future<Either<Failure, List<Scedule>>> call({required NoPrams data}) async{
-    final result =  await repo.getRequest(Params(uri: Uri.parse("customer_schedule_list"), methed: Methed.Post,
-    data: {
+  Future<Either<Failure, List<Scedule>>> call({required FilterData? data}) async{
+    Map<String,dynamic> pdata = {
       "cus_id":sl<Configration>().custId
-    }));
-    return result.fold((l) => Left(l), (r) {
-      return  Right((r as List).map((e) => Scedule.fromJson(e)).toList());
-    });
+    };
+    if(data !=null){
+      switch(data.type){
+        case 'class':pdata.addAll({'schedule_id':data.id}); break;
+        case 'plan':pdata.addAll({'plan_id':data.id}); break;
+        case 'trainer':pdata.addAll({'staff_id':data.id}); break;
+        case 'room':pdata.addAll({'room_id':data.id}); break;
+      }
+    }
+    final result =  await repo.getRequest(Params(uri: Uri.parse("customer_schedule_list"), methed: Methed.Post, data: pdata));
+    return result.fold((l) => Left(l), (r) => Right((r as List).map((e) => Scedule.fromJson(e)).toList()));
   }
-
 }

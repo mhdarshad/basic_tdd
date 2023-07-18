@@ -13,21 +13,22 @@ import '../../../modules/room_scedule/room_scedule_controller.dart';
 import '../../screens/home/home_controller.dart';
 
 class ClassBookingInfoDailog extends StatelessWidget {
+  final String? selectedMat;
   final String? selectedRoom;
   final RoomDetails? roomDetail;
   final Scedule? classData;
   final String? classId;
    ClassBookingInfoDailog({
-    this.selectedRoom,
+    this.selectedMat,
     super.key,
-     required this.classId,
+     required this.classId, this.selectedRoom,
   }):roomDetail = stored.rooms?.roomDetails?.where((element) => element.sno.toString() == selectedRoom).firstOrNull(),
          classData = stored.scedules.where((element) => element.id.toString() == classId).firstOrNull();
 
 
   @override
   Widget build(BuildContext context) {
-    final c = stored.scedules.where((element) => element.room_id == selectedRoom).firstOrNull();
+    // final c = stored.scedules.where((element) => element.room_id == selectedRoom).firstOrNull();
     return AlertDialog(
         content:  Column(
           mainAxisAlignment:MainAxisAlignment.start,
@@ -39,6 +40,10 @@ class ClassBookingInfoDailog extends StatelessWidget {
             ),
             // "${stored.rooms?.roomDetails?.where((element) => element.sno.toString() == selectedRoom).firstOrNull().floorNo}".text.make()
             buildBookinInfoDetails(title: 'Room',detail: roomDetail?.floorNo),
+            buildBookinInfoDetails(title: 'Mat',detail: stored.rooms?.roomSpotDetails?.firstWhere((element) {
+              print("Element index: ${element.index} room: ${selectedMat}");
+              return element.index==selectedMat;
+            }).index),
             buildBookinInfoDetails(title: 'Class',detail: classData?.title),
             buildBookinInfoDetails(title: 'Start Time',detail: classData?.appointments?.first.startTime),
             buildBookinInfoDetails(title: 'End Time',detail: classData?.appointments?.first.endTime),
@@ -70,7 +75,7 @@ class ClassBookingInfoDailog extends StatelessWidget {
                   }
                   return MaterialButton(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    onPressed: () => sl<RoomSceduleEvent>().bookMat(context,room:selectedRoom??"",classId:stored.scedules.where((element) => element.room_id == selectedRoom).firstOrNull().id.toString()),
+                    onPressed: () => sl<RoomSceduleEvent>().bookMat(context,room:selectedMat??"",classId:stored.scedules.where((element) => element.room_id == selectedRoom).firstOrNull().id.toString()),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,

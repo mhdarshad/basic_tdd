@@ -4,24 +4,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
+import '../../../data/models/api/trainers/trainers_data.dart';
 import '../../../domain/usecase/update_trainer_usecase/update_trainer_usecase.dart';
 
 class UpdatetrainerEvent
-    extends LogicHandler<UpdatetrainerUseCase, UpdatetrainerDatas> {
+    extends LogicHandler<UpdatetrainerUseCase, PersonalTrainerData> {
   UpdatetrainerEvent(super.usecase);
 
   @override
-  call({required UpdatetrainerDatas data, BuildContext? context}) {
+  call({required PersonalTrainerData data, BuildContext? context}) {
     // TODO: implement call
     return UpdatetrainerMutation(usecase,context!, data);
   }
 }
 
-class UpdatetrainerMutation extends EventMutations<UpdatetrainerDatas> {
+class UpdatetrainerMutation extends EventMutations<PersonalTrainerData> {
   UpdatetrainerUseCase usecase;
   String? err;
   BuildContext? context;
-  UpdatetrainerMutation(this.usecase,this.context, UpdatetrainerDatas data) : super(data);
+  UpdatetrainerMutation(this.usecase,this.context, PersonalTrainerData data) : super(data);
 
   @override
   perform() async {

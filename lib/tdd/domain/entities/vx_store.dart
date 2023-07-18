@@ -23,7 +23,7 @@ class ProjectStore extends VxStore{
   Map<String,dynamic>? pathParameters;
  DashBoardData? dashboard;
  List<Scedule> scedules = [];
- List<PersonalTrainerData>? trainerData;
+ List<PersonalTrainerData>? trainerData =[];
  PersonalTrainerData? selectedtrainer;
   PurchaseInvoiceData? purchaseInvoiceData ;
   Customer? userdata;
@@ -31,6 +31,11 @@ class ProjectStore extends VxStore{
   RoomSceduels? rooms;
 
   PlansAndTrainerData? plandata;
+
+ List<SubscribedPlans>? plan_forfilter = [];
+
+  List<PersonalTrainerData> trainerForFIlter = [];
+
 
 }
 enum UpdatedFrom{

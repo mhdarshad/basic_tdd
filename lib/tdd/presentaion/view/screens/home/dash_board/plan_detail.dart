@@ -368,9 +368,9 @@ class _PlanDetailState extends State<PlanDetail> {
   void onSelectTrainer(PersonalTrainerData e) {
     if(e.itprRetlPrice!=0){
       stored.selectedtrainer = e;
-      sl<UpdatetrainerEvent>()(context:context,data: UpdatetrainerDatas(invoiceNumber: "00000000000", transctionId: e.addonItem.toString()));
+      sl<UpdatetrainerEvent>()(context:context,data:e);
     }else{
-      sl<UpdatetrainerEvent>()(context:context,data: UpdatetrainerDatas(invoiceNumber: "00000000000", transctionId: e.addonItem.toString()));
+      sl<UpdatetrainerEvent>()(context:context,data: e);
     }
   }
 }

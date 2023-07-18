@@ -14,10 +14,11 @@ import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/presentation/flutter_flow/flutter_flow_util.dart';
 import '../../../../injection_container.dart';
 import '../../../data/models/api/invoice/purchase_invoce_data.dart';
+import '../../../data/models/api/trainers/trainers_data.dart';
 import '../../../presentaion/modules/update_trainer/updateTrainer_controller.dart';
 import '../../repositories/repository_provider.dart';
 
-class UpdatetrainerUseCase  extends UseCase<bool,UpdatetrainerDatas>{
+class UpdatetrainerUseCase  extends UseCase<bool,PersonalTrainerData>{
   DependencyRepostProvider<dynamic> repo;
 
   PurchaseInvoiceData? purchaseInvoiceData;
@@ -94,67 +95,88 @@ class UpdatetrainerUseCase  extends UseCase<bool,UpdatetrainerDatas>{
 
   /// Use Case For Setup DB
   @override
-  Future<Either<Failure,bool>> call({required UpdatetrainerDatas data, dynamic Function(int,Either<Failure, dynamic>)? returnStatus}) async{
-    return await payCard(
-        onSucsess: (Map<String, dynamic> invoice) async{
-          if (kDebugMode) {
-            print("show Toast paid");
-          }
-          List<GymInvoiceData> right = [];
-          purchaseInvoiceData = PurchaseInvoiceData.fromJson(invoice);
-          final planData = stored.plandata?.plans?.first;
-          final paymentDetail =  await repo.getRequest(Params(uri: Uri.parse("get_change_trainer_details/${planData?.itemCode}"), methed: Methed.Get));
-          final pdata = paymentDetail.map((r) => (r as List).map((e) => GymInvoiceData.fromJson(e)).toList().where((element) => element.custId.toString() == sl<Configration>().custId).toList());
-         right = pdata.foldRight<List<GymInvoiceData>>(right, (r, previous) => [...previous,...r]);
-         if (kDebugMode) {
-           print(right.map((e) => e.toJson()));
-         }
-          final result =  await repo.getRequest(Params(uri: Uri.parse("update_trainer"), methed: Methed.Post,data: {
-            "invoice_no":right.first.invoiceNo,
-            "trainer_id":right.first.trainerId
-          }));
-         if(returnStatus!=null) {
-           returnStatus(1,result.fold((l) => Left(l), (r) {
+  Future<Either<Failure,bool>> call({required PersonalTrainerData data, dynamic Function(int,Either<Failure, dynamic>)? returnStatus}) async{
+    print("amount to be Paid:${(data.itprRetlPrice.toDouble()??0)}");
+    if((data.itprRetlPrice.toDouble()??0)==0){
+      final planData = stored.plandata?.plans?.first;
+      List<GymInvoiceData> right = [];
+      final paymentDetail =  await repo.getRequest(Params(uri: Uri.parse("get_change_trainer_details/${planData?.itemCode}"), methed: Methed.Get));
+      final pdata = paymentDetail.map((r) => (r as List).map((e) => GymInvoiceData.fromJson(e)).toList().where((element) => element.custId.toString() == sl<Configration>().custId).toList());
+      right = pdata.foldRight<List<GymInvoiceData>>(right, (r, previous) => [...previous,...r]);
+      final result =  await repo.getRequest(Params(uri: Uri.parse("update_trainer"), methed: Methed.Post,data: {
+        "invoice_no":right.first.invoiceNo,
+        "trainer_id":data.addonItem,
+        "cust_id":sl<Configration>().custId
+      }));
+      return returnStatus!(1,result.fold((l) => Left(l), (r) {
+        if (kDebugMode) {
+          print(r);
+        }
+        return  const Right(true);
+      }));
+
+    }else{
+      return await payCard(
+          onSucsess: (Map<String, dynamic> invoice) async{
             if (kDebugMode) {
-              print(r);
+              print("show Toast paid");
             }
-            return  const Right(true);
-          }));
-         }
-        },
-        onFailure: (Map<String, dynamic> invoice) {
-          purchaseInvoiceData = PurchaseInvoiceData.fromJson(invoice);
-          // returnStatus!(0,result.fold((l) => Left(l), (r) {
-          //   if (kDebugMode) {
-          //     print(r);
-          //   }
-          //   return  const Right(true);
-          // }));
-        },
-        onPrecess: (Map<String, dynamic> invoice) async{
-          if (kDebugMode) {
-            print("show Toast paid");
-          }
-          List<GymInvoiceData> right = [];
-          purchaseInvoiceData = PurchaseInvoiceData.fromJson(invoice);
-          final planData = stored.plandata?.plans?.first;
-          final paymentDetail =  await repo.getRequest(Params(uri: Uri.parse("get_change_trainer_details/${planData?.itemCode}"), methed: Methed.Get));
-          final pdata = paymentDetail.map((r) => (r as List).map((e) => GymInvoiceData.fromJson(e)).toList().where((element) => element.custId.toString() == sl<Configration>().custId).toList());
-          right = pdata.foldRight<List<GymInvoiceData>>(right, (r, previous) => [...previous,...r]);
-          if (kDebugMode) {
-            print(right.map((e) => e.toJson()));
-          }
-          final result =  await repo.getRequest(Params(uri: Uri.parse("update_trainer"), methed: Methed.Post,data: {
-            "invoice_no":right.first.invoiceNo,
-            "trainer_id":right.first.trainerId
-          }));
-          returnStatus!(1,result.fold((l) => Left(l), (r) {
+            List<GymInvoiceData> right = [];
+            purchaseInvoiceData = PurchaseInvoiceData.fromJson(invoice);
+            final planData = stored.plandata?.plans?.first;
+            final paymentDetail =  await repo.getRequest(Params(uri: Uri.parse("get_change_trainer_details/${planData?.itemCode}"), methed: Methed.Get));
+            final pdata = paymentDetail.map((r) => (r as List).map((e) => GymInvoiceData.fromJson(e)).toList().where((element) => element.custId.toString() == sl<Configration>().custId).toList());
+            right = pdata.foldRight<List<GymInvoiceData>>(right, (r, previous) => [...previous,...r]);
             if (kDebugMode) {
-              print(r);
+              print(right.map((e) => e.toJson()));
             }
-            return  const Right(true);
-          }));
-        });
+            final result =  await repo.getRequest(Params(uri: Uri.parse("update_trainer"), methed: Methed.Post,data: {
+              "invoice_no":right.first.invoiceNo,
+              "trainer_id":data.addonItem
+            }));
+            if(returnStatus!=null) {
+              returnStatus(1,result.fold((l) => Left(l), (r) {
+                if (kDebugMode) {
+                  print(r);
+                }
+                return  const Right(true);
+              }));
+            }
+          },
+          onFailure: (Map<String, dynamic> invoice) {
+            purchaseInvoiceData = PurchaseInvoiceData.fromJson(invoice);
+            // returnStatus!(0,result.fold((l) => Left(l), (r) {
+            //   if (kDebugMode) {
+            //     print(r);
+            //   }
+            //   return  const Right(true);
+            // }));
+          },
+          onPrecess: (Map<String, dynamic> invoice) async{
+            if (kDebugMode) {
+              print("show Toast paid");
+            }
+            List<GymInvoiceData> right = [];
+            purchaseInvoiceData = PurchaseInvoiceData.fromJson(invoice);
+            final planData = stored.plandata?.plans?.first;
+            final paymentDetail =  await repo.getRequest(Params(uri: Uri.parse("get_change_trainer_details/${planData?.itemCode}"), methed: Methed.Get));
+            final pdata = paymentDetail.map((r) => (r as List).map((e) => GymInvoiceData.fromJson(e)).toList().where((element) => element.custId.toString() == sl<Configration>().custId).toList());
+            right = pdata.foldRight<List<GymInvoiceData>>(right, (r, previous) => [...previous,...r]);
+            if (kDebugMode) {
+              print(right.map((e) => e.toJson()));
+            }
+            final result =  await repo.getRequest(Params(uri: Uri.parse("update_trainer"), methed: Methed.Post,data: {
+              "invoice_no":right.first.invoiceNo,
+              "trainer_id":right.first.trainerId
+            }));
+            returnStatus!(1,result.fold((l) => Left(l), (r) {
+              if (kDebugMode) {
+                print(r);
+              }
+              return  const Right(true);
+            }));
+          });
+    }
   }
 }
 class GymInvoiceData {

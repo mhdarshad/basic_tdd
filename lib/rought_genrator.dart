@@ -357,7 +357,7 @@ extension GoNavigations on Routename{
 ///   return Object.entries(imEnd).map(([key, value]) => `${key}=${value}`).join('&');
 /// };
 class PageControler{
- static get routs =>[
+  static get routs =>[
     GoRoute(path: '/',redirect: (_,__)=>"/${Routename.login.nUri.name}"),
     goRoute(Routename.login,(BuildContext context, GoRouterState state)=> Auth(key: state.pageKey,)),
     goRoute(Routename.config,(BuildContext context, GoRouterState state)=> DbConfig(key: state.pageKey,)),
@@ -370,8 +370,8 @@ class PageControler{
     goRoute(Routename.signup,(BuildContext context, GoRouterState state)=> SignUpPage(key: state.pageKey,),routes: [
       goRoute(Routename.form,(BuildContext context, GoRouterState state)=> SignUpForm(key: state.pageKey,),isSubROught: true),
     ]),
-   goRoute(Routename.sceduleDetais,(BuildContext context, GoRouterState state)=> ViewSceduleDetail(key: state.pageKey,sceduleId:state.queryParameters['class_id'])),
-   goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page'],
+    goRoute(Routename.sceduleDetais,(BuildContext context, GoRouterState state)=> ViewSceduleDetail(key: state.pageKey,sceduleId:state.queryParameters['class_id'])),
+    goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page'],
         routes: [
           goRoute(Routename.trainers,(BuildContext context, GoRouterState state)=> SelectTrainer(key: state.pageKey,planId:state.queryParameters['item_code']),isSubROught: true),
           goRoute(Routename.scedule,(BuildContext context, GoRouterState state)=> SceduleListing(key: state.pageKey,planId:state.queryParameters['plan_id']),isSubROught: true,
@@ -400,8 +400,8 @@ class PageControler{
       {List<String>? params, List<RouteBase>? routes,bool isSubROught = false}) => GoRoute(name:route.nUri.name,path: "${isSubROught?route.nUri.path.replaceFirst('/', ''):route.nUri.path}${(params??[]).toRequiredParamsString()}",routes:routes??const <RouteBase>[],builder: (BuildContext context, GoRouterState state) {
     stored.pathParameters = state.pathParameters;
     print(state.pathParameters);
-        return widget(context,state);
-      });
+    return widget(context,state);
+  });
 }
 final router = GoRouter(
   redirect: (context,state){
@@ -502,7 +502,6 @@ class Navigations {
     // }
     context.goNamed(name.nUri.name,pathParameters: parms.map((key, value) =>
         MapEntry(key, value.toString())),queryParameters: qparms);
-
   }
 
   refresh(BuildContext context)=>
