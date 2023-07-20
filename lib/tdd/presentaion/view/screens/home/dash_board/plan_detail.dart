@@ -134,37 +134,37 @@ class _PlanDetailState extends State<PlanDetail> {
                             ),
                           ),
                         ),
-                        FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
-                            showDialog(context: context, builder: (context){
-                              return UpdatetrainerContainer(
-                                builder: (context,store,status) {
-                                  return TrainersListtCOntroller(planData?.itemCode.toString(),onSelecttrainer: (e)=> onSelectTrainer(e),selectedtrainerId:trainerData.addonItem);
-                                }
-                              );
-                               // SelectTrainer(planId:(planData?.itemCode??'0').toString());
-                            });
-                          },
-                          text: 'Change',
-                          options: FFButtonOptions(
-                            height: 40,
-                            padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                            color: FlutterFlowTheme.of(context).primary,
-                            textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                              fontFamily: 'Readex Pro',
-                              color: Colors.white,
-                            ),
-                            elevation: 3,
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
+                        // FFButtonWidget(
+                        //   onPressed: () {
+                        //     print('Button pressed ...');
+                        //     showDialog(context: context, builder: (context){
+                        //       return UpdatetrainerContainer(
+                        //         builder: (context,store,status) {
+                        //           return TrainersListtCOntroller(planData?.itemCode.toString(),onSelecttrainer: (e)=> onSelectTrainer(e),selectedtrainerId:trainerData.addonItem);
+                        //         }
+                        //       );
+                        //        // SelectTrainer(planId:(planData?.itemCode??'0').toString());
+                        //     });
+                        //   },
+                        //   text: 'Change',
+                        //   options: FFButtonOptions(
+                        //     height: 40,
+                        //     padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                        //     iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        //     color: FlutterFlowTheme.of(context).primary,
+                        //     textStyle:
+                        //     FlutterFlowTheme.of(context).titleSmall.override(
+                        //       fontFamily: 'Readex Pro',
+                        //       color: Colors.white,
+                        //     ),
+                        //     elevation: 3,
+                        //     borderSide: const BorderSide(
+                        //       color: Colors.transparent,
+                        //       width: 1,
+                        //     ),
+                        //     borderRadius: BorderRadius.circular(8),
+                        //   ),
+                        // ),
                       ],
                     ),
                   )

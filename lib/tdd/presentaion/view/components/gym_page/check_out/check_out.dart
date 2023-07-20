@@ -49,11 +49,16 @@ class CheckOut extends StatelessWidget {
                             transitionOnUserGestures: true,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(0),
-                              child: Image.network(
-                                'https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.cover,
+                              child: CachedNetworkImage(
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  imageUrl: planData?.image??'',
+                                  errorWidget: (context,__,___){
+                                    return Image.asset('assets/image/gym_image_error_2.webp' ,
+                                      width: double.infinity,
+                                      height: double.infinity,);
+                                  },
+                                  fit: BoxFit.cover
                               ),
                             ),
                           ),
@@ -143,45 +148,48 @@ class CheckOut extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     mainAxisSize: MainAxisSize.max,
+                  //     children: [
+                  //       ClipRRect(
+                  //         borderRadius: BorderRadius.circular(40),
+                  //         child: CachedNetworkImage(
+                  //           imageUrl:trainerData?.image??'',
+                  //           fit: BoxFit.cover,
+                  //           width: 60,
+                  //           height: 60,
+                  //           errorWidget: (contxt,url,data){
+                  //             return Image.asset('assets/icons/profile.jpeg');
+                  //           },
+                  //         ),
+                  //       ),
+                  //       Text(
+                  //         trainerData?.itemDescription??'',
+                  //         style: FlutterFlowTheme.of(context).labelMedium,
+                  //       ),
+                  //       Text(
+                  //         'Price : ${trainerData?.itprRetlPrice??0}',
+                  //         style: FlutterFlowTheme.of(context).bodyMedium,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(40),
-                          child: CachedNetworkImage(
-                            imageUrl:trainerData?.image??'',
-                            fit: BoxFit.cover,
-                            width: 60,
-                            height: 60,
-                            errorWidget: (contxt,url,data){
-                              return Image.asset('assets/icons/profile.jpeg');
-                            },
-                          ),
-                        ),
-                        Text(
-                          trainerData?.itemDescription??'',
-                          style: FlutterFlowTheme.of(context).labelMedium,
-                        ),
-                        Text(
-                          'Price : ${trainerData?.itprRetlPrice??0}',
-                          style: FlutterFlowTheme.of(context).bodyMedium,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DateRangePicker(from: TimeStatus.to, initialTime:DateTime.now(),
+                              duration:Duration(days:  daysData(planData),
+                              ), viewOnly: true,),
                         ),
                       ],
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: DateRangePicker(from: TimeStatus.to, initialTime:DateTime.now(),
-                            duration:Duration(days:  daysData(planData),
-                            )),
-                      ),
-                    ],
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 0),

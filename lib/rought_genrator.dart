@@ -376,7 +376,7 @@ class PageControler{
           goRoute(Routename.trainers,(BuildContext context, GoRouterState state)=> SelectTrainer(key: state.pageKey,planId:state.queryParameters['item_code']),isSubROught: true),
           goRoute(Routename.scedule,(BuildContext context, GoRouterState state)=> SceduleListing(key: state.pageKey,planId:state.queryParameters['plan_id']),isSubROught: true,
               routes: [
-                goRoute(Routename.room,(BuildContext context, GoRouterState state)=> RoomSelect(key: state.pageKey,roomId:state.queryParameters['room_id'],classId:state.queryParameters['class_id'],),isSubROught: true,),
+                goRoute(Routename.room,(BuildContext context, GoRouterState state)=> RoomSelect(key: state.pageKey,roomId:state.queryParameters['room_id'],classId:state.queryParameters['class_id'],date: state.queryParameters['date'],),isSubROught: true,),
               ]),
         ]),
     goRoute(Routename.checkout,(BuildContext context, GoRouterState state)=>CheckOut(key: state.pageKey,),routes: [

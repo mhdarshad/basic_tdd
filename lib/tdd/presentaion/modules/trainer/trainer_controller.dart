@@ -35,7 +35,9 @@ class TrainerMutation extends EventMutations<PlanFetchData>  {
     }
   }
 }
+
 class PlanFetchData{
   final String? planId;
-  const PlanFetchData({ this.planId});
+  final String? sceduleId;
+  const PlanFetchData({ this.sceduleId,this.planId});
 }

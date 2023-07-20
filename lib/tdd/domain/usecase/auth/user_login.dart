@@ -53,7 +53,7 @@ class SingUpUseCase extends UseCase<UserAcsessData,SignUpData>{
   Future<Either<Failure, UserAcsessData>> call({required SignUpData data}) async{
    final result =  await repo.getRequest(Params(uri: Uri.parse("signup"), methed: Methed.Post,
         data: {
-          "name": "${data.userFirstname }${data.userSecondname}",
+          "name": "${data.userFirstname } ${data.userSecondname}",
           "phone_code": data.phoneCode,
           "phone": data.phone,
           "email": data.emaile,

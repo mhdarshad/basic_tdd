@@ -8,6 +8,7 @@ class Scedule {
   int? memberCount;
   Map<String,dynamic>? days;
   String? room_id;
+  String? trainername;
 
   Scedule(
       {this.id,
@@ -15,6 +16,7 @@ class Scedule {
         this.date,
         this.appointments,
         this.planId,
+        this.trainername,
         this.staffId,
         this.memberCount,
         this.room_id,
@@ -36,6 +38,7 @@ class Scedule {
       });
     }
     planId = json['plan_id'];
+    trainername = json['staff_name'];
     room_id = json['room_id'];
     staffId = json['staff_id'];
     memberCount = json['member_count'];
@@ -57,6 +60,7 @@ class Scedule {
     data['plan_id'] = planId;
     data['room_id'] = staffId;
     data['staff_id'] = room_id;
+    data['staff_name'] = trainername;
     data['member_count'] = memberCount;
     if (days != null) {
       data['Days'] = days;

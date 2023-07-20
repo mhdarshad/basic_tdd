@@ -14,8 +14,9 @@ class StaffTimlineCalender extends StatefulWidget {
   final Function(AppointmentDragUpdateDetails)? onDraged;
   final Function(AppointmentResizeEndDetails)? onAppointmentResizeed;
   final StaffTimlineCalenderController controller;
+  final Color? headerColor;
   final Widget Function(BuildContext, CalendarAppointmentDetails)? eventViewBuilder;
-  const StaffTimlineCalender(this.controller,{Key? key, required this.usersData, this.onTap, this.onDraged, this.onAppointmentResizeed, this.eventViewBuilder,required this.calView,  }): super(key: key);
+  const StaffTimlineCalender(this.controller,{Key? key, required this.usersData, this.onTap, this.onDraged, this.onAppointmentResizeed, this.eventViewBuilder,required this.calView,  this.headerColor,  }): super(key: key);
 
   @override
   State<StaffTimlineCalender> createState() => _StaffTimlineCalenderState();
@@ -57,9 +58,14 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
             allowAppointmentResize: true,
             onAppointmentResizeEnd: widget.onAppointmentResizeed,
             // allowViewNavigation: true,
+            viewHeaderStyle:widget.headerColor!=null?ViewHeaderStyle(backgroundColor: widget.headerColor):ViewHeaderStyle(),
             cellBorderColor: Colors.green,
             showCurrentTimeIndicator:true,
-            monthViewSettings: const MonthViewSettings(navigationDirection:MonthNavigationDirection.vertical ,showAgenda: true,appointmentDisplayMode: MonthAppointmentDisplayMode.indicator),
+            monthViewSettings: const MonthViewSettings(
+                navigationDirection:MonthNavigationDirection.vertical ,
+                showAgenda: true,
+                appointmentDisplayMode: MonthAppointmentDisplayMode.indicator
+            ),
             viewNavigationMode: ViewNavigationMode.snap,
             allowedViews: const [
               // CalendarView.timelineDay,
@@ -107,7 +113,7 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
                 ],),
               ),
             ),
-            scheduleViewSettings:const ScheduleViewSettings(appointmentTextStyle:TextStyle(color: Colors.black),hideEmptyScheduleWeek: true,monthHeaderSettings: MonthHeaderSettings(height: 60,textAlign: TextAlign.center),weekHeaderSettings: WeekHeaderSettings()),
+            scheduleViewSettings:const ScheduleViewSettings(appointmentItemHeight: 100,appointmentTextStyle:TextStyle(color: Colors.black),hideEmptyScheduleWeek: true,monthHeaderSettings: MonthHeaderSettings(height: 60,textAlign: TextAlign.center),weekHeaderSettings: WeekHeaderSettings()),
             // showNavigationArrow: true,
             dragAndDropSettings: stafTimeline.draganddropSettings,
             onDragStart: (arguments){

@@ -15,28 +15,29 @@ import '../../../domain/entities/plans/subscribed_plans_listing.dart';
 import '../../../domain/usecase/dashboard/dashboard_usecase.dart';
 import '../../../domain/usecase/room_scedule/room_scedule_usecase.dart';
 import '../../../domain/usecase/scedule/scedule_usecase.dart';
-class   RoomSceduleEvent extends LogicHandler<RoomSceduleUseCase, String>{
+class   RoomSceduleEvent extends LogicHandler<RoomSceduleUseCase, Map<String,dynamic>>{
   BookMatUseCase boockMatUseCase;
   RoomSceduleEvent(super.usecase,this.boockMatUseCase);
 
   @override
-  call({required String data}) {
+  call({required Map<String,dynamic> data}) {
     // TODO: implement call
      return  RoomSceduleMutation(usecase, data);
   }
 
-   bookMat(BuildContext context, {required String room, required String classId}) {
+   bookMat(BuildContext context, {required String room, required String classId, required String date}) {
     return BookMatMutation(context,boockMatUseCase,{
       "calss_id": classId,
       "index" : room,
-      "cus_id" : sl<Configration>().custId
+      "cus_id" : sl<Configration>().custId,
+      'date':date
     });
   }
 }
 
-class RoomSceduleMutation extends EventMutations<String>  {
+class RoomSceduleMutation extends EventMutations<Map<String,dynamic>>  {
   RoomSceduleUseCase usecase;
-  RoomSceduleMutation(this.usecase, String data) : super(data);
+  RoomSceduleMutation(this.usecase, Map<String,dynamic> data) : super(data);
 
   @override
   perform() async {

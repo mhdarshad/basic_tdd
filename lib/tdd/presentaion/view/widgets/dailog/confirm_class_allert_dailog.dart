@@ -18,10 +18,11 @@ class ClassBookingInfoDailog extends StatelessWidget {
   final RoomDetails? roomDetail;
   final Scedule? classData;
   final String? classId;
+  final String? date;
    ClassBookingInfoDailog({
     this.selectedMat,
     super.key,
-     required this.classId, this.selectedRoom,
+     required this.classId, this.selectedRoom, this. date,
   }):roomDetail = stored.rooms?.roomDetails?.where((element) => element.sno.toString() == selectedRoom).firstOrNull(),
          classData = stored.scedules.where((element) => element.id.toString() == classId).firstOrNull();
 
@@ -34,22 +35,51 @@ class ClassBookingInfoDailog extends StatelessWidget {
           mainAxisAlignment:MainAxisAlignment.start,
           mainAxisSize:MainAxisSize.min,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Confirm Booking",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("Confirm Booking",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                  ),
+                  // "${stored.rooms?.roomDetails?.where((element) => element.sno.toString() == selectedRoom).firstOrNull().floorNo}".text.make()
+                  buildBookinInfoDetails(title: 'Room',detail: roomDetail?.floorNo),
+                  buildBookinInfoDetails(title: 'Mat',detail: stored.rooms?.roomSpotDetails?.firstWhere((element) {
+                    print("Element index: ${element.index} room: ${selectedMat}");
+                    return element.index==selectedMat;
+                  }).index),
+                ],
+              ),
             ),
-            // "${stored.rooms?.roomDetails?.where((element) => element.sno.toString() == selectedRoom).firstOrNull().floorNo}".text.make()
-            buildBookinInfoDetails(title: 'Room',detail: roomDetail?.floorNo),
-            buildBookinInfoDetails(title: 'Mat',detail: stored.rooms?.roomSpotDetails?.firstWhere((element) {
-              print("Element index: ${element.index} room: ${selectedMat}");
-              return element.index==selectedMat;
-            }).index),
-            buildBookinInfoDetails(title: 'Class',detail: classData?.title),
-            buildBookinInfoDetails(title: 'Start Time',detail: classData?.appointments?.first.startTime),
-            buildBookinInfoDetails(title: 'End Time',detail: classData?.appointments?.first.endTime),
-            buildBookinInfoDetails(title: 'Start Date',detail: classData?.date?.first.startDate),
-            buildBookinInfoDetails(title: 'End Date',detail: classData?.date?.first.endDate),
-            buildBookinInfoDetails(title: 'Trainer Name',detail: classData?.date?.first.endDate),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  buildBookinInfoDetails(title: 'Class',detail: classData?.title),
+                  buildBookinInfoDetails(title: 'Trainer',detail: classData?.trainername),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  buildBookinInfoDetails(title: 'Start Time',detail: classData?.appointments?.first.startTime),
+                  buildBookinInfoDetails(title: 'End Time',detail: classData?.appointments?.first.endTime),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  buildBookinInfoDetails(title: 'Date',detail: date),
+                  // buildBookinInfoDetails(title: 'End Date',detail: classData?.date?.first.endDate),
+                ],
+              ),
+            ),
+            // buildBookinInfoDetails(title: 'Trainer Name',detail: classData?.date?.first.endDate),
           ],),
         actions: [
           Padding(
@@ -75,7 +105,7 @@ class ClassBookingInfoDailog extends StatelessWidget {
                   }
                   return MaterialButton(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    onPressed: () => sl<RoomSceduleEvent>().bookMat(context,room:selectedMat??"",classId:stored.scedules.where((element) => element.room_id == selectedRoom).firstOrNull().id.toString()),
+                    onPressed: () => sl<RoomSceduleEvent>().bookMat(context,room:selectedMat??"",classId:stored.scedules.where((element) => element.room_id == selectedRoom).firstOrNull().id.toString(), date:date??''),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,

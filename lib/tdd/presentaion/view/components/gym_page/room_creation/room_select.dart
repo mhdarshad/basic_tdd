@@ -14,10 +14,11 @@ import '../../../widgets/dailog/confirm_class_allert_dailog.dart';
 class RoomSelect extends StatefulWidget {
   final String? roomId;
   final String? classId;
+  final String? date;
 
   final bool  viewOnly;
 
-  const RoomSelect({Key? key, this. roomId, this. classId,  this.viewOnly = false}) : super(key: key);
+  const RoomSelect({Key? key, this. roomId, this. classId,  this.viewOnly = false, this.date}) : super(key: key);
 
   @override
   State<RoomSelect> createState() => _RoomSelectState();
@@ -28,7 +29,8 @@ class _RoomSelectState extends State<RoomSelect> {
   @override
   void initState() {
     // TODO: implement initState
-    sl<RoomSceduleEvent>()(data: widget.roomId??'');
+    print("Dtae :${widget.date}");
+    sl<RoomSceduleEvent>()(data: {'room_id':widget.roomId ?? '','date':widget.date});
     super.initState();
   }
   @override
@@ -106,7 +108,7 @@ class _RoomSelectState extends State<RoomSelect> {
                                     onTap: () {
                                       // selectedRoom.value = e.index??"0";
                                       // selectedRoom.notifyListeners();
-                                      showDialog(context: context, builder:(context)=> ClassBookingInfoDailog(selectedMat: selectedRoom.value,selectedRoom:widget.roomId,classId:widget.classId));
+                                      showDialog(context: context, builder:(context)=> ClassBookingInfoDailog(selectedMat: selectedRoom.value,selectedRoom:widget.roomId,classId:widget.classId,date:widget.date));
                                       // sl<RoomSceduleEvent>().bookMat(context,room:selectedRoom.value,classId:store.scedules.where((element) => element.room_id == widget.roomId).firstOrNull().id.toString());
                                     },
                                     child: Card(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/entities/vx_store.dart';
 import 'package:velocity_x/velocity_x.dart';
+import '../room_scedule/room_scedule_controller.dart';
+import '../trainer/trainer_controller.dart';
 import 'scedule_controller.dart';
 
 class SceduleContainer extends StatelessWidget {
@@ -22,7 +24,7 @@ class SceduleContainer extends StatelessWidget {
             }
           }
         }
-        }, mutations: const {SceduleListMutation},
+        }, mutations: const {SceduleListMutation,TrainerMutation,RoomSceduleMutation},
         builder: (context, store, state) {
           switch (state!) {
             case VxStatus.none:

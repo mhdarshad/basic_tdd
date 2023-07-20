@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/vx_store.dart';
+import 'mat_detailes_scedule_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'dashboard_controller.dart';
 
-class DashBoardConteainer extends StatelessWidget {
-  const DashBoardConteainer({super.key, required this.builder});
+class MatDetailesSceduleContainer extends StatelessWidget {
+  const MatDetailesSceduleContainer({super.key, required this.builder});
 
   final Widget Function(BuildContext context, ProjectStore store, VxStatus state) builder;
 
   @override
   Widget build(BuildContext context) {
     return VxConsumer<ProjectStore>(
-        notifications: {PlansListMutation: (ctx, store, {status}) {
+        notifications: {MatDetailesSceduleMutation: (ctx, store, {status}) {
           if (status == VxStatus.error) {
-            // VxToast.show(
-            //     ctx, msg: (store as PlansListMutation).err ?? '');
+            VxToast.show(
+                ctx, msg: (store as MatDetailesSceduleMutation).err ?? '');
           } else if (status == VxStatus.success) {
 
           }
         }
-        }, mutations: const {PlansListMutation},
+        }, mutations: const {MatDetailesSceduleMutation},
         builder: (context, store, state) {
           switch (state!) {
             case VxStatus.none:
@@ -38,6 +38,7 @@ class DashBoardConteainer extends StatelessWidget {
           }
           return builder(context, store, state);
         }
+
     );
   }
 }

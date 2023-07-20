@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../data/models/api/scdule/scedule_api.dart';
+import '../../../data/models/api/user/dash_board_date.dart';
 import '../../../data/models/api/user/dashboard_data.dart';
 import '../../../domain/entities/plans/subscribed_plans_listing.dart';
 import '../../../domain/usecase/dashboard/dashboard_usecase.dart';
@@ -27,7 +28,7 @@ class   SceduleEvent extends LogicHandler<SceduleUseCase, FilterData?>{
   void getFilterData(String? value) {
     final planForfilter = stored.plan_forfilter?.map((e) => {
       'id':e.itemCode,
-      'name':e.invoiceDetail?.invoiceItemDiscription}).toList();
+      'name':e.invoiceDetails?.first.invoiceItemDiscription}).toList();
     final scedulteForFIlter = stored.scedules.map((e) => {
       'id':e.id,
       'name':e.title}).toList();
@@ -57,7 +58,7 @@ class   SceduleEvent extends LogicHandler<SceduleUseCase, FilterData?>{
       },
     };
    filterFor.value = filterValue[value?.trim().toLowerCase()];
-    filterFor.notifyListeners();
+   filterFor.notifyListeners();
   }
 }
 
@@ -90,7 +91,7 @@ class SceduleListMutation extends EventMutations<FilterData?>  {
         dashboard = r;
       });
     }
-    dashboard?.subscribedPlans?.forEach((element) => plansScedule.add(PlansData(id: element.id.toString(),title: element.invoiceDetail?.invoiceItemDiscription,classes: scedules?.toList())));
+    dashboard?.subscribedPlans?.forEach((element) => plansScedule.add(PlansData(id: element.id.toString(),title: element.invoiceDetails?.first.invoiceItemDiscription,classes: scedules?.toList())));
     store?.plan_forfilter =  dashboard?.subscribedPlans;
     store?.trainerForFIlter.clear();
     store?.plan_forfilter?.forEach((element) async{

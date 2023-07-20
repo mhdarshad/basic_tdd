@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../injection_container.dart';
+import '../../../../../data/models/api/user/dash_board_date.dart';
 import '../../../../modules/dashboard/dashboard_consumer.dart';
 import '../../../../modules/dashboard/dashboard_controller.dart';
 
@@ -203,7 +204,7 @@ class _DashBoardState extends State<DashBoard> {
                 ),
               ),
               if(dashboard?.schedules!=null&&(dashboard!.schedules?.isNotEmpty??false))ScedulesListContainer(dashboard.schedules!),
-              if(dashboard?.subscribedPlans!=null&&(dashboard!.subscribedPlans?.isNotEmpty??false))SubscribePlanWidget(dashboard.subscribedPlans!),
+              if(dashboard?.subscribedPlans!=null&&(dashboard!.subscribedPlans?.isNotEmpty??false))SubscribePlanWidget(dashboard.currentPlans!),
             ],
           ),
         );
@@ -213,7 +214,7 @@ class _DashBoardState extends State<DashBoard> {
 }
 
 class ScedulesListContainer extends StatelessWidget {
-  final List<Scedule>  list;
+  final List<Schedules>  list;
 
   const ScedulesListContainer(this.list, {
     super.key,
@@ -415,7 +416,7 @@ class SubscribePlanWidget extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
-                                e.invoiceDetail?.invoiceItemDiscription??"Selected Plan",
+                                e.invoiceDetails?.first.invoiceItemDiscription??'',
                                 style: FlutterFlowTheme.of(context)
                                     .headlineSmall
                                     .override(

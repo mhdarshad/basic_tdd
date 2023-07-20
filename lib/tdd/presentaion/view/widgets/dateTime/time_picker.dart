@@ -7,11 +7,13 @@ class DateRangePicker extends StatelessWidget {
   final TimeStatus from;
   final DateTime initialTime;
   final Duration duration;
+  final bool viewOnly;
 
   const DateRangePicker({
     required this.from,
     super.key,
     required this.initialTime,
+    required this.viewOnly,
     required this.duration,
 
   });
@@ -24,7 +26,9 @@ class DateRangePicker extends StatelessWidget {
         color: FlutterFlowTheme.of(context).primaryBackground,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         onPressed: () async{
-          SceduleUserDetailModel.selectDOB(await showDatePicker(context: context, firstDate: DateTime.now(), lastDate: DateTime.now().add(const Duration(days: 36525)), initialDate: DateTime.now()));
+          if(!viewOnly){
+            SceduleUserDetailModel.selectDOB(await showDatePicker(context: context, firstDate: DateTime.now(), lastDate: DateTime.now().add(const Duration(days: 36525)), initialDate: DateTime.now()));
+          }
         },
         child: ValueListenableBuilder<DateTime?>(
             valueListenable: SceduleUserDetailModel.dateController,

@@ -16,8 +16,10 @@ class TrainersUseCase extends UseCase<List<PersonalTrainerData>,PlanFetchData>{
   /// Use Case For Setup DB
   @override
   Future<Either<Failure, List<PersonalTrainerData>>> call({required PlanFetchData data}) async{
-    final result =  await repo.getRequest(Params(uri: Uri.parse("available_trainers_for_plan"), methed: Methed.Post,data: {
+    final result =  data.planId!=null?await repo.getRequest(Params(uri: Uri.parse("available_trainers_for_plan"), methed: Methed.Post,data: {
       "plan_id":data.planId
+    })):await repo.getRequest(Params(uri: Uri.parse("available_trainers_for_schedule"), methed: Methed.Post,data: {
+      "schedule_id":data.sceduleId
     }));
     return result.fold((l) => Left(l), (r) {
       if (kDebugMode) {

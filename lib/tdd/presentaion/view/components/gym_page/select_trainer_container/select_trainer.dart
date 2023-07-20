@@ -201,12 +201,10 @@ class _TrainersListtCOntrollerState extends State<TrainersListtCOntroller> {
                                     if(e.itprRetlPrice!=0)
                                     Container(
                                       width: 100,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 0),
+                                      padding: const EdgeInsetsDirectional.fromSTEB( 0, 0, 0, 0),
                                       child: Text(
                                         "${e.itprRetlPrice.toString()} AED",
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge,
+                                        style: FlutterFlowTheme.of(context) .bodyLarge,
                                       ),
                                     ),
                                     Card(

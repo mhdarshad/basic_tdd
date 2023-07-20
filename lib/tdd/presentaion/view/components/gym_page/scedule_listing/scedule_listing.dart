@@ -90,179 +90,153 @@ class _SceduleListingState extends State<SceduleListing> {
         child:  SceduleContainer(
         builder: (context,store,mutation) {
           final scedule = store.scedules;
-          scedule.filter((sceduleData)=> sceduleData.planId.toString() == '');
+          // scedule.filter((sceduleData)=> sceduleData.planId.toString() == '');
           // return Container();
           return StaffTimlineCalender(
               StaffTimlineCalenderController.instance,
-             // eventViewBuilder: (context,data){
-             //   final appointment = (data.appointments.first as Appointment);
-             //   return GestureDetector(onTap:()=>print("isMoreAppointmentRegion ${appointment}"),child: Padding(
-             //     padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-             //     child: Container(
-             //       width: MediaQuery.of(context)
-             //           .size
-             //           .width *
-             //           1.0,
-             //       height: 100.0,
-             //       decoration: BoxDecoration(
-             //         color: FlutterFlowTheme.of(context)
-             //             .secondaryBackground,
-             //         boxShadow: const [
-             //           BoxShadow(
-             //             blurRadius: 3.0,
-             //             color: Color(0x411D2429),
-             //             offset: Offset(0.0, 1.0),
-             //           )
-             //         ],
-             //         borderRadius:
-             //         BorderRadius.circular(12.0),
-             //       ),
-             //       child: Padding(
-             //         padding:
-             //         const EdgeInsetsDirectional.fromSTEB(
-             //             8.0, 8.0, 8.0, 8.0),
-             //         child: Row(
-             //           mainAxisSize: MainAxisSize.max,
-             //           children: [
-             //             Padding(
-             //               padding: const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 1.0, 1.0),
-             //               child: ClipRRect(
-             //                 borderRadius:
-             //                 BorderRadius.circular(
-             //                     8.0),
-             //                 child: Image.network(
-             //                   'https://images.unsplash.com/photo-1574914629385-46448b767aec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8bGF0dGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
-             //                   width: 70.0,
-             //                   height: 100.0,
-             //                   fit: BoxFit.cover,
-             //                 ),
-             //               ),
-             //             ),
-             //             Expanded(
-             //               child: Padding(
-             //                 padding:
-             //                 const EdgeInsetsDirectional
-             //                     .fromSTEB(8.0, 0.0,
-             //                     4.0, 0.0),
-             //                 child: Column(
-             //                   mainAxisSize:
-             //                   MainAxisSize.max,
-             //                   mainAxisAlignment:
-             //                   MainAxisAlignment
-             //                       .center,
-             //                   crossAxisAlignment:
-             //                   CrossAxisAlignment
-             //                       .start,
-             //                   children: [
-             //                     Text(
-             //                       '${appointment.subject}',
-             //                       style: FlutterFlowTheme
-             //                           .of(context)
-             //                           .titleLarge,
-             //                     ),
-             //                     Padding(
-             //                       padding:
-             //                       const EdgeInsetsDirectional
-             //                           .fromSTEB(
-             //                           0.0,
-             //                           4.0,
-             //                           8.0,
-             //                           0.0),
-             //                       child: AutoSizeText(
-             //                         'Time: 6:00 AM to 9 :00 AM',
-             //                         textAlign:
-             //                         TextAlign.start,
-             //                         style: FlutterFlowTheme
-             //                             .of(context)
-             //                             .bodySmall
-             //                             .override(
-             //                           fontFamily:
-             //                           'Readex Pro',
-             //                           fontSize:
-             //                           12.0,
-             //                         ),
-             //                       ),
-             //                     ),
-             //                     Padding(
-             //                       padding:
-             //                       const EdgeInsetsDirectional
-             //                           .fromSTEB(
-             //                           0.0,
-             //                           4.0,
-             //                           8.0,
-             //                           0.0),
-             //                       child: AutoSizeText(
-             //                         'Total Joinee : 205',
-             //                         textAlign:
-             //                         TextAlign.start,
-             //                         style: FlutterFlowTheme
-             //                             .of(context)
-             //                             .bodySmall
-             //                             .override(
-             //                           fontFamily:
-             //                           'Readex Pro',
-             //                           fontSize:
-             //                           12.0,
-             //                         ),
-             //                       ),
-             //                     ),
-             //                   ],
-             //                 ),
-             //               ),
-             //             ),
-             //             Column(
-             //               mainAxisSize:
-             //               MainAxisSize.max,
-             //               mainAxisAlignment:
-             //               MainAxisAlignment
-             //                   .spaceBetween,
-             //               crossAxisAlignment:
-             //               CrossAxisAlignment.end,
-             //               children: [
-             //                 Padding(
-             //                   padding:
-             //                   const EdgeInsetsDirectional
-             //                       .fromSTEB(
-             //                       0.0,
-             //                       4.0,
-             //                       0.0,
-             //                       0.0),
-             //                   child: Icon(
-             //                     Icons
-             //                         .chevron_right_rounded,
-             //                     color:
-             //                     FlutterFlowTheme.of(
-             //                         context)
-             //                         .secondaryText,
-             //                     size: 24.0,
-             //                   ),
-             //                 ),
-             //                 Padding(
-             //                   padding:
-             //                   const EdgeInsetsDirectional
-             //                       .fromSTEB(
-             //                       0.0,
-             //                       0.0,
-             //                       4.0,
-             //                       8.0),
-             //                   child: Text(
-             //                     '2m left',
-             //                     textAlign:
-             //                     TextAlign.end,
-             //                     style:
-             //                     FlutterFlowTheme.of(
-             //                         context)
-             //                         .bodySmall,
-             //                   ),
-             //                 ),
-             //               ],
-             //             ),
-             //           ],
-             //         ),
-             //       ),
-             //     ),
-             //   ));
-             // },
+             headerColor: FlutterFlowTheme.of(context).primary,
+             eventViewBuilder: (context,data){
+               final appointment = (data.appointments.first as Appointment);
+                final trainerDetail =scedule.firstWhere((element) => appointment.id == element.id).trainername;
+               return Container(
+                 width: MediaQuery.of(context).size.width * 1.0,
+                 height: 100.0,
+                 decoration: BoxDecoration(
+                   color: FlutterFlowTheme.of(context) .secondaryBackground,
+                   boxShadow: const [
+                     BoxShadow(
+                       blurRadius: 3.0,
+                       color: Color(0x411D2429),
+                       offset: Offset(0.0, 1.0),
+                     )
+                   ],
+                   borderRadius:
+                   BorderRadius.circular(12.0),
+                 ),
+                 child: Row(
+                   mainAxisSize: MainAxisSize.max,
+                   children: [
+                     // Padding(
+                     //   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 1.0, 1.0),
+                     //   child: ClipRRect(
+                     //     borderRadius:
+                     //     BorderRadius.circular(
+                     //         8.0),
+                     //     child: Image.network(
+                     //       'https://images.unsplash.com/photo-1574914629385-46448b767aec?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8bGF0dGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
+                     //       width: 70.0,
+                     //       height: 100.0,
+                     //       fit: BoxFit.cover,
+                     //     ),
+                     //   ),
+                     // ),
+                     Expanded(
+                       child: Padding(
+                         padding:
+                         const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 4.0, 0.0),
+                         child: Column(
+                           mainAxisSize:
+                           MainAxisSize.max,
+                           mainAxisAlignment: MainAxisAlignment  .center,
+                           crossAxisAlignment: CrossAxisAlignment .start,
+                           children: [
+                             Text(
+                               appointment.subject,
+                               style: FlutterFlowTheme.of(context) .titleLarge,
+                             ),
+                             Padding(
+                               padding:
+                               const EdgeInsetsDirectional.fromSTEB(0.0, 4.0,  8.0, 0.0),
+                               child: AutoSizeText(
+                                 'Time: ${DateFormat('hh:mm a').format(appointment.startTime)} to ${DateFormat('hh:mm a').format(appointment.endTime)}',
+                                 textAlign:
+                                 TextAlign.start,
+                                 style: FlutterFlowTheme
+                                     .of(context)
+                                     .bodySmall
+                                     .override(
+                                   fontFamily:
+                                   'Readex Pro',
+                                   fontSize:
+                                   12.0,
+                                 ),
+                               ),
+                             ),
+                             Padding(
+                               padding:
+                               const EdgeInsetsDirectional
+                                   .fromSTEB(
+                                   0.0,
+                                   4.0,
+                                   8.0,
+                                   0.0),
+                               child: AutoSizeText(
+                                 'Trainer : $trainerDetail',
+                                 textAlign:
+                                 TextAlign.start,
+                                 style: FlutterFlowTheme
+                                     .of(context)
+                                     .bodySmall
+                                     .override(
+                                   fontFamily:
+                                   'Readex Pro',
+                                   fontSize:
+                                   12.0,
+                                 ),
+                               ),
+                             ),
+                           ],
+                         ),
+                       ),
+                     ),
+                     Column(
+                       mainAxisSize:
+                       MainAxisSize.max,
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       crossAxisAlignment:CrossAxisAlignment.end,
+                       children: [
+                         Padding(
+                           padding:
+                           const EdgeInsetsDirectional
+                               .fromSTEB(
+                               0.0,
+                               4.0,
+                               0.0,
+                               0.0),
+                           child: Icon(
+                             Icons
+                                 .chevron_right_rounded,
+                             color:
+                             FlutterFlowTheme.of(
+                                 context)
+                                 .secondaryText,
+                             size: 24.0,
+                           ),
+                         ),
+                         // Padding(
+                         //   padding:
+                         //   const EdgeInsetsDirectional
+                         //       .fromSTEB(
+                         //       0.0,
+                         //       0.0,
+                         //       4.0,
+                         //       8.0),
+                         //   child: Text(
+                         //     '2m left',
+                         //     textAlign:
+                         //     TextAlign.end,
+                         //     style:
+                         //     FlutterFlowTheme.of(
+                         //         context)
+                         //         .bodySmall,
+                         //   ),
+                         // ),
+                       ],
+                     ),
+                   ],
+                 ),
+               );
+             },
               onTap: (event){
                 if(event.appointments?.isEmpty??true){
                   /// SanchoCalenderController.instance.changeView(CalendarView.schedule);
@@ -275,7 +249,8 @@ class _SceduleListingState extends State<SceduleListing> {
                 }
                 navigate.push(context, name: Routename.room,parms: params,qparms: {
                   'room_id':scedule.where((element) => element.id == event.appointments?.first.id).firstOrNull().room_id.toString(),
-                  'class_id':scedule.where((element) => element.id == event.appointments?.first.id).firstOrNull().id.toString()
+                  'class_id':scedule.where((element) => element.id == event.appointments?.first.id).firstOrNull().id.toString(),
+                  'date':DateFormat('yyyy-MM-dd').format(event.date??DateTime.now())
                 });
                 },
               calView: CalendarView.schedule,
@@ -283,7 +258,6 @@ class _SceduleListingState extends State<SceduleListing> {
                 e.days?.removeWhere((key, value) => value==null);
                 final startDate = DateFormat('yyyy-MM-dd').parse(e.date!.first.startDate!);
                 final endDate = DateFormat('yyyy-MM-dd').parse(e.date!.first.endDate!);
-
                 final starttime = DateFormat('HH:mm:ss').parse(e.appointments!.first.startTime!);
                 final endtime = DateFormat('HH:mm:ss').parse(e.appointments!.first.endTime!).subtract(const Duration(minutes: 2));
                 return Person(id: e.id.toString(), name: e.title??'', brake: [

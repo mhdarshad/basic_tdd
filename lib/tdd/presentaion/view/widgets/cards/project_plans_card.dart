@@ -139,7 +139,7 @@ class CardListContaint extends StatelessWidget {
                   width: 80,
                   imageUrl: image,
                   errorWidget: (context,__,___){
-                    return Image.asset('assets/image/gymimage.jpg');
+                    return Image.asset('assets/image/gym_image_error_2.webp',);
                   },
                   fit: BoxFit.cover
                 ),

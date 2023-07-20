@@ -26,7 +26,12 @@ class UpdatetrainerMutation extends EventMutations<PersonalTrainerData> {
 
   @override
   perform() async {
-    final request = await usecase(data: data);
+    final request = await usecase(data: data,returnStatus: (data,respone){
+      navigate.pushReplace(context!, name: Routename.home,parms: {'page':BottemNavigationsData.dashboard.name});
+      respone.forEach((r) {
+
+      });
+    });
     if (!request.isLeft()) {
      navigate.pushReplace(context!, name: Routename.home,parms: {'page':BottemNavigationsData.dashboard.name});
       request.forEach((r) {

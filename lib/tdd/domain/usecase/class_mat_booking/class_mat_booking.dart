@@ -5,28 +5,30 @@ import '../../../../core/error/failuers.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/config/user_config.dart';
 import '../../../../injection_container.dart';
+import '../../../data/models/api/scdule/mat_data_scedule.dart';
 import '../../../data/models/api/scdule/scedule_api.dart';
 import '../../../data/models/api/user/dash_board_date.dart';
 import '../../../data/models/api/user/dashboard_data.dart';
 import '../../../data/models/api/user/plans_data.dart';
 import '../../repositories/repository_provider.dart';
 
-class DashBoardUseCase extends UseCase<DashBoardData,NoPrams>{
+class MatDetailesSceduleUseCase extends UseCase<List<SceduleMat>,String>{
   DependencyRepostProvider<dynamic> repo;
-  DashBoardUseCase({required this.repo});
+  MatDetailesSceduleUseCase({required this.repo});
   /// call meted for inserting product to db
 
   /// Use Case For Setup DB
   @override
-  Future<Either<Failure, DashBoardData>> call({required NoPrams data}) async {
-    final result =  await repo.getRequest(Params(uri: Uri.parse("customer_dashboard"), methed: Methed.Post,data: {
-      "cus_id":"${sl<Configration>().custId}"
+  Future<Either<Failure, List<SceduleMat>>> call({required String data}) async {
+    final result =  await repo.getRequest(Params(uri: Uri.parse("mat_details_for_schedule"), methed: Methed.Post,data: {
+      "class_id":data
     }));
     return result.fold((l) => Left(l), (r) {
       if (kDebugMode) {
         print(r);
       }
-      return  Right(DashBoardData.fromJson(r));
+
+      return  Right((r as List).map((e) => SceduleMat.fromJson(e)).toList());
     });
   }
 }
