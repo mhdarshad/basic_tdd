@@ -155,7 +155,7 @@ class _ProjectScafoldState extends State<ProjectScafold> {
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                       child: Text(
-                        'Sign Up',
+                        'Member Sign Up',
                         style: FlutterFlowTheme.of(context).headlineSmall,
                       ).animateOnPageLoad(ProjectScafold.animationsMap['textOnPageLoadAnimation1']!),
                     ),

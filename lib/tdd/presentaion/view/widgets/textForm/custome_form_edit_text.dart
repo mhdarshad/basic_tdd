@@ -1,4 +1,5 @@
 import 'package:cloud_me_v2/core/util/presentation/flutter_flow/flutter_flow_util.dart';
+import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -85,10 +86,10 @@ class PhoneNumberContainer extends StatelessWidget {
 class CustomeEdittext extends StatelessWidget {
   final String? labelText;
   final TextEditingController? controller;
-
+  final String? Function(BuildContext, String?)? validator;
   const CustomeEdittext({
     this. labelText,
-    super.key,  this.controller,
+    super.key,  this.controller, this.validator,
   });
 
   @override
@@ -143,15 +144,15 @@ class CustomeEdittext extends StatelessWidget {
           color: FlutterFlowTheme.of(context).alternate,
         ),
         keyboardType: TextInputType.emailAddress,
-        validator:
-        GetUserController.emailAddressControllerValidator?.asValidator(context),
+        validator:validator?.asValidator(context),
       ),
     );
   }
 }
 class PasswordEditText extends StatelessWidget {
   const PasswordEditText({
-    super.key,  this. showForgetPassword =true,
+    super.key,
+    this.showForgetPassword =true,
   });
 final bool showForgetPassword;
   @override
@@ -224,16 +225,19 @@ final bool showForgetPassword;
             ),
           ),
           if(showForgetPassword)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Text(
-                  'Forget password?',
-                  textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).labelSmall,
-                ),
-              ],
+          MaterialButton(
+            onPressed: ()=>navigate.push(context, name: Routename.resetPassword),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text(
+                    'Forget password?',
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).labelSmall,
+                  ),
+                ],
+              ),
             ),
           ),
         ],

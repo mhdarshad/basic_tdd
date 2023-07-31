@@ -79,67 +79,67 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
         final roomViewData = roomData?.roomSpotDetails?.where((element) => element.bookingCusId == sl<Configration>().custId).toList()??[];
         return ListView(children: [
           if(trainerData?.isNotEmpty??false)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(child: Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("Trainer Details",style: TextStyle(fontSize: 20),),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Text('Trainer Name :'),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(trainerData?.first.trName??''),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('Trainer Email : ${trainerData?.first.trainerMail??''}'),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(Icons.mail),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  // MaterialButton(
-                  //   elevation:2,
-                  //   color: FlutterFlowTheme.of(context).primary,
-                  //   onPressed: () {
-                  //     showDialog(context: context, builder: (context)
-                  //     {
-                  //       return UpdatetrainerContainer(
-                  //           builder: (context, store, status) {
-                  //             return TrainersListtCOntroller(plan?.first.itemCode.toString(),
-                  //                 onSelecttrainer: (e) => {/*onSelectTrainer(e)*/},
-                  //                 selectedtrainerId: trainerData?.first.addonItem);
-                  //           }
-                  //       );
-                  //     });
-                  //   },
-                  //   child: const Row(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       Text('Change trainer:'),
-                  //     ],
-                  //   ),
-                  // ),
-                ],
-              ),
-            )),
-          ),
+              child: Card(child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Trainer Details",style: TextStyle(fontSize: 20),),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Text('Trainer Name :'),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(trainerData?.first.trName??''),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Trainer Email : ${trainerData?.first.trainerMail??''}'),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(Icons.mail),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    // MaterialButton(
+                    //   elevation:2,
+                    //   color: FlutterFlowTheme.of(context).primary,
+                    //   onPressed: () {
+                    //     showDialog(context: context, builder: (context)
+                    //     {
+                    //       return UpdatetrainerContainer(
+                    //           builder: (context, store, status) {
+                    //             return TrainersListtCOntroller(plan?.first.itemCode.toString(),
+                    //                 onSelecttrainer: (e) => {/*onSelectTrainer(e)*/},
+                    //                 selectedtrainerId: trainerData?.first.addonItem);
+                    //           }
+                    //       );
+                    //     });
+                    //   },
+                    //   child: const Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text('Change trainer:'),
+                    //     ],
+                    //   ),
+                    // ),
+                  ],
+                ),
+              )),
+            ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(child: Padding(
@@ -239,21 +239,21 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
                     ],
                   ),
                   if(trainerData?.isNotEmpty??false)
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Text('Trainer Price:'),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('${trainerData?.first.price??'0'} AED'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Text('Trainer Price:'),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('${trainerData?.first.price??'0'} AED'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                 ],
               ),
             )),
@@ -262,122 +262,122 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
             padding: const EdgeInsets.all(8.0),
             child: Card(
               child: ExpansionDrawer(
-                title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text("Room Details",style: TextStyle(fontSize: 20),),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Text('Room Name:'),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(roomData?.roomDetails?.first.floorNo??''),
-                              ),
-
-                            ],
-                          ),
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Text('Room No:'),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text('${roomData?.roomDetails?.first.sno??''}'),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      // if(roomViewData.isNotEmpty)
-                      //   MaterialButton(
-                      //     elevation:2,
-                      //     color: FlutterFlowTheme.of(context).primary,
-                      //     onPressed: () {
-                      //       showDialog(context: context, builder: (context)=> RoomSelect(roomId:scedule.first.room_id,classId:scedule.first.id.toString(),viewOnly:true,date: scedule.first.appointments?.first.startTime,));
-                      //     },
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.center,
-                      //       children: [
-                      //         const Text('Mat No:'),
-                      //         Padding(
-                      //           padding: const EdgeInsets.all(8.0),
-                      //           child: Text(roomViewData.first.index??''),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-
-                    ],
-                  ),
-                ),
-                expanded: MatDetailesSceduleContainer(
-                  builder: (context,store,status) {
-                    final roomdata = store.roomDateList;
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Table(
-                        // border: TableBorder.all(color: Colors.black),
-                        children:  [
-                          const TableRow(children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('Date'),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('Slot'),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('View'),
-                            ),
-                          ]),
-                          ...roomdata.map((e) => TableRow(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(e.classDate??''),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(e.index.toString()),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child:
-                              MaterialButton(
-                                elevation:2,
-                                color: FlutterFlowTheme.of(context).primary,
-                                onPressed: () {
-                                  showDialog(context: context, builder: (context)=> RoomSelect(roomId:e.roomId.toString(),classId:e.classId.toString(),viewOnly:true,date: e.classDate.toString(),));
-                                },
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('View'),
-                                  ],
+                  title: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("Room Details",style: TextStyle(fontSize: 20),),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Text('Room Name:'),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(roomData?.roomDetails?.first.floorNo??''),
                                 ),
-                              ),
-                            ),
-                          ])),
 
-                        ],
-                      ),
-                    );
-                  }
-                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Text('Room No:'),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('${roomData?.roomDetails?.first.sno??''}'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        // if(roomViewData.isNotEmpty)
+                        //   MaterialButton(
+                        //     elevation:2,
+                        //     color: FlutterFlowTheme.of(context).primary,
+                        //     onPressed: () {
+                        //       showDialog(context: context, builder: (context)=> RoomSelect(roomId:scedule.first.room_id,classId:scedule.first.id.toString(),viewOnly:true,date: scedule.first.appointments?.first.startTime,));
+                        //     },
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.center,
+                        //       children: [
+                        //         const Text('Mat No:'),
+                        //         Padding(
+                        //           padding: const EdgeInsets.all(8.0),
+                        //           child: Text(roomViewData.first.index??''),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+
+                      ],
+                    ),
+                  ),
+                  expanded: MatDetailesSceduleContainer(
+                      builder: (context,store,status) {
+                        final roomdata = store.roomDateList;
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Table(
+                            // border: TableBorder.all(color: Colors.black),
+                            children:  [
+                              const TableRow(children: [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Date'),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Slot'),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('View'),
+                                ),
+                              ]),
+                              ...roomdata.map((e) => TableRow(children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(e.classDate??''),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(e.index.toString()),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child:
+                                  MaterialButton(
+                                    elevation:2,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    onPressed: () {
+                                      showDialog(context: context, builder: (context)=> RoomSelect(roomId:e.roomId.toString(),classId:e.classId.toString(),viewOnly:true,date: e.classDate.toString(),));
+                                    },
+                                    child: const Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text('View'),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ])),
+
+                            ],
+                          ),
+                        );
+                      }
+                  )
               ),
             ),
           ),
@@ -408,6 +408,46 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
               // });
               return false;
             },
+            monthCellVIewBuilder: (context,cell)=>  Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Container(
+                // margin: const EdgeInsets.all(100.0),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                      Radius.circular(40)
+                  ),
+                  border: Border.all(
+                    width: 3,
+                    color: Colors.green,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                child: Column(mainAxisAlignment:MainAxisAlignment.spaceAround,
+                  children:  [
+                    Expanded(flex:2,
+                        child: Center(child: Text("${cell.date.day}",style: const TextStyle(fontSize: 20),))),
+                    Expanded(child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: const BorderRadius.only(
+                              bottomLeft:Radius.circular(40),
+                              bottomRight:Radius.circular(40)
+                          ),
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.green,
+                            style: BorderStyle.solid,
+                          ),
+                        ),child:  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("${cell.appointments.length}"),
+                      ],
+                    ))
+                    )
+                  ],),
+              ),
+            ),
             usersData: scedule.map((e) {
               e.days?.removeWhere((key, value) => value==null);
               final startDate = DateFormat('yyyy-MM-dd').parse(e.date!.first.startDate!);
@@ -421,7 +461,8 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
                     Appointment(
                         subject:e.title??'',
                         id: e.id,
-                        recurrenceRule: SfCalendar.generateRRule(RecurrenceProperties(interval:1,
+                        recurrenceRule: SfCalendar.generateRRule(RecurrenceProperties(
+                          interval:1,
                           startDate: startDate,
                           weekDays:e.days!.keys.toList().toFormatKey,
                           endDate: endDate,

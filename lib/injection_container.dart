@@ -83,7 +83,7 @@ _bloc(){
   sl.registerFactory(() => EditProfileModuleEvent(EditProfileModuleUseCase( repo: sl(),),));
   sl.registerFactory(() => PlanTrainerDetailEvent(PlanTrainerDetailUseCase( repo: sl(),),));
   sl.registerFactory(() => UpdatetrainerEvent(UpdatetrainerUseCase( repo: sl(),),));
-  sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),), OtpUseCase(repo:sl()), SingUpUseCase(repo: sl()) ));
+  sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),), OtpUseCase(repo:sl()), SingUpUseCase(repo: sl()) , ChangePasswordUseCase(repo: sl()) ));
   sl.registerFactory(() => GetDBController(BDConfigUseCase( repo: sl(),),));
   // TabbySDK().setup(
   //   withApiKey: '', // Put here your Api key

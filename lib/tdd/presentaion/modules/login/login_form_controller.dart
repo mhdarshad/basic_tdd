@@ -28,11 +28,13 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
   LoginUseCase usecase;
   OtpUseCase verifyOtpUseCase;
   SingUpUseCase signUpUseCase;
+  ChangePasswordUseCase changepassUseCase;
 
 
-  GetUserController(this.usecase,this.verifyOtpUseCase,this.signUpUseCase) : super(usecase);
+  GetUserController(this.usecase,this.verifyOtpUseCase,this.signUpUseCase,this.changepassUseCase) : super(usecase);
   // State field(s) for emailAddress widget.
   static  TextEditingController? phoneNumberController = TextEditingController();
+  static  TextEditingController? reEnterpasswordController = TextEditingController();
   static  TextEditingController? emailAddressController = TextEditingController();
   static  TextEditingController? firstNameController = TextEditingController();
   static  TextEditingController? lastNameController = TextEditingController();
@@ -41,7 +43,7 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
   static ValueNotifier<DateTime?> dateController = ValueNotifier(null);
   static String? Function(BuildContext, String?)? emailAddressControllerValidator;
   static String? Function(BuildContext, String?)? phoneNumberControllerValidator;
-  String? Function(BuildContext, String?)? passwordControllerValidator;
+   String? Function(BuildContext, String?)? passwordControllerValidator;
   static String? Function(BuildContext, String?)? pinCodeControllerValidator;
   // State field(s) for password widget.
 
@@ -53,6 +55,7 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
   }
   static late String contryCode ;
   static ValueNotifier<bool> showOtp = ValueNotifier(false);
+  static ValueNotifier<bool> changePass = ValueNotifier(false);
   static ValueNotifier<String?> dropDownValue = ValueNotifier(null);
 
   static FormFieldController<String>? dropDownValueController;
@@ -75,6 +78,9 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
     // throw UnimplementedError();
     sl<GetUserController>()(data:LoginData(username: phoneNumberController?.text??'', password:  passwordController?.text??"", key: "key") );
   }
+  changePassInit(){
+    changePass.value = false;
+  }
   signUp(){
     return GetUserEvents(signUpUseCase, SignUpData(userFirstname: firstNameController?.text??'',userSecondname:lastNameController?.text??"", password:  passwordController?.text??"",  dateOfBirth: dateController.value.toString(),  gender: dropDownValue.value??'', emaile: emailAddressController?.text??'', phone: phoneNumberController?.value.text??'', phoneCode: contryCode));
   }
@@ -85,6 +91,7 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
     phoneNumberController ??= TextEditingController();
     pinCodeController = TextEditingController();
     passwordController ??= TextEditingController();
+
   }
   static void dispose() {
     // phoneNumberController?.dispose();
@@ -95,38 +102,93 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
     dateController.notifyListeners();
   }
 
-  verifyOTP() => GetUserEvents(verifyOtpUseCase,OTPData(phone: phoneNumberController?.text??'',otp: pinCodeController?.text));
+  verifyOTP() => GetUserEvents(verifyOtpUseCase,OTPData(OTPType.SignUp,phone: phoneNumberController?.text??'',otp: pinCodeController?.text));
 
   static void setOtpvalue(bool bool) {
     showOtp.value = true;
     showOtp.notifyListeners();
   }
 
-  void otpReSend() => GetUserEvents(verifyOtpUseCase,OTPData(phone: phoneNumberController?.text??''));
+  void otpReSend() {
+    GetUserEvents(verifyOtpUseCase,OTPData(OTPType.SignUp,phone: phoneNumberController?.text??''));
+  }
+
+  forgetPasswordOTPSend() {
+    GetUserEvents(verifyOtpUseCase,OTPData(OTPType.forgetPass,phone: phoneNumberController?.text??''));
+  }
+
+
+  void forgetPasswordverifyOTP() {
+    GetUserEvents(verifyOtpUseCase,OTPData(OTPType.forgetPass,phone: phoneNumberController?.text??'',otp: pinCodeController?.text));
+  }
+
+  static void showChangepassword() {
+    changePass.value = true;
+    changePass.notifyListeners();
+  }
+
+  changepassword() {
+    GetUserEvents(changepassUseCase,ChangePassData(passwordController?.text??''));
+  }
 }
 
 class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
   UseCase usecase;
   GetUserEvents(this.usecase, AuthParamsAbstarct data) : super(data);
   bool otpVerified= false;
+  bool otpSent= false;
+  bool passwordUpdated= false;
   @override
   perform() async {
     final request = await usecase(data:data);
 
     if(usecase  is OtpUseCase ) {
+      print("Its Veryfy Use Case");
       if (!request.isLeft()) {
-        request.forEach((r) {
-          otpVerified = true;
-          if (kDebugMode) {
-            print("customer ID: ${r['customer_id']}");
+        if(data is OTPData){
+          if((data as OTPData).otp!=null){
+            if((data as OTPData).otpType == OTPType.SignUp) {
+              request.forEach((r) {
+                otpVerified = true;
+                if (kDebugMode) {
+                  print("customer ID: ${r['customer_id']}");
+                }
+                sl<Configration>().custTocken = r['customer_auth'].toString().encript;
+                sl<Configration>().custId =r['customer_id'].toString();
+              });
+            }else{
+              request.forEach((r) {
+                print("OTP Verified Success From API $r" );
+                otpVerified = true;
+                // sl<Configration>().cid = r['cus_id'];
+              });
+            }
+          }else{
+            request.forEach((r) {
+              sl<Configration>().cid = r['cus_id'];
+              print("OTP Sent  :${r['cus_id']}");
+              otpSent = true;
+            });
           }
-          sl<Configration>().custTocken = r['customer_auth'].toString().encript;
-          sl<Configration>().custId =r['customer_id'].toString();
-        });
+
+        }
       }
       else{
-        errorToast("Invalid OTP");
-        request.leftMap((l) =>throw l);
+        errorToast("Number not Registered");
+        // request.leftMap((l) =>throw l);
+      }
+      return;
+    }
+    if(usecase  is ChangePasswordUseCase ) {
+      (data as ChangePassData);
+      if (!request.isLeft()) {
+        if (kDebugMode) {
+          print(sl<Configration>().cid);
+        }
+        passwordUpdated = true;
+      }else{
+        errorToast("Number not Registered");
+        // request.leftMap((l) =>throw l);
       }
       return;
     }

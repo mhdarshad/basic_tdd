@@ -15,15 +15,21 @@ import '../../../../domain/usecase/auth/user_login.dart';
 import '../../../modules/login/login_form_controller.dart';
 import 'package:flutter/material.dart';
 
-class SignupOtp extends StatefulWidget {
-  const SignupOtp({Key? key}) : super(key: key);
+class OTPVerificationContainer extends StatefulWidget {
+  const OTPVerificationContainer({Key? key, required this.onOtpVeryfiedStatus, required this.onClickResendOtp, required this.onClickSendOtp, required this.onClickVerifyOtp, required this.onBackPress, required this.onSignUpStatus}) : super(key: key);
+  final Function(bool isSucsess) onOtpVeryfiedStatus;
+  final Function onSignUpStatus;
+  final Function onClickResendOtp;
+  final Function onClickSendOtp;
+  final Function onClickVerifyOtp;
+  final Function(bool isotpSent) onBackPress;
 
   @override
-  _SignupOtpState createState() =>
-      _SignupOtpState();
+  _OTPVerificationContainerState createState() =>
+      _OTPVerificationContainerState();
 }
 
-class _SignupOtpState extends State<SignupOtp> {
+class _OTPVerificationContainerState extends State<OTPVerificationContainer> {
 
   @override
   void setState(VoidCallback callback) {
@@ -51,19 +57,10 @@ class _SignupOtpState extends State<SignupOtp> {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              IconButton(onPressed: (){
-                if(otpSent){
-                      GetUserController.showOtp.value = false;
-                      GetUserController.showOtp.notifyListeners();
-                    }else{
-                  navigate.pop(context);
-                }
-                  }, icon: const Icon(Icons.arrow_back),),
+              IconButton(onPressed: ()=>widget.onBackPress(otpSent), icon: const Icon(Icons.arrow_back),),
               PhoneEditText(isReadOnly: otpSent,),
               if(otpSent)
-              TextButton(onPressed: (){
-                sl<GetUserController>().otpReSend();
-              }, child: const Text("Resend OTP!")),
+              TextButton(onPressed: ()=>widget.onClickResendOtp(), child: const Text("Resend OTP!")),
               otpSent?Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 32),
                 child: PinCodeTextField(
@@ -107,9 +104,26 @@ class _SignupOtpState extends State<SignupOtp> {
                     return CustomeButton  (
                       color:FlutterFlowTheme.of(context).primary,
                       borderColor: Colors.transparent,
-                      onPressed: ()=>sl<GetUserController>().verifyOTP(),
+                      onPressed: ()=>widget.onClickVerifyOtp(),
                       text: 'Verify',);
+                  }, listner: (context , store , status) {
+                if(status == VxStatus.success){
+                  if((store as GetUserEvents).otpSent){
+                    GetUserController.setOtpvalue(true);
+                    return;
                   }
+                  if((store ).otpVerified) {
+                    widget.onOtpVeryfiedStatus(true);
+                  }else{
+                    widget.onOtpVeryfiedStatus(false);
+                  }
+                  if((store).usecase is SingUpUseCase&&sl<Configration>().cid !=null) {
+                    widget.onSignUpStatus();
+                  }
+                }else if(status == VxStatus.error){
+                  widget.onOtpVeryfiedStatus(false);
+                }
+              },
               ):
               VxConsumer(
                   mutations: const {GetUserEvents},
@@ -117,24 +131,22 @@ class _SignupOtpState extends State<SignupOtp> {
                     GetUserEvents:(ctx, store, {status}) {
                       if(status == VxStatus.success){
                         if((store as GetUserEvents).otpVerified) {
-                          navigate.pushReplace(context, name: Routename.home,parms: {
-                            'page': BottemNavigationsData.dashboard.name
-                          });
+                          widget.onOtpVeryfiedStatus(true);
                         }else{
-                          print("Sucsess");
-                          if((store).usecase is SingUpUseCase&&sl<Configration>().cid !=null) {
-                            GetUserController.setOtpvalue(true);
-                          }
+                          widget.onOtpVeryfiedStatus(false);
+                        }
+                        if((store).usecase is SingUpUseCase&&sl<Configration>().cid !=null) {
+                          widget.onSignUpStatus();
                         }
                       }else if(status == VxStatus.error){
-                        GetUserController.initState(context);
+                        widget.onOtpVeryfiedStatus(false);
                       }
                     }
                   },
                   builder: (context,store,status) {
                   return CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,
                     borderColor:  FlutterFlowTheme.of(context).alternate,
-                    onPressed: () =>   sl<GetUserController>().signUp(), text: 'Send OTP',);
+                    onPressed: () => widget.onClickSendOtp(), text: 'Send OTP',);
                 }
               ),
               // CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,

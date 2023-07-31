@@ -6,9 +6,11 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_widgets.dart';
 import '../../../../../injection_container.dart';
+import '../../../../domain/usecase/auth/user_login.dart';
 import '../../../modules/login/login_form_controller.dart';
 import 'package:flutter/material.dart';
 
+import '../../screens/home/home_controller.dart';
 import '../../widgets/textForm/custome_form_edit_text.dart';
 import '../../widgets/textForm/form_text_filed.dart';
 
@@ -54,7 +56,15 @@ class _LoginFormComponent2WidgetState extends State<LoginFormComponent2Widget> {
                 color:FlutterFlowTheme.of(context).primary,
                 borderColor: Colors.transparent,
                 onPressed: ()=>GetUserController.login(), text: 'Sign In',);
+            }, listner: (context , store , status ) {
+            if((store as GetUserEvents).usecase  is LoginUseCase){
+              if(status == VxStatus.success){
+                navigate.pushReplace(context, name: Routename.home,parms: {
+                  'page':BottemNavigationsData.dashboard.name
+                });
+              }
             }
+          },
           ),
           CustomeButton(
             color: FlutterFlowTheme.of(context).secondaryBackground,

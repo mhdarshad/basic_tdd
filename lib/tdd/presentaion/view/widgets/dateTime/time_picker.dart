@@ -6,7 +6,7 @@ import '../../../../../core/util/presentation/flutter_flow/flutter_flow_util.dar
 class DateRangePicker extends StatelessWidget {
   final TimeStatus from;
   final DateTime initialTime;
-  final Duration duration;
+  final DateTime endDate;
   final bool viewOnly;
 
   const DateRangePicker({
@@ -14,7 +14,7 @@ class DateRangePicker extends StatelessWidget {
     super.key,
     required this.initialTime,
     required this.viewOnly,
-    required this.duration,
+    required this.endDate,
 
   });
 
@@ -57,7 +57,7 @@ class DateRangePicker extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            store!=null?'${DateFormat('dd-MM-yyyy').format(store)} \n ${DateFormat('dd-MM-yyyy').format(store.add(duration))} ':'${DateFormat('dd-MM-yyyy').format(initialTime)} \n${DateFormat('dd-MM-yyyy').format(initialTime.add(duration))} ',
+                            store!=null?'${DateFormat('dd-MM-yyyy').format(store)} \n ${DateFormat('dd-MM-yyyy').format(endDate)} ':'${DateFormat('dd-MM-yyyy').format(initialTime)} \n${DateFormat('dd-MM-yyyy').format(endDate)} ',
                             style: FlutterFlowTheme.of(context).titleSmall.override(
                               fontFamily: 'Lexend Deca',
                               color:FlutterFlowTheme.of(context).secondaryText,

@@ -18,6 +18,7 @@ import '../../../../core/util/config/user_config.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../../core/util/presentation/flutter_flow/flutter_flow_util.dart';
 import '../../../../injection_container.dart';
+import '../../../data/models/api/user/plans_data.dart';
 import '../../../domain/usecase/genrateInvoice/trainer_usecase.dart';
 import '../../view/widgets/dateTime/time_picker.dart';
 typedef UseCaseData = GenrateInvoiceUseCase;
@@ -184,7 +185,7 @@ class GentrateInvoiceMutation extends EventMutations<Map<String,dynamic>>  {
             "delivery_date": null,
             "stiching_charge": "0",
             "plan_start": DateFormat('dd/MM/yyyy').format(SceduleUserDetailModel.dateController.value??DateTime.now()),
-            "expiry_date": DateFormat('dd/MM/yyyy').format(SceduleUserDetailModel.dateController.value?.add(Duration(days:  (store?.selectedPlans?.noOfDays??0)+DateUtils.getDaysInMonth(DateTime.now().year, store?.selectedPlans?.noOfMonths??0)))??DateTime.now()),
+            "expiry_date": daysData(store?.selectedPlans),
             "trainer_code": store?.selectedtrainer?.addonItem,
             "trainer_price": store?.selectedtrainer?.itprRetlPrice,
             "multiple_salesman": "100002",
@@ -229,7 +230,16 @@ class GentrateInvoiceMutation extends EventMutations<Map<String,dynamic>>  {
     "requestfrom": "web"
   };
   GentrateInvoiceMutation(this.usecase, Map<String,dynamic> data) : super(data);
-
+  DateTime daysData(Plans? planData) {
+    DateTime month =DateTime.now();
+    if(((planData?.noOfMonths!=null)&&(planData?.noOfMonths!=0))){
+      month = DateUtils.addMonthsToMonthDate(DateTime.now(), planData?.noOfMonths??0);
+    }
+    if(planData?.noOfDays!=null && planData?.noOfDays!=0) {
+      month.add(Duration(days:planData?.noOfDays??0));
+    }
+    return month;
+  }
   @override
   perform() async {
     final request = await usecase(data:generateConfig);

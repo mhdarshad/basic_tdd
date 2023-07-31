@@ -313,11 +313,12 @@ import 'tdd/presentaion/view/components/sign_up/sign_up_form.dart';
 import 'tdd/presentaion/view/components/view_scedule_page/view_scedule_detail.dart';
 import 'tdd/presentaion/view/screens/auth/auth.dart';
 import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
+import 'tdd/presentaion/view/screens/auth/forget_password_container.dart';
 import 'tdd/presentaion/view/screens/auth/otp_login.dart';
 import 'tdd/presentaion/view/screens/home/dash_board/plan_detail.dart';
 
 enum Routename{
-  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers, paymentStatus, scedule, room, profile, planDetail, editprofile, officialDetails, editEmiratesid, sceduleDetais
+  home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers, paymentStatus, scedule, room, profile, planDetail, editprofile, officialDetails, editEmiratesid, sceduleDetais, resetPassword
 }
 extension ListToString on List<String> {
   String toRequiredParamsString() {
@@ -350,6 +351,7 @@ extension GoNavigations on Routename{
       case Routename.officialDetails:return CUri("edit/professional");
       case Routename.editEmiratesid:return CUri("edit/verification");
       case Routename.sceduleDetais:return CUri('view/schedule');
+      case Routename.resetPassword:return CUri('password/reset');
     }
   }
 }
@@ -359,7 +361,9 @@ extension GoNavigations on Routename{
 class PageControler{
   static get routs =>[
     GoRoute(path: '/',redirect: (_,__)=>"/${Routename.login.nUri.name}"),
-    goRoute(Routename.login,(BuildContext context, GoRouterState state)=> Auth(key: state.pageKey,)),
+    goRoute(Routename.login,(BuildContext context, GoRouterState state)=> Auth(key: state.pageKey,),routes: [
+      goRoute(Routename.resetPassword,(BuildContext context, GoRouterState state)=> ForgetPasswordPage(key: state.pageKey,),isSubROught: true),
+    ]),
     goRoute(Routename.config,(BuildContext context, GoRouterState state)=> DbConfig(key: state.pageKey,)),
     goRoute(Routename.profile,(BuildContext context, GoRouterState state)=> UserProfile(key: state.pageKey,),routes: [
       goRoute(Routename.editprofile,(BuildContext context, GoRouterState state)=> EditProfile(key: state.pageKey, methode: EditMethode.personal,),isSubROught: true),

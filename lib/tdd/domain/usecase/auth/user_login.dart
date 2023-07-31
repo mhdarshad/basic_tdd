@@ -29,21 +29,54 @@ class OtpUseCase extends UseCase<Map<String,dynamic>,OTPData>{
   Future<Either<Failure, Map<String,dynamic>>> call({required OTPData data}) async{
     late Either<Failure, dynamic> result;
     if(data.otp!=null){
-       result =  await repo.getRequest(Params(uri: Uri.parse("verify_otp"), methed: Methed.Post,
+      if(data.otpType == OTPType.SignUp) {
+        result =  await repo.getRequest(Params(uri: Uri.parse("verify_otp"), methed: Methed.Post,
           data: {
             'cus_id':sl<Configration>().cid,
             'otp':data.otp,
             // 'license_key':data.key,
           }));
+      }else{
+        result =  await repo.getRequest(Params(uri: Uri.parse("customer_forget_password_otp_vry"), methed: Methed.Post,
+            data: {
+              'cus_id':sl<Configration>().cid,
+              'otp':data.otp,
+              // 'license_key':data.key,
+            }));
+      }
     }else{
-       result =  await repo.getRequest(Params(uri: Uri.parse("resend_otp"), methed: Methed.Post,
-          data: {
-            'cus_id':data.phone,
-            // 'license_key':data.key,
-          }));
+      if(data.otpType == OTPType.SignUp) {
+        result = await repo.getRequest(
+            Params(uri: Uri.parse("resend_otp"), methed: Methed.Post,
+                data: {
+                  'cus_id': data.phone,
+                  // 'license_key':data.key,
+                }));
+      }else{
+        result = await repo.getRequest(
+            Params(uri: Uri.parse("customer_forget_password"), methed: Methed.Post,
+                data: {
+                  'phone_no': data.phone,
+                  // 'license_key':data.key,
+                }));
+      }
     }
 
    return result.fold((l) => Left(l), (r) =>Right(r));
+  }
+}
+class ChangePasswordUseCase extends UseCase<UserAcsessData,ChangePassData>{
+  DependencyRepostProvider repo;
+  ChangePasswordUseCase({required this.repo});
+  @override
+  Future<Either<Failure, UserAcsessData>> call({required ChangePassData data}) async{
+   final result =  await repo.getRequest(Params(uri: Uri.parse("signup"), methed: Methed.Post,
+       data: {
+         'cus_id':sl<Configration>().cid,
+         'password':data.password,
+         // 'license_key':data.key,
+       }));
+   return result.fold((l) => Left(l), (r) =>Right( UserAcsessData.fromJson(r)));
   }
 }
 class SingUpUseCase extends UseCase<UserAcsessData,SignUpData>{
@@ -51,7 +84,7 @@ class SingUpUseCase extends UseCase<UserAcsessData,SignUpData>{
   SingUpUseCase({required this.repo});
   @override
   Future<Either<Failure, UserAcsessData>> call({required SignUpData data}) async{
-   final result =  await repo.getRequest(Params(uri: Uri.parse("signup"), methed: Methed.Post,
+   final result =  await repo.getRequest(Params(uri: Uri.parse("customer_forget_password_update"), methed: Methed.Post,
         data: {
           "name": "${data.userFirstname } ${data.userSecondname}",
           "phone_code": data.phoneCode,
@@ -83,9 +116,16 @@ class SignUpData extends AuthParamsAbstarct{
 class OTPData extends AuthParamsAbstarct{
   final String phone;
   final String? otp;
-  OTPData({required this.phone, this.otp, });
+  final OTPType otpType;
+  OTPData(this.otpType, {required this.phone, this.otp, });
 }
-
+class ChangePassData extends AuthParamsAbstarct{
+  final String password;
+   ChangePassData(this.password);
+}
+enum OTPType{
+  forgetPass,SignUp
+}
 abstract class AuthParamsAbstarct{
 
 }

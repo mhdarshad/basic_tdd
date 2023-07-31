@@ -9,28 +9,17 @@ import 'login_form_controller.dart';
 
 class LoginFormConsumer extends StatelessWidget {
   final Widget Function(BuildContext, ProjectStore, VxStatus?) builder;
+  final void Function(BuildContext, VxMutation<VxStore?>, VxStatus?) listner;
 
-  const LoginFormConsumer({Key? key,required this.builder}) : super(key: key);
+  const LoginFormConsumer({Key? key,required this.builder, required this.listner}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return VxConsumer<ProjectStore>(
       notifications:  {
         GetUserEvents:(context,store, {VxStatus? status}){
-          if((store as GetUserEvents).usecase  is LoginUseCase){
-            if(status == VxStatus.success){
-              navigate.pushReplace(context, name: Routename.home,parms: {
-                'page':BottemNavigationsData.dashboard.name
-              });
-            }
-          }
-          if((store).usecase  is OtpUseCase){
-            if(status == VxStatus.success){
-              navigate.pushReplace(context, name: Routename.home,parms: {
-                'page':BottemNavigationsData.dashboard.name
-              });
-            }
-          }
+        listner(context,store,status);
+
         }
       },
       builder: (context,store,_) {

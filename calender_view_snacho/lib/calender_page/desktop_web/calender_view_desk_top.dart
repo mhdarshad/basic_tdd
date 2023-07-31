@@ -16,7 +16,8 @@ class StaffTimlineCalender extends StatefulWidget {
   final StaffTimlineCalenderController controller;
   final Color? headerColor;
   final Widget Function(BuildContext, CalendarAppointmentDetails)? eventViewBuilder;
-  const StaffTimlineCalender(this.controller,{Key? key, required this.usersData, this.onTap, this.onDraged, this.onAppointmentResizeed, this.eventViewBuilder,required this.calView,  this.headerColor,  }): super(key: key);
+  final Widget Function(BuildContext, MonthCellDetails)? monthCellVIewBuilder;
+  const StaffTimlineCalender(this.controller,{Key? key, required this.usersData, this.onTap, this.onDraged, this.onAppointmentResizeed, this.eventViewBuilder,required this.calView,  this.headerColor, this.monthCellVIewBuilder,  }): super(key: key);
 
   @override
   State<StaffTimlineCalender> createState() => _StaffTimlineCalenderState();
@@ -73,46 +74,7 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
               // CalendarView.month,
               // CalendarView.month
             ],
-            monthCellBuilder: (context,cell)=>Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Container(
-                // margin: const EdgeInsets.all(100.0),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                      Radius.circular(40)
-                  ),
-                  border: Border.all(
-                    width: 3,
-                    color: Colors.green,
-                    style: BorderStyle.solid,
-                  ),
-                ),
-                child: Column(mainAxisAlignment:MainAxisAlignment.spaceAround,
-                  children:  [
-                  Expanded(flex:2,
-                      child: Center(child: Text("${cell.date.day}",style: const TextStyle(fontSize: 20),))),
-                    Expanded(child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black87,
-                          borderRadius: const BorderRadius.only(
-                              bottomLeft:Radius.circular(40),
-                              bottomRight:Radius.circular(40)
-                          ),
-                          border: Border.all(
-                            width: 2,
-                            color: Colors.green,
-                            style: BorderStyle.solid,
-                          ),
-                        ),child:  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("${cell.appointments.length}"),
-                          ],
-                        ))
-                    )
-                ],),
-              ),
-            ),
+            monthCellBuilder:widget.monthCellVIewBuilder!=null? (context,cell)=>widget.monthCellVIewBuilder!(context,cell):null,
             scheduleViewSettings:const ScheduleViewSettings(appointmentItemHeight: 100,appointmentTextStyle:TextStyle(color: Colors.black),hideEmptyScheduleWeek: true,monthHeaderSettings: MonthHeaderSettings(height: 60,textAlign: TextAlign.center),weekHeaderSettings: WeekHeaderSettings()),
             // showNavigationArrow: true,
             dragAndDropSettings: stafTimeline.draganddropSettings,
@@ -148,4 +110,6 @@ class _StaffTimlineCalenderState extends State<StaffTimlineCalender> {
             specialRegions: stafTimeline.brakeTime /// Un Available Time Regions
         ));
   }
+
+
 }

@@ -184,9 +184,8 @@ class CheckOut extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: DateRangePicker(from: TimeStatus.to, initialTime:DateTime.now(),
-                              duration:Duration(days:  daysData(planData),
-                              ), viewOnly: true,),
+                          child: DateRangePicker(from: TimeStatus.from, initialTime:DateTime.now(),
+                            endDate:daysData(planData), viewOnly: true,),
                         ),
                       ],
                     ),
@@ -346,11 +345,14 @@ class CheckOut extends StatelessWidget {
     );
   }
 
-  int daysData(Plans? planData) {
-    int month = 0;
+  DateTime daysData(Plans? planData) {
+    DateTime month =DateTime.now();
     if(((planData?.noOfMonths!=null)&&(planData?.noOfMonths!=0))){
-    month = (DateUtils.getDaysInMonth(DateTime.now().year, planData?.noOfMonths??0));
-  }
-    return (planData?.noOfDays??0)+month;
+      month = DateUtils.addMonthsToMonthDate(DateTime.now(), planData?.noOfMonths??0);
+    }
+    if(planData?.noOfDays!=null && planData?.noOfDays!=0) {
+      month.add(Duration(days:planData?.noOfDays??0));
+    }
+    return month;
   }
 }
