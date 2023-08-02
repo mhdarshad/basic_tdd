@@ -113,7 +113,7 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
     GetUserEvents(verifyOtpUseCase,OTPData(OTPType.SignUp,phone: phoneNumberController?.text??''));
   }
 
-  forgetPasswordOTPSend() {
+  forgetPasswordOTPSend(BuildContext context) {
     GetUserEvents(verifyOtpUseCase,OTPData(OTPType.forgetPass,phone: phoneNumberController?.text??''));
   }
 
@@ -174,8 +174,12 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
         }
       }
       else{
+        // if(data.context!=null) {
+        //   navigate.push(data.context!, name: Routename.login);
+        // }
         errorToast("Number not Registered");
         // request.leftMap((l) =>throw l);
+
       }
       return;
     }

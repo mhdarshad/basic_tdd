@@ -8,6 +8,7 @@ import 'package:cloud_me_v2/tdd/presentaion/modules/dashboard/dashboard_controll
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
@@ -45,9 +46,13 @@ class Filemanager {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
+      final responsedata = await response.stream.bytesToString();
+      print("API URL: https://dev.cloudmesoft.com/api/flutter/$apiUrl");
+      print("response: ${responsedata}");
+      await Clipboard.setData( ClipboardData(text: responsedata));
       sl<DashboardEvent>()(data: NoPrams());
       // print(await response.stream.bytesToString());
-      return Right(await response.stream.bytesToString());
+      return Right(responsedata);
     }else {
       print(response.reasonPhrase);
       return const Left("Cannot Update ");

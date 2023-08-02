@@ -1,6 +1,7 @@
 import 'package:cloud_me_v2/core/error/failuers.dart';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/config/user_config.dart';
@@ -62,21 +63,26 @@ class OtpUseCase extends UseCase<Map<String,dynamic>,OTPData>{
       }
     }
 
-   return result.fold((l) => Left(l), (r) =>Right(r));
+   return result.fold((l) => Left(l), (r) {
+     if(r is List<dynamic>){
+       return r.isNotEmpty?Right(r.first):Right({});
+     }
+     return Right(r);
+   });
   }
 }
-class ChangePasswordUseCase extends UseCase<UserAcsessData,ChangePassData>{
+class ChangePasswordUseCase extends UseCase<bool,ChangePassData>{
   DependencyRepostProvider repo;
   ChangePasswordUseCase({required this.repo});
   @override
-  Future<Either<Failure, UserAcsessData>> call({required ChangePassData data}) async{
-   final result =  await repo.getRequest(Params(uri: Uri.parse("signup"), methed: Methed.Post,
+  Future<Either<Failure, bool>> call({required ChangePassData data}) async{
+   final result =  await repo.getRequest(Params(uri: Uri.parse("customer_forget_password_update"), methed: Methed.Post,
        data: {
          'cus_id':sl<Configration>().cid,
          'password':data.password,
          // 'license_key':data.key,
        }));
-   return result.fold((l) => Left(l), (r) =>Right( UserAcsessData.fromJson(r)));
+   return result.fold((l) => Left(l), (r) =>const Right( true));
   }
 }
 class SingUpUseCase extends UseCase<UserAcsessData,SignUpData>{
@@ -84,7 +90,7 @@ class SingUpUseCase extends UseCase<UserAcsessData,SignUpData>{
   SingUpUseCase({required this.repo});
   @override
   Future<Either<Failure, UserAcsessData>> call({required SignUpData data}) async{
-   final result =  await repo.getRequest(Params(uri: Uri.parse("customer_forget_password_update"), methed: Methed.Post,
+   final result =  await repo.getRequest(Params(uri: Uri.parse("signup"), methed: Methed.Post,
         data: {
           "name": "${data.userFirstname } ${data.userSecondname}",
           "phone_code": data.phoneCode,
@@ -127,5 +133,6 @@ enum OTPType{
   forgetPass,SignUp
 }
 abstract class AuthParamsAbstarct{
-
+BuildContext? context;
+AuthParamsAbstarct({this.context});
 }

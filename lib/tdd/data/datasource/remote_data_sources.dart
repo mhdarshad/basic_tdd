@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -100,7 +101,9 @@ class RemoteDataSourceImpl implements RemoteDataSource{
     if(sl<Configration>().custTocken!=null) {
       custauthtocken = sl<Configration>().custTocken!.decript;
     }
-
+    print("Cust toclen: ${custauthtocken}");
+    print("B toclen: ${authtocken}");
+    await Clipboard.setData(ClipboardData(text: authtocken??''));
     try {
       if(param.methed==Methed.Get){
         meadiater = "?";
@@ -125,7 +128,10 @@ class RemoteDataSourceImpl implements RemoteDataSource{
       if(param.methed == Methed.Post){
         responsejs = await http.post(Uri.parse('$baseurl${param.uri}$meadiater'),
             headers: headers,
-            body: jsonEncode(param.data!.map((key, value) => MapEntry(key, value)))
+            body: jsonEncode(param.data!.map((key, value) {
+              print(value);
+              return MapEntry(key, value);
+            }))
         );
       }
       else  if(param.methed == Methed.Get){

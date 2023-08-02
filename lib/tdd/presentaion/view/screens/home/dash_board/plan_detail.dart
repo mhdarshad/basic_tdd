@@ -76,7 +76,7 @@ class _PlanDetailState extends State<PlanDetail> {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  (trainerData!=null)?Padding(
+                  if(trainerData!=null)Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -167,24 +167,24 @@ class _PlanDetailState extends State<PlanDetail> {
                         // ),
                       ],
                     ),
-                  )
-                      :Center(
-                    child: MaterialButton(onPressed: (){
-                      showDialog(context: context, builder: (context){
-                        return TrainersListtCOntroller(
-                          planData?.itemCode.toString(),
-                          onSelecttrainer: (e)=> onSelectTrainer(e),
-                        );
-                        // SelectTrainer(planId:(planData?.itemCode??'0').toString());
-                      });
-                    },elevation: 8,child:  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                         Icon(Icons.add,color: FlutterFlowTheme.of(context).primaryColor,),
-                        Text("Add Trainer",style: TextStyle(color: FlutterFlowTheme.of(context).primaryColor),)
-                      ],
-                    ),),
                   ),
+                  // Center(
+                  //   child: MaterialButton(onPressed: (){
+                  //     showDialog(context: context, builder: (context){
+                  //       return TrainersListtCOntroller(
+                  //         planData?.itemCode.toString(),
+                  //         onSelecttrainer: (e)=> onSelectTrainer(e),
+                  //       );
+                  //       // SelectTrainer(planId:(planData?.itemCode??'0').toString());
+                  //     });
+                  //   },elevation: 8,child:  Row(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //        Icon(Icons.add,color: FlutterFlowTheme.of(context).primaryColor,),
+                  //       Text("Add Trainer",style: TextStyle(color: FlutterFlowTheme.of(context).primaryColor),)
+                  //     ],
+                  //   ),),
+                  // ),
                   SizedBox(
                     height: 240,
                     child: Stack(

@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -61,7 +62,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                 }, onSignUpStatus: ()=> GetUserController.setOtpvalue(true),
                 onClickSendOtp: () {
                   GetUserController.setOtpvalue(true);
-                  return sl<GetUserController>().forgetPasswordOTPSend();
+                  return sl<GetUserController>().forgetPasswordOTPSend(context);
                 },):Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -78,11 +79,23 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                     child: VxConsumer(
                         notifications: {
                           GetUserEvents: (context,store, {status}){
-                           if(( store as GetUserEvents).passwordUpdated){
-                             showDialog(context: context, builder: (context)=>const AlertDialog(content: Text("Password Changed SSuccessfully"),actions: [
-                               Text("Ok")
-                             ],));
-                           }
+                            if(( store as GetUserEvents).passwordUpdated){
+                              CoolAlert.show(
+                                  context: context,
+                                  type: CoolAlertType.success,
+                                  text: "Password Changed Successfully!",onConfirmBtnTap: (){
+                                navigate.pushReplace(context, name: Routename.login);
+                              }
+                              );
+                              // showDialog(context: context, builder: (context)=> AlertDialog(content: const Text("Password Changed Successfully"),actions: [
+                              //   GestureDetector(onTap: (){
+                              //
+                              //   },child: const Padding(
+                              //     padding: EdgeInsets.all(8.0),
+                              //     child: Text("Ok"),
+                              //   ))
+                              // ],));
+                            }
                           }
                         },
                         mutations: const {GetUserEvents},
@@ -90,7 +103,25 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                           return CustomeButton(
                             color:FlutterFlowTheme.of(context).primary,
                             borderColor: Colors.transparent,
-                            onPressed: () => sl<GetUserController>().changepassword(),
+                            onPressed: () {
+                              try {
+                                if(GetUserController.passwordController!.text == GetUserController.reEnterpasswordController!.text) {
+                                  sl<GetUserController>().changepassword();
+                                }else{
+                                  CoolAlert.show(
+                                    context: context,
+                                    type: CoolAlertType.error,
+                                    text: "Password MissMatch!",
+                                  );
+                                }
+                              } catch (e) {
+                                CoolAlert.show(
+                                  context: context,
+                                  type: CoolAlertType.error,
+                                  text: "Password Cannot be Empty!",
+                                );
+                              }
+                            },
                             text: 'Change',
                           );
                         }

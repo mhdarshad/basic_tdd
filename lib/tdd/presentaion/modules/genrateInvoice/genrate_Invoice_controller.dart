@@ -135,7 +135,7 @@ class GentrateInvoiceMutation extends EventMutations<Map<String,dynamic>>  {
           {
             "Invoice_Cust_id": sl<Configration>().custId,
             "Invoice_created_user": stored.purchaseInvoiceData?.merchantId,
-            "Invoice_created_dt":  DateTime.now().toString(),
+            "Invoice_created_dt":  DateFormat('dd/MM/yyyy').format(DateTime.now()).toString(),
             "Invoice_gross": "${store?.selectedPlans?.itemPrice}",
             "Invoice_discount": "0.00",
             "Invoice_nett": "${store?.selectedPlans?.itemPrice}",
@@ -155,7 +155,7 @@ class GentrateInvoiceMutation extends EventMutations<Map<String,dynamic>>  {
             "delivery_type": null,
             "Delivery_Area": "--",
             "invoice_vat": "0.00",
-            "order_time":  DateTime.now().toString(),
+            "order_time": DateFormat('dd/MM/yyyy HH:mm:ss ').format(DateTime.now()) .toString(),
             "cust_name": "MADURA",
             "cust_mob": "--",
             "cust_mob2": "--",
@@ -185,7 +185,7 @@ class GentrateInvoiceMutation extends EventMutations<Map<String,dynamic>>  {
             "delivery_date": null,
             "stiching_charge": "0",
             "plan_start": DateFormat('dd/MM/yyyy').format(SceduleUserDetailModel.dateController.value??DateTime.now()),
-            "expiry_date": daysData(store?.selectedPlans),
+            "expiry_date": DateFormat('dd/MM/yyyy ').format(daysData(store?.selectedPlans)).toString(),
             "trainer_code": store?.selectedtrainer?.addonItem,
             "trainer_price": store?.selectedtrainer?.itprRetlPrice,
             "multiple_salesman": "100002",
@@ -242,7 +242,10 @@ class GentrateInvoiceMutation extends EventMutations<Map<String,dynamic>>  {
   }
   @override
   perform() async {
+    // await Clipboard.setData(ClipboardData(text:jsonEncode(generateConfig)));
+
     final request = await usecase(data:generateConfig);
+
     // Clipboard.setData(ClipboardData(text: jsonEncode(generateConfig)));
     if(!request.isLeft()){
       if (kDebugMode) {

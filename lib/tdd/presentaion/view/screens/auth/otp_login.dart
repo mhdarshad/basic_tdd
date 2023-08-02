@@ -42,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
             'page': BottemNavigationsData.dashboard.name
           });
         }else{
-          GetUserController.initState(context);
+          // GetUserController.initState(context);
         }
       }, onSignUpStatus: (){
         GetUserController.setOtpvalue(true);
