@@ -415,7 +415,7 @@ final router = GoRouter(
       print("no data");
       return Routename.login.nUri.path;
     }
-    print("custTocken ${sl<Configration>().custTocken}");
+    print("custTocken check on Redirect: ${sl<Configration>().custTocken}");
     if((state.location ==  Routename.login.nUri.path) && (sl<Configration>().custTocken !=null) && sl<Configration>().cid != null){
       print("no data");
       return '${Routename.home.nUri.path}/dashboard';

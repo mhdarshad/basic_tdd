@@ -59,6 +59,12 @@
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "--dart-define=API_URL=https://dev.cloudmesoft.com/api/flutter/ --dart-define=sanitoryDNS=https://79dd60cc87b630dc68309397ea3a040d@o4504473477054464.ingest.sentry.io/4505684994359296 --dart-define=isDevelopment=true"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Profile"

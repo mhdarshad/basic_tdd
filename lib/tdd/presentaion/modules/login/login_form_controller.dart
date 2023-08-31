@@ -49,7 +49,9 @@ class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with Get
 
   static  ValueNotifier<bool> passwordVisibility = ValueNotifier(false);
   passwordVisiblity(bool value){
-    print("password");
+    if (kDebugMode) {
+      print("password");
+    }
     passwordVisibility.value =value;
     passwordVisibility.notifyListeners();
   }
@@ -153,7 +155,15 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
                 if (kDebugMode) {
                   print("customer ID: ${r['customer_id']}");
                 }
-                sl<Configration>().custTocken = r['customer_auth'].toString().encript;
+                final UserAcsessData result = r;
+                // sl<Configration>().custTocken = r['customer_auth'].toString().encript;
+                sl<SharedPreferences>().setString(SFkeys.token, result.customerAuth?.encript??'');
+                sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer.id??0);
+                // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
+
+                sl<SharedPreferences>().setString(SFkeys.UID, result.customerID.toString());
+                sl<Configration>().custId = result.customerID.toString();
+                sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
                 sl<Configration>().custId =r['customer_id'].toString();
               });
             }else{
@@ -165,7 +175,8 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
             }
           }else{
             request.forEach((r) {
-              sl<Configration>().cid = r['cus_id'];
+              sl<SharedPreferences>().setInt(SFkeys.ID,  r['cus_id']);
+              // sl<Configration>().cid = r['cus_id'];
               print("OTP Sent  :${r['cus_id']}");
               otpSent = true;
             });
@@ -179,7 +190,6 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
         // }
         errorToast("Number not Registered");
         // request.leftMap((l) =>throw l);
-
       }
       return;
     }
@@ -197,21 +207,32 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
       return;
     }
     else if (usecase is LoginUseCase){
-      if(!request.isLeft()){
+      if(request.isRight()){
         if (kDebugMode) {
           print("logged in");
         }
-        request.forEach((r) {
+        request.fold((l) {
+          print("Error After Sucsess: ${l}");
+          errorToast("Credential mismatch");
+        },(r) {
           final UserAcsessData result = r;
+          print("customer tocken on logibn: ${result.customerAuth}");
           sl<SharedPreferences>().setString(SFkeys.token, result.customerAuth?.encript??'');
+          sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer.id??0);
+          // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
+
           sl<SharedPreferences>().setString(SFkeys.UID, result.customerID.toString());
           sl<Configration>().custId = result.customerID.toString();
-          sl<Configration>().custTocken = result.customerAuth?.encript;
+          // sl<Configration>() = result.customerAuth?.encript;
           store?.userdata = result.customer;
         });
       }else{
+        print("Filed for login");
         errorToast("Credential mismatch");
-        // request.leftMap((l) => throw l);
+        request.leftMap((l) {
+          print(l);
+          throw l;
+        });
       }
     }
     else if (usecase is SingUpUseCase){
@@ -224,12 +245,21 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
             print(r);
           }
           final UserAcsessData result = r;
-          sl<Configration>().custTocken = result.customerAuth?.encript;
-          sl<Configration>().cid = result.customer.id;
+          // sl<Configration>().custTocken = result.customerAuth?.encript;
+          sl<SharedPreferences>().setString(SFkeys.token, result.customerAuth?.encript??'');
+          sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer.id??0);
+          // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
+
+          sl<SharedPreferences>().setString(SFkeys.UID, result.customerID.toString());
+          sl<Configration>().custId = result.customerID.toString();
+          sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
+          // sl<Configration>().cid = result.customer.id;
           store?.userdata = result.customer;
         });
       } else{
-        sl<Configration>().cid = null;
+        // sl<Configration>().cid = null;
+        sl<SharedPreferences>().remove(SFkeys.ID,);
+
         errorToast("Phone number already registered");
         // throw ServerExceptions(400,ExceptiomModle(message: "Phone number already registered",errors: {}));
       }

@@ -23,7 +23,7 @@ class DateRangePicker extends StatelessWidget {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
       child:  MaterialButton(
-        color: FlutterFlowTheme.of(context).primaryBackground,
+        // color: FlutterFlowTheme.of(context).primaryBackground,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         onPressed: () async{
           if(!viewOnly){

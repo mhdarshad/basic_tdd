@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_me_v2/core/util/presentation/constants/ic_constants.dart';
 import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
 import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tekartik_common_utils/common_utils_import.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -320,7 +322,9 @@ class UserProfile extends StatelessWidget {
               }
             },),
             ListIconButton(icon:Icons.logout,text:'LogOut',onClick:() async {
-               sl<Configration>().custTocken = null;
+              sl<SharedPreferences>().remove(SFkeys.token);
+              sl<SharedPreferences>().remove(SFkeys.ID);
+              sl<SharedPreferences>().remove(SFkeys.UID);
            navigate.pushReplace(context, name: Routename.login);
             },),
             // Padding(

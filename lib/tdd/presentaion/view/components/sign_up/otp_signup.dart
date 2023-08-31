@@ -144,7 +144,7 @@ class _OTPVerificationContainerState extends State<OTPVerificationContainer> {
                     }
                   },
                   builder: (context,store,status) {
-                  return CustomeButton(color:FlutterFlowTheme.of(context).secondaryBackground,
+                  return CustomeButton(color:FlutterFlowTheme.of(context).primary,
                     borderColor:  FlutterFlowTheme.of(context).alternate,
                     onPressed: () => widget.onClickSendOtp(), text: 'Send OTP',);
                 }
@@ -227,10 +227,10 @@ class CustomeButton extends StatelessWidget {
             ),
             elevation: 3.0,
             borderSide: borderColor!=null? BorderSide(
-              color:borderColor!,
+              color:borderColor??const Color(0xFF000000),
               width: 2,
             ):BorderSide.none,
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(20.0),
           ),
         ),
       ),

@@ -116,7 +116,8 @@ class StatusWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(24, 8, 24, 0),
           child: Text(
-            'Your payment has been confirmed, it may take 1-2 hours in order for your payment to go through and show up in your transation list.',
+            (status==PayStatus.success)?'Your payment has been confirmed, it may take 1-2 hours in order for your payment to go through and show up in your Transaction list.'
+                :'Your Payment has been Failed If the Amount debited from you Account will be refund with in a 3 Working Days ',
             textAlign: TextAlign.center,
             style: FlutterFlowTheme.of(context).labelLarge,
           ),
@@ -175,10 +176,10 @@ class StatusWidget extends StatelessWidget {
                   onPressed: () {
                     if (kDebugMode) {
                       print('Button pressed ...');
-                      navigate.pushReplace(context, name: Routename.home,parms: {
-                        'page':BottemNavigationsData.dashboard.name
-                      });
                     }
+                    navigate.pushReplace(context, name: Routename.home,parms: {
+                      'page':BottemNavigationsData.dashboard.name
+                    });
                   },
                   text: 'Go Home',
                   options: FFButtonOptions(

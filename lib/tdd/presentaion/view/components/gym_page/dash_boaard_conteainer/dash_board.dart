@@ -146,7 +146,7 @@ class _DashBoardState extends State<DashBoard> {
                                 child: Container(
                                   height: 32,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).primaryText,
+                                    color: FlutterFlowTheme.of(context).primary,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   alignment: const AlignmentDirectional(0, 0),
@@ -179,7 +179,7 @@ class _DashBoardState extends State<DashBoard> {
                                 child: Container(
                                   height: 32,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).primaryText,
+                                    color: FlutterFlowTheme.of(context).primary,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   alignment: const AlignmentDirectional(0, 0),

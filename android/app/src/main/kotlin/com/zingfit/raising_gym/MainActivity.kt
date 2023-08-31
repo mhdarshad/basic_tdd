@@ -1,4 +1,4 @@
-package com.cloudme.cloud_me_v2
+package com.zingfit.raising_gym
 
 import io.flutter.embedding.android.FlutterActivity
 

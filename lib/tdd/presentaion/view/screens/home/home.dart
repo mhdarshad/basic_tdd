@@ -29,6 +29,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   @override
   void initState() {
+    DashBoardController.setContext( context);
+
   }
   @override
   void dispose() {
@@ -42,53 +44,54 @@ class _DashBoardPageState extends State<DashBoardPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Home',
-          style: FlutterFlowTheme.of(context).headlineMedium.override(
-            fontFamily: 'Outfit',
-            color: FlutterFlowTheme.of(context).primaryText,
-            fontSize: 22,
+    return SafeArea(
+      child: ProjectScafold(
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          title: Text(
+            '${DashBoardController.currentPageName(widget.pageName??BottemNavigationsData.dashboard.name)}',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+              fontFamily: 'Outfit',
+              color: Colors.white,
+              fontSize: 22,
+            ),
           ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-            child: GestureDetector(
-              onTap: (){
-                // sl<Configration>().custTocken = null;
-                navigate.push(context, name: Routename.profile,);
-              },
-              child: Container(
-                width: 60,
-                height: 60,
-                clipBehavior: Clip.antiAlias,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: CachedNetworkImage(
-                  imageUrl:stored.userdata?.custImage??'',
-                  fit: BoxFit.cover,
-                  errorWidget: (contxt,url,data){
-                    return Image.asset('assets/icons/profile.jpeg');
-                  },
+          actions: [
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+              child: GestureDetector(
+                onTap: (){
+                  // sl<Configration>().custTocken = null;
+                  navigate.push(context, name: Routename.profile,);
+                },
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl:stored.userdata?.custImage??'',
+                    fit: BoxFit.cover,
+                    errorWidget: (contxt,url,data){
+                      return Image.asset('assets/icons/profile.jpeg');
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-        centerTitle: false,
-        elevation: 0,
-      ),
-      endDrawer: EndDrawer(),
-      bottomNavigationBar: BottomNavigationBar(items: DashBoardController.navigationItems,
-      currentIndex: DashBoardController.setNavigationIndex(widget.pageName??BottemNavigationsData.dashboard.name),
-        onTap:(index) =>DashBoardController.onTapavigation(context,index),),
-      body: SafeArea(child:  ProjectScafold(child: DashBoardController.getPageOnWidget(widget.pageName??BottemNavigationsData.dashboard.name)),));
+          ],
+          centerTitle: false,
+          elevation: 0,
+        ),
+        endDrawer: EndDrawer(),
+        bottomNavigationBar: BottomNavigationBar(items: DashBoardController.navigationItems,
+        currentIndex: DashBoardController.setNavigationIndex(widget.pageName??BottemNavigationsData.dashboard.name),
+          onTap:(index) =>DashBoardController.onTapavigation(context,index),),
+        child: SafeArea(child:  DashBoardController.getPageOnWidget(widget.pageName??BottemNavigationsData.dashboard.name),),),
+    );
   }
 }
 

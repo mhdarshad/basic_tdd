@@ -7,24 +7,18 @@ import 'package:cloud_me_v2/tdd/presentaion/view/components/gym_page/scedule_lis
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:velocity_x/velocity_x.dart';
 
-import '../../../../../core/usecases/usecase.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_util.dart';
 import '../../../../../injection_container.dart';
 import '../../../../domain/entities/vx_store.dart';
-import '../../../../domain/usecase/scedule/scedule_usecase.dart';
 import '../../../modules/mat_details_for_scedule/mat_detailes_scedule_consumer.dart';
 import '../../../modules/mat_details_for_scedule/mat_detailes_scedule_controller.dart';
 import '../../../modules/scedule/scedule_consumer.dart';
 import '../../../modules/scedule/scedule_controller.dart';
 import '../../../modules/trainer/trainer_controller.dart';
-import '../../../modules/update_trainer/updateTrainer_consumer.dart';
 import '../../widgets/expansion_widget/expansion_list.dart';
-import '../../widgets/list/expansion_drawer_list_view.dart';
 import '../gym_page/room_creation/room_select.dart';
-import '../gym_page/select_trainer_container/select_trainer.dart';
 
 class ViewSceduleDetail extends StatefulWidget {
   final String? sceduleId;
@@ -49,7 +43,7 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(bottom:  const TabBar(
+        appBar: AppBar(backgroundColor: FlutterFlowTheme.of(context).primary,bottom:  const TabBar(
           tabs: [
             Tab(icon: Icon(Icons.info)),
             Tab(icon: Icon(Icons.calendar_month)),
@@ -78,7 +72,8 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
         final roomData = store.rooms;
         final roomViewData = roomData?.roomSpotDetails?.where((element) => element.bookingCusId == sl<Configration>().custId).toList()??[];
         return ListView(children: [
-          if(trainerData?.isNotEmpty??false)
+
+          // if(trainerData?.isNotEmpty??false)
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(child: Padding(
@@ -98,17 +93,7 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
                             const Text('Trainer Name :'),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(trainerData?.first.trName??''),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text('Trainer Email : ${trainerData?.first.trainerMail??''}'),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(Icons.mail),
+                              child: Text(scedule.first.trainername??''),
                             ),
                           ],
                         ),
@@ -212,6 +197,7 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
               ),
             )),
           ),
+          if(plan?.first.invoiceDetails?.first.invoiceItemPrice!=null)
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(child: Padding(
@@ -391,7 +377,7 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
         return StaffTimlineCalender(
             StaffTimlineCalenderController.instance,
             calView: CalendarView.month,
-            onTap: (event){
+            onTap: (event) {
               if(event.appointments?.isEmpty??true){
                 /// SanchoCalenderController.instance.changeView(CalendarView.schedule);
                 /// SanchoCalenderController.removeAppointment( appointment);
@@ -408,7 +394,7 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
               // });
               return false;
             },
-            monthCellVIewBuilder: (context,cell)=>  Padding(
+            monthCellVIewBuilder: (context,cell)=> Padding(
               padding: const EdgeInsets.all(4.0),
               child: Container(
                 // margin: const EdgeInsets.all(100.0),

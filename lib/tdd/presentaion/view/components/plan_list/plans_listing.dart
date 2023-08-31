@@ -20,7 +20,7 @@ class PlansListing extends StatelessWidget {
               title,
               style: FlutterFlowTheme.of(context).displaySmall.override(
                 fontFamily: 'Outfit',
-                color: FlutterFlowTheme.of(context).alternate,
+                color: FlutterFlowTheme.of(context).primary,
                 fontSize: 20,
               ),
             ),

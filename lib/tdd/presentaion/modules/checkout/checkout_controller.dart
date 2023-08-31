@@ -30,9 +30,9 @@ class CheckoutEvent extends LogicHandler<DashBoardUseCase, CheckoutData>{
       amount: '340',
       currency: Currency.aed,
       buyer: Buyer(
-        email: data.user.email??'',
-        phone: data.user.custMob??'',
-        name: data.user.custName??'',
+        email: 'id.card.success@tabby.ai',
+        phone: '500000001',
+        name: 'Yazan Khalid',
         dob: '2019-08-24',
       ),
       buyerHistory: BuyerHistory(
@@ -43,22 +43,22 @@ class CheckoutEvent extends LogicHandler<DashBoardUseCase, CheckoutData>{
       shippingAddress: const ShippingAddress(
         city: 'string',
         address: 'string',
-        zip: 'string',
+        zip: '0000',
       ),
-      order: Order(referenceId: 'id123', items: [
+      order: Order(referenceId: '${data.user.id}', items: [
         OrderItem(
           title: 'Jersey',
           description: 'Jersey',
           quantity: 1,
           unitPrice: '10.00',
-          referenceId: 'uuid',
+          referenceId: '24354365',
           productUrl: 'http://example.com',
           category: 'clothes',
         )
       ]),
       orderHistory: [
         OrderHistoryItem(
-          purchasedAt: DateTime.now().toString(),
+          purchasedAt: '2019-08-24T14:15:22Z',
           amount: '10.00',
           paymentMethod: OrderHistoryItemPaymentMethod.card,
           status: OrderHistoryItemStatus.newOne,
@@ -67,11 +67,35 @@ class CheckoutEvent extends LogicHandler<DashBoardUseCase, CheckoutData>{
     );
 
     return TabbySDK().createSession(TabbyCheckoutPayload(
-      merchantCode: 'ae',
+      merchantCode: 'RG',
       lang: Lang.en,
       payment: mockPayload,
     ));
 
+  }
+  // void openTabyCheckOutPage(BuildContext context) {
+  //   Navigator.pushNamed(
+  //     context,
+  //     '/checkout',
+  //     arguments: TabbyCheckoutNavParams(
+  //       selectedProduct: session!.availableProducts.installments!,
+  //     ),
+  //   );
+  // }
+
+  void openTabyInAppBrowser(BuildContext context,session) {
+    TabbyWebView.showWebView(
+      context: context,
+      webUrl: session!.availableProducts.installments!.webUrl,
+      onResult: (WebViewResult resultCode) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(resultCode.name),
+          ),
+        );
+        Navigator.pop(context);
+      },
+    );
   }
   @override
   call({required CheckoutData data, BuildContext? context}) {

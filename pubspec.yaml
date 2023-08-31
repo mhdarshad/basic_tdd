@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.6+6
+version: 2.0.0+11
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -62,6 +62,7 @@ dependencies:
   encrypt:
   provider:
   table_calendar:
+  sentry_flutter: ^7.8.0
   # Flutter Flow Support
   auto_size_text:
   font_awesome_flutter:
@@ -102,6 +103,9 @@ dependencies:
   flutter_paytabs_bridge:
   in_date_utils: ^1.2.0+2
   cool_alert: ^2.0.1
+  webview_flutter: ^4.0.5
+  flutter_spinkit: ^5.2.0
+  flutter_inappwebview:
   calender_view_snacho:
    path: calender_view_snacho
 #  syncfusion_flutter_calendar:
@@ -146,6 +150,7 @@ dev_dependencies:
     sdk: flutter
   sqflite_common_ffi:
   sqlite3_flutter_libs:
+  change_app_package_name: ^1.1.0
   socket_io_client:
   laravel_echo:
     path: ./echo_laravel

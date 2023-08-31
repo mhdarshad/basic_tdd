@@ -52,14 +52,7 @@ class DynamicThemeControle{
               ))/*cardColor: ,backgroundColor: ,textTheme:*/),
 
       1: ThemeData(
-          primarySwatch: const MaterialColor(0xFFF1F5EE, {
-            50:Color(0xFF2D2D2D),
-            200:Color(0xFF2D2D2D),
-            100:Color(0xFF2D2D2D),
-            500:Color(0xFF2D2D2D),
-            600:Color(0xFF2D2D2D),
-            700:Color(0xFF2D2D2D),
-          }),
+          primarySwatch: PrimerySwatchThemeData,
           scaffoldBackgroundColor:  const Color(0xFFF7F8F6),
           fontFamily: 'Roboto',
           chipTheme: ChipThemeData(checkmarkColor: Colors.green,selectedColor: cloudMe,disabledColor: Colors.black87,backgroundColor: Colors.white),
@@ -91,14 +84,7 @@ class DynamicThemeControle{
               ))/*cardColor: ,backgroundColor: ,textTheme:*/),
 
       2: ThemeData(
-          primarySwatch: const MaterialColor(0xFFF1F5EE, {
-            50:Color(0xFF2D2D2D),
-            200:Color(0xFF2D2D2D),
-            100:Color(0xFF2D2D2D),
-            500:Color(0xFF2D2D2D),
-            600:Color(0xFF2D2D2D),
-            700:Color(0xFF2D2D2D),
-          }),
+          primarySwatch:PrimerySwatchThemeData,
           scaffoldBackgroundColor: Colors.white,
           fontFamily: 'Roboto',
           chipTheme: ChipThemeData(checkmarkColor: Colors.green,selectedColor: cloudMe,disabledColor: Colors.black87,backgroundColor: Colors.white),

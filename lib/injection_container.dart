@@ -85,10 +85,10 @@ _bloc(){
   sl.registerFactory(() => UpdatetrainerEvent(UpdatetrainerUseCase( repo: sl(),),));
   sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),), OtpUseCase(repo:sl()), SingUpUseCase(repo: sl()) , ChangePasswordUseCase(repo: sl()) ));
   sl.registerFactory(() => GetDBController(BDConfigUseCase( repo: sl(),),));
-  // TabbySDK().setup(
-  //   withApiKey: '', // Put here your Api key
-  //   environment: Environment.stage, // Or use Environment.production
-  // );
+  TabbySDK().setup(
+    withApiKey: 'sk_test_5e81c0a0-4687-422b-ab74-87e66819fd71', // Put here your Api key
+    environment: Environment.production, // Or use Environment.production
+  );
 
   // sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),),));
   // sl.registerFactory(() => RegisterEvent(RegisterUseCase(sll()),));
@@ -159,7 +159,7 @@ _external()async {
     print("Token: ${sl<Configration>().tocken}");
   }
   if(sl<SharedPreferences>().containsKey(SFkeys.token)){
-    sl<Configration>().custTocken = sl<SharedPreferences>().getString(SFkeys.token);
+     sl<SharedPreferences>().getString(SFkeys.token);
   }
   if(sl<SharedPreferences>().containsKey(SFkeys.UID)){
     sl<Configration>().custId =  sl<SharedPreferences>().getString(SFkeys.UID);

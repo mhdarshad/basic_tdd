@@ -168,7 +168,7 @@ class CardListContaint extends StatelessWidget {
               height: 32,
               width: 80,
               decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).primaryText,
+                color: FlutterFlowTheme.of(context).secondary,
                 borderRadius: BorderRadius.circular(12),
               ),
               alignment: const AlignmentDirectional(0, 0),

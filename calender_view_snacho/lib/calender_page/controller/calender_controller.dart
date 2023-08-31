@@ -6,7 +6,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../calender_view_modle/calender_view_modle.dart';
 
 abstract class StaffTimlineCalenderController{
-  MeetingDataSource? events;
+    MeetingDataSource? events;
   late List<TimeRegion> brakeTime;
    set addStaffs(List<Person> users) ;
    final ValueNotifier<bool>  isShowFab =  ValueNotifier(false);
@@ -48,6 +48,8 @@ class CalenderControllerImpl extends StaffTimlineCalenderController {
     ).toList();
     final appointmentList = _users.fold<List<Appointment>>([],(list,e) => [...list,...e.appointments]);
     brakeTime = _users.fold<List<TimeRegion>>([],(list,user) => [...list,...user.brake.map((e) => TimeRegion(resourceIds:[user.id],startTime: e.startTime, endTime: e.endTime,text: e.text,enablePointerInteraction: false,iconData: Icons.timelapse))]);
+   print(appointmentList);
+   print("appointmentListappointmentList");
     events = MeetingDataSource(appointmentList, usersData);
     events?.notifyListeners(CalendarDataSourceAction.addResource, usersData);
 
@@ -57,6 +59,7 @@ class CalenderControllerImpl extends StaffTimlineCalenderController {
     _assignUserDataToTable();
     controller.addPropertyChangedListener((p0) {
       print("Property Change Listener:$p0 ${controller.view}");
+      print("Property Change Listener:$p0 ${controller}");
       if(p0 == 'calendarView'){
         isShowFab.value = !(controller.view == CalendarView.timelineDay)&& !(controller.view == CalendarView.timelineWeek);
         print("is time line :${!(controller.view == CalendarView.timelineDay)} AND ${!(controller.view == CalendarView.timelineWeek)} ${isShowFab.value}");

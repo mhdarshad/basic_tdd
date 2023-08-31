@@ -34,7 +34,25 @@ extension CalenderFormat on List<String>{
       'thu':  WeekDays.thursday,
       'fri':  WeekDays.friday,
       'sat':  WeekDays.saturday,
-   }[e]!)).toList();
+   }[e]?? WeekDays.sunday)).toList();
+   String get toFormatStringKey =>map((e) =>({
+      'sun':  'SU',
+      'mon': 'MO',
+      'tue':  'TU',
+      'wed': 'WE',
+      'thu':  'TH',
+      'fri':  'FR',
+      'sat': 'SA'
+   }[e]?? '')).toList().join(',');
+   List<int> get toFormatintKey =>map((e) =>({
+      'sun':  7,
+      'mon': 1,
+      'tue':  2,
+      'wed': 3,
+      'thu':  4,
+      'fri':  5,
+      'sat':6
+   }[e]?? 1)).toList();
 }
 class SceduleListing extends StatefulWidget {
   const SceduleListing({Key? key, String? planId}) : super(key: key);
@@ -54,13 +72,15 @@ class _SceduleListingState extends State<SceduleListing> {
   Widget build(BuildContext context) {
 
     return  ProjectScafold(
-        appBar: AppBar(actions:  [
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          actions:  [
           //TODO:: Add Filter
           Row(
             children: [
               const Text("Filter:"),
               DropDownContainer(hint:"Select Filter",data: SceduleEvent.filterData,builder: (context,data){
-                return Text(data);
+                return Text(data,style: const TextStyle(color: Colors.white),);
               },onSelect: (value){
                 sl<SceduleEvent>().getFilterData(value);
               }),
@@ -76,7 +96,7 @@ class _SceduleListingState extends State<SceduleListing> {
                       hint:'Select ${value['title']??''}',
                       data: value['data'],
                       builder: (context,data){
-                    return Text(data?['name']??'');
+                    return Text(data?['name']??'',style: const TextStyle(color: Colors.white),);
                   },
                       onSelect: (fvalue){
                         print("Selected Value${fvalue?['name']} and its Id: ${fvalue?['id']}");
@@ -92,17 +112,28 @@ class _SceduleListingState extends State<SceduleListing> {
           final scedule = store.scedules;
           // scedule.filter((sceduleData)=> sceduleData.planId.toString() == '');
           // return Container();
+          if (kDebugMode) {
+            print(scedule.length);
+          }
           return StaffTimlineCalender(
               StaffTimlineCalenderController.instance,
              headerColor: FlutterFlowTheme.of(context).primary,
              eventViewBuilder: (context,data){
                final appointment = (data.appointments.first as Appointment);
                 final trainerDetail =scedule.firstWhere((element) => appointment.id == element.id).trainername;
-               return Container(
+
+               print(scedule.firstWhere((element) => appointment.id == element.id).days?.keys.toList().toFormatintKey);
+               scedule.firstWhere((element) => appointment.id.toString() == element.id.toString()).days?.removeWhere((key, value) => value==null);
+               final isweekDay = scedule.map((element) => scedule.firstWhere((element) => appointment.id == element.id).days?.keys.toList().toFormatintKey.any((week) {
+                print("$week ${data.date.weekday} ${appointment.subject}");
+                 return data.date.weekday == week;
+               })).first;
+
+               return (isweekDay??false)?Container(
                  width: MediaQuery.of(context).size.width * 1.0,
                  height: 100.0,
                  decoration: BoxDecoration(
-                   color: FlutterFlowTheme.of(context) .secondaryBackground,
+                   color: FlutterFlowTheme.of(context) .primary,
                    boxShadow: const [
                      BoxShadow(
                        blurRadius: 3.0,
@@ -142,7 +173,7 @@ class _SceduleListingState extends State<SceduleListing> {
                            children: [
                              Text(
                                appointment.subject,
-                               style: FlutterFlowTheme.of(context) .titleLarge,
+                               style: FlutterFlowTheme.of(context) .titleLarge.copyWith(color: Colors.white),
                              ),
                              Padding(
                                padding:
@@ -159,7 +190,7 @@ class _SceduleListingState extends State<SceduleListing> {
                                    'Readex Pro',
                                    fontSize:
                                    12.0,
-                                 ),
+                                 ).copyWith(color: Colors.white),
                                ),
                              ),
                              Padding(
@@ -182,14 +213,37 @@ class _SceduleListingState extends State<SceduleListing> {
                                    'Readex Pro',
                                    fontSize:
                                    12.0,
-                                 ),
+                                 ).copyWith(color: Colors.white),
                                ),
                              ),
+                             // Padding(
+                             //   padding:
+                             //   const EdgeInsetsDirectional
+                             //       .fromSTEB(
+                             //       0.0,
+                             //       4.0,
+                             //       8.0,
+                             //       0.0),
+                             //   child: AutoSizeText(
+                             //     'Week : ${data.date.weekday}',
+                             //     textAlign:
+                             //     TextAlign.start,
+                             //     style: FlutterFlowTheme
+                             //         .of(context)
+                             //         .bodySmall
+                             //         .override(
+                             //       fontFamily:
+                             //       'Readex Pro',
+                             //       fontSize:
+                             //       12.0,
+                             //     ).copyWith(color: Colors.white),
+                             //   ),
+                             // ),
                            ],
                          ),
                        ),
                      ),
-                     Column(
+                     const Column(
                        mainAxisSize:
                        MainAxisSize.max,
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -197,7 +251,7 @@ class _SceduleListingState extends State<SceduleListing> {
                        children: [
                          Padding(
                            padding:
-                           const EdgeInsetsDirectional
+                           EdgeInsetsDirectional
                                .fromSTEB(
                                0.0,
                                4.0,
@@ -206,10 +260,7 @@ class _SceduleListingState extends State<SceduleListing> {
                            child: Icon(
                              Icons
                                  .chevron_right_rounded,
-                             color:
-                             FlutterFlowTheme.of(
-                                 context)
-                                 .secondaryText,
+                             color:Colors.white,
                              size: 24.0,
                            ),
                          ),
@@ -235,6 +286,9 @@ class _SceduleListingState extends State<SceduleListing> {
                      ),
                    ],
                  ),
+               ): Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Text("No Class Scheduled for\n ${appointment.subject}"),
                );
              },
               onTap: (event){
@@ -256,23 +310,38 @@ class _SceduleListingState extends State<SceduleListing> {
               calView: CalendarView.schedule,
               usersData: scedule.map((e) {
                 e.days?.removeWhere((key, value) => value==null);
+                print(e.days!.keys.toSet().toList().toList().toFormatKey);
+                print(e.title);
+                print("e.days");
                 final startDate = DateFormat('yyyy-MM-dd').parse(e.date!.first.startDate!);
                 final endDate = DateFormat('yyyy-MM-dd').parse(e.date!.first.endDate!);
                 final starttime = DateFormat('HH:mm:ss').parse(e.appointments!.first.startTime!);
                 final endtime = DateFormat('HH:mm:ss').parse(e.appointments!.first.endTime!).subtract(const Duration(minutes: 2));
+               print("Start Date Time ${DateTime(startDate.year,startDate.month,startDate.day,starttime.hour,starttime.minute,starttime.second)}");
+               print("End Date Time ${DateTime(endDate.year,endDate.month,endDate.day,endtime.hour,endtime.minute,endtime.second) }");
+               // print("Days Interval: FREQ=WEEKLY;INTERVAL=1;BYDAY=${e.days?.keys.toList().toFormatStringKey};COUNT=10");
+                print(SfCalendar.generateRRule(RecurrenceProperties(
+                  recurrenceType: RecurrenceType.weekly,
+                  startDate: DateTime(startDate.year,startDate.month,startDate.day,starttime.hour,starttime.minute,starttime.second),
+                  weekDays:e.days!.keys.toList().toFormatKey,
+                  recurrenceRange: RecurrenceRange.endDate,
+                  // recurrenceCount: endDate.difference(startDate).inDays+1,
+                  endDate: DateTime(endDate.year,endDate.month,endDate.day,endtime.hour,endtime.minute,endtime.second),
+                ),DateTime(startDate.year,startDate.month,startDate.day,starttime.hour,starttime.minute,starttime.second),
+                    DateTime(endDate.year,endDate.month,endDate.day,endtime.hour,endtime.minute,endtime.second) ));
                 return Person(id: e.id.toString(), name: e.title??'', brake: [
-              ], imageUrl: "imageUrl",
-                  appointments: [
+              ], imageUrl: "imageUrl",appointments: [
                     Appointment(
                         subject:e.title??'',
                         id: e.id,
-                        recurrenceRule: SfCalendar.generateRRule(RecurrenceProperties(interval:1,
-                          startDate: startDate,
-                          weekDays:e.days!.keys.toList().toFormatKey,
-                          endDate: endDate,
-                        ),
-                            DateTime(startDate.year,startDate.month,startDate.day,starttime.hour,starttime.minute,starttime.second),
-                            DateTime(endDate.year,endDate.month,endDate.day,endtime.hour,endtime.minute,endtime.second) ),
+                        // recurrenceRule: 'FREQ=WEEKLY;INTERVAL=1;BYDAY=${e.days?.keys.toList().toFormatStringKey};COUNT=10',
+                        // recurrenceRule: e.days!.keys.toList().toFormatKey.isNotEmpty?SfCalendar.generateRRule(RecurrenceProperties(
+                        //   recurrenceType: RecurrenceType.monthly,
+                        //   startDate: DateTime(startDate.year,startDate.month,startDate.day,starttime.hour,starttime.minute,starttime.second),
+                        //   weekDays:e.days!.keys.toList().toFormatKey,
+                        //   recurrenceRange: RecurrenceRange.endDate,
+                        //   endDate: DateTime(endDate.year,endDate.month,endDate.day,endtime.hour,endtime.minute,endtime.second),
+                        // ),DateTime(startDate.year,startDate.month,startDate.day,starttime.hour,starttime.minute,starttime.second), DateTime(endDate.year,endDate.month,endDate.day,endtime.hour,endtime.minute,endtime.second) ):null,
                         startTime: DateTime(startDate.year,startDate.month,startDate.day,starttime.hour,starttime.minute,starttime.second),
                         endTime: DateTime(endDate.year,endDate.month,endDate.day,endtime.hour,endtime.minute,endtime.second)
                     )
@@ -296,9 +365,11 @@ class _SceduleListingState extends State<SceduleListing> {
           child: ValueListenableBuilder<T?>(
               valueListenable: dropDownAdapter,
               builder: (context,store,_) {
-                print("store:$store");
+                if (kDebugMode) {
+                  print("store:$store");
+                }
                 return DropdownButton<T>(
-                  hint:  Text(hint),
+                  hint:  Text(hint,style: const TextStyle(color: Colors.white),),
                     onChanged: (value) {
                       dropDownAdapter.value = value;
                       dropDownAdapter.notifyListeners();

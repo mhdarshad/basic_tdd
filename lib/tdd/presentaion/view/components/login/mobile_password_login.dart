@@ -2,6 +2,7 @@ import 'package:cloud_me_v2/core/util/presentation/flutter_flow/flutter_flow_uti
 import 'package:cloud_me_v2/rought_genrator.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/login/login_form_consumer.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_widgets.dart';
@@ -59,6 +60,9 @@ class _LoginFormComponent2WidgetState extends State<LoginFormComponent2Widget> {
             }, listner: (context , store , status ) {
             if((store as GetUserEvents).usecase  is LoginUseCase){
               if(status == VxStatus.success){
+                if (kDebugMode) {
+                  print("Status Is Success");
+                }
                 navigate.pushReplace(context, name: Routename.home,parms: {
                   'page':BottemNavigationsData.dashboard.name
                 });
@@ -138,10 +142,10 @@ class CustomeButton extends StatelessWidget {
             height: 44,
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
             iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-            color: color,
+            color: borderColor!=null? color:Colors.white,
             textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                   fontFamily: 'Readex Pro',
-                  color: Colors.white,
+                  color: borderColor==Colors.transparent? Colors.white:FlutterFlowTheme.of(context).secondaryText,
                 ),
             elevation: 3.0,
             borderSide: borderColor!=null? BorderSide(

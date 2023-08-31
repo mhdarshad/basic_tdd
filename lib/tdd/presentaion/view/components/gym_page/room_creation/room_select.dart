@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_me_v2/core/util/calculations/calculation.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/database_module/db_config_controller.dart';
 import 'package:cloud_me_v2/tdd/presentaion/modules/room_scedule/room_scedule_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -29,7 +30,9 @@ class _RoomSelectState extends State<RoomSelect> {
   @override
   void initState() {
     // TODO: implement initState
-    print("Dtae :${widget.date}");
+    if (kDebugMode) {
+      print("Date :${widget.date}");
+    }
     sl<RoomSceduleEvent>()(data: {'room_id':widget.roomId ?? '','date':widget.date});
     super.initState();
   }
@@ -38,7 +41,7 @@ class _RoomSelectState extends State<RoomSelect> {
     return GestureDetector(
       onTap: () => {},
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(backgroundColor: FlutterFlowTheme.of(context).primary,),
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
           top: true,
@@ -108,7 +111,7 @@ class _RoomSelectState extends State<RoomSelect> {
                                     onTap: () {
                                       // selectedRoom.value = e.index??"0";
                                       // selectedRoom.notifyListeners();
-                                      showDialog(context: context, builder:(context)=> ClassBookingInfoDailog(selectedMat: selectedRoom.value,selectedRoom:widget.roomId,classId:widget.classId,date:widget.date));
+                                      showDialog(context: context, builder:(context) => ClassBookingInfoDailog(selectedMat: selectedRoom.value,selectedRoom:widget.roomId,classId:widget.classId,date:widget.date));
                                       // sl<RoomSceduleEvent>().bookMat(context,room:selectedRoom.value,classId:store.scedules.where((element) => element.room_id == widget.roomId).firstOrNull().id.toString());
                                     },
                                     child: Card(

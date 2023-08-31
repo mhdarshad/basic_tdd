@@ -1,3 +1,5 @@
+import 'package:cloud_me_v2/core/util/calculations/calculation.dart';
+
 class PersonalTrainerData {
   int addonItem;
   int itprRetlPrice;
@@ -23,7 +25,7 @@ class PersonalTrainerData {
       itprRetlPrice: json['ITPR_RETL_PRICE'],
       itemDescription: json['item_Description'],
       itemDescriptionName: json['item_desc_name']??'',
-      qty: json['qty'],
+      qty: json['qty'].toString().parseInt??0,
       image: json['image'],
       email: json['trainer_mail'],
     );
