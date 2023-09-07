@@ -1,7 +1,7 @@
 //
 //
-// import 'package:cloud_me_v2/core/util/config/user_config.dart';
-// import 'package:cloud_me_v2/tdd/presentaion/view/screens/auth/auth.dart';
+// import 'package:rising_gym/core/util/config/user_config.dart';
+// import 'package:rising_gym/tdd/presentaion/view/screens/auth/auth.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/foundation.dart';
 // import 'package:flutter/material.dart';
@@ -293,9 +293,9 @@
 // }
 //
 
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/components/gym_page/room_creation/room_select.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home.dart';
+import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/presentaion/view/components/gym_page/room_creation/room_select.dart';
+import 'package:rising_gym/tdd/presentaion/view/screens/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -370,21 +370,21 @@ class PageControler{
       goRoute(Routename.officialDetails,(BuildContext context, GoRouterState state)=> EditProfile(key: state.pageKey,methode: EditMethode.professional),isSubROught: true),
       goRoute(Routename.editEmiratesid,(BuildContext context, GoRouterState state)=> EditProfile(key: state.pageKey,methode: EditMethode.emiratesid),isSubROught: true),
     ]),
-    goRoute(Routename.planDetail,(BuildContext context, GoRouterState state)=> PlanDetail(key: state.pageKey,planId:state.queryParameters['plan_id'])),
+    goRoute(Routename.planDetail,(BuildContext context, GoRouterState state)=> PlanDetail(key: state.pageKey,planId:state.uri.queryParameters['plan_id'])),
     goRoute(Routename.signup,(BuildContext context, GoRouterState state)=> SignUpPage(key: state.pageKey,),routes: [
       goRoute(Routename.form,(BuildContext context, GoRouterState state)=> SignUpForm(key: state.pageKey,),isSubROught: true),
     ]),
-    goRoute(Routename.sceduleDetais,(BuildContext context, GoRouterState state)=> ViewSceduleDetail(key: state.pageKey,sceduleId:state.queryParameters['class_id'])),
+    goRoute(Routename.sceduleDetais,(BuildContext context, GoRouterState state)=> ViewSceduleDetail(key: state.pageKey,sceduleId:state.uri.queryParameters['class_id'])),
     goRoute(Routename.home,(BuildContext context, GoRouterState state)=>DashBoardPage(state.pathParameters['page'],key: state.pageKey,),params: ['page'],
         routes: [
-          goRoute(Routename.trainers,(BuildContext context, GoRouterState state)=> SelectTrainer(key: state.pageKey,planId:state.queryParameters['item_code']),isSubROught: true),
-          goRoute(Routename.scedule,(BuildContext context, GoRouterState state)=> SceduleListing(key: state.pageKey,planId:state.queryParameters['plan_id']),isSubROught: true,
+          goRoute(Routename.trainers,(BuildContext context, GoRouterState state)=> SelectTrainer(key: state.pageKey,planId:state.uri.queryParameters['item_code']),isSubROught: true),
+          goRoute(Routename.scedule,(BuildContext context, GoRouterState state)=> SceduleListing(key: state.pageKey,planId:state.uri.queryParameters['plan_id']),isSubROught: true,
               routes: [
-                goRoute(Routename.room,(BuildContext context, GoRouterState state)=> RoomSelect(key: state.pageKey,roomId:state.queryParameters['room_id'],classId:state.queryParameters['class_id'],date: state.queryParameters['date'],),isSubROught: true,),
+                goRoute(Routename.room,(BuildContext context, GoRouterState state)=> RoomSelect(key: state.pageKey,roomId:state.uri.queryParameters['room_id'],classId:state.uri.queryParameters['class_id'],date: state.uri.queryParameters['date'],),isSubROught: true,),
               ]),
         ]),
     goRoute(Routename.checkout,(BuildContext context, GoRouterState state)=>CheckOut(key: state.pageKey,),routes: [
-      goRoute(Routename.paymentStatus,(BuildContext context, GoRouterState state)=> PaymentConfirmContainer(key: state.pageKey,status:state.queryParameters["status"]??'no_payment'),isSubROught: true),
+      goRoute(Routename.paymentStatus,(BuildContext context, GoRouterState state)=> PaymentConfirmContainer(key: state.pageKey,status:state.uri.queryParameters["status"]??'no_payment'),isSubROught: true),
     ]),
   ];
 
@@ -409,14 +409,14 @@ class PageControler{
 }
 final router = GoRouter(
   redirect: (context,state){
-    print("path: ${state.location}");
+    print("path: ${state.fullPath}");
     // return null;
-    if((state.location ==  '/home/dashboard') && (sl<Configration>().custTocken ==null)){
+    if((state.fullPath ==  '/home/dashboard') && (sl<Configration>().custTocken ==null)){
       print("no data");
       return Routename.login.nUri.path;
     }
     print("custTocken check on Redirect: ${sl<Configration>().custTocken}");
-    if((state.location ==  Routename.login.nUri.path) && (sl<Configration>().custTocken !=null) && sl<Configration>().cid != null){
+    if((state.fullPath ==  Routename.login.nUri.path) && (sl<Configration>().custTocken !=null) && sl<Configration>().cid != null){
       print("no data");
       return '${Routename.home.nUri.path}/dashboard';
     }
@@ -468,8 +468,8 @@ class Navigations {
     context.pushNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);
   }
 
-  String getCurrentRoute()=>
-      router.location;
+  String getCurrentRoute(BuildContext context)=>
+      GoRouterState.of(context).uri.toString();
 
   pushReplace(BuildContext context,{required Routename name,Map<String, dynamic> parms = const <String, dynamic>{}, Map<String, dynamic> qparms = const <String, dynamic>{}})=>
       context.pushReplacementNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:cloud_me_v2/core/usecases/usecase.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/invoice/purchase_invoce_data.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/user/plans_data.dart';
-import 'package:cloud_me_v2/tdd/data/models/db/users.dart';
+import 'package:rising_gym/core/usecases/usecase.dart';
+import 'package:rising_gym/tdd/data/models/api/invoice/purchase_invoce_data.dart';
+import 'package:rising_gym/tdd/data/models/api/user/plans_data.dart';
+import 'package:rising_gym/tdd/data/models/db/users.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paytabs_bridge/BaseBillingShippingInfo.dart';
@@ -113,16 +113,16 @@ class CheckOutMutation extends VxMutation<ProjectStore> {
 
   BuildContext context;
   PaymentSdkConfigurationDetails get generateConfig {
-    var billingDetails = BillingDetails("Mohammed Arshad", data.user.email??'', "${data.user.custMob}", data.user.custAdd1??'', data.user.custCountry??'', data.user.custState??'',  data.user.custState??'', "");
+    var billingDetails = BillingDetails("${data.user.custName}", data.user.email??'', "${data.user.custMob}", data.user.custAdd1??'', data.user.custCountry??'', data.user.custState??'',  data.user.custState??'', "");
     List<PaymentSdkAPms> apms = [];
-    apms.add(PaymentSdkAPms.AMAN);
+    apms.add(PaymentSdkAPms.APPLE_PAY);
     var configuration = PaymentSdkConfigurationDetails(
-        profileId: "122214",
-        serverKey: "SLJNKWHW6K-J6L2JTTLNT-9JNWWJ2GKJ",
-        clientKey: "CPKM7K-V7QM6G-BM677B-62GQ7T",
+        profileId: "123263",
+        serverKey: "SHJNKWHWDM-J6MDWTBLWB-LB69J9NZR2",
+        clientKey: "CVKM7K-V7BP6G-NDV72B-PVVQM7",
         cartId: "12433",
         cartDescription: "Flowers",
-        merchantName: "Raising Gym",
+        merchantName: "Rising Gym",
         screentTitle: "Pay with Card",
         amount: (plansData?.itemPrice.toDouble()??0)+(personalTrainerData?.itprRetlPrice.toDouble()??0),
         showBillingInfo: true,
@@ -203,7 +203,7 @@ class CheckOutMutation extends VxMutation<ProjectStore> {
               store?.purchaseInvoiceData = PurchaseInvoiceData.fromJson(data);
               errerMessege =/* PurchaseInvoiceData.fromJson(data).h?.responseMessage??*/'Unknown Error';
               navigate.push(context, name: Routename.paymentStatus,qparms: {
-                "status":"unpaid"
+                "status":"unpaid",
               });
             },
             onPrecess: (Map<String, dynamic> data) {

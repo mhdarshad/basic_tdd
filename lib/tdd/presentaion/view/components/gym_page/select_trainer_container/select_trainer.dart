@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/trainer/trainer_controller.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/presentaion/modules/trainer/trainer_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_icon_button.dart';

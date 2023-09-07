@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_me_v2/core/util/presentation/constants/ic_constants.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
+import 'package:rising_gym/core/util/presentation/constants/ic_constants.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tekartik_common_utils/common_utils_import.dart';
@@ -299,8 +299,8 @@ class UserProfile extends StatelessWidget {
               ),
             ),
             ListIconButton(icon:Icons.help_outline_rounded,text:'WhatsApp',onClick:() async {
-              var whatsapp ="+919144040888";
-              var whatsappURl_android = "whatsapp://send?phone=$whatsapp&text=hello";
+              var whatsapp ="+97192229999";
+              var whatsappURl_android = "https://api.whatsapp.com/send?phone=$whatsapp&text=hello";
               var whatappURL_ios ="https://wa.me/$whatsapp?text=${Uri.parse("hello")}";
               if(Platform.isIOS){
                 // for iOS phone only
@@ -309,7 +309,6 @@ class UserProfile extends StatelessWidget {
                 }else{
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("whatsapp no installed")));
-
                 }
               }else{
                 // android , web

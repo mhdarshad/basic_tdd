@@ -1,9 +1,9 @@
 
 
-import 'package:cloud_me_v2/core/cripto_algo.dart';
-import 'package:cloud_me_v2/core/util/presentation/constants/ic_constants.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/data/models/exception_modle.dart';
+import 'package:rising_gym/core/cripto_algo.dart';
+import 'package:rising_gym/core/util/presentation/constants/ic_constants.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/data/models/exception_modle.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
@@ -155,10 +155,10 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
                 if (kDebugMode) {
                   print("customer ID: ${r['customer_id']}");
                 }
-                final UserAcsessData result = r;
+                final UserAcsessData result = UserAcsessData.fromJson(r);
                 // sl<Configration>().custTocken = r['customer_auth'].toString().encript;
                 sl<SharedPreferences>().setString(SFkeys.token, result.customerAuth?.encript??'');
-                sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer.id??0);
+                sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer?.id??0);
                 // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
 
                 sl<SharedPreferences>().setString(SFkeys.UID, result.customerID.toString());
@@ -218,7 +218,7 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
           final UserAcsessData result = r;
           print("customer tocken on logibn: ${result.customerAuth}");
           sl<SharedPreferences>().setString(SFkeys.token, result.customerAuth?.encript??'');
-          sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer.id??0);
+          sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer?.id??0);
           // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
 
           sl<SharedPreferences>().setString(SFkeys.UID, result.customerID.toString());
@@ -247,12 +247,12 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
           final UserAcsessData result = r;
           // sl<Configration>().custTocken = result.customerAuth?.encript;
           sl<SharedPreferences>().setString(SFkeys.token, result.customerAuth?.encript??'');
-          sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer.id??0);
+          sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer?.id??0);
           // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
 
           sl<SharedPreferences>().setString(SFkeys.UID, result.customerID.toString());
           sl<Configration>().custId = result.customerID.toString();
-          sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
+          // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
           // sl<Configration>().cid = result.customer.id;
           store?.userdata = result.customer;
         });

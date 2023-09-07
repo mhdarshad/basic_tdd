@@ -1,8 +1,8 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/database_module/db_config_controller.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/presentaion/modules/database_module/db_config_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

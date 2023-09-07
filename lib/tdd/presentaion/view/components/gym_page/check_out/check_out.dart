@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_me_v2/core/util/calculations/calculation.dart';
-import 'package:cloud_me_v2/core/util/presentation/template/custom_scafold.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/user/plans_data.dart';
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/core/helper/toast_builder/toast_controller.dart';
+import 'package:rising_gym/core/util/calculations/calculation.dart';
+import 'package:rising_gym/core/util/presentation/template/custom_scafold.dart';
+import 'package:rising_gym/tdd/data/models/api/user/plans_data.dart';
+import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:in_date_utils/in_date_utils.dart';
@@ -78,7 +79,7 @@ class CheckOut extends StatelessWidget {
                                   children: [
                                     Card(
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      color: const Color(0x3A000000),
+                                      // color: const Color(0x3A000000),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
                                       ),
@@ -321,17 +322,23 @@ class CheckOut extends StatelessWidget {
                                     lang: Lang.en,
                                   ),
                                 ),
+                                (false)?
                                 FFButtonWidget(
                                   onPressed: () async{
-                                    TabbyWebView.showWebView(
-                                      context: context,
-                                      webUrl:(await sl<CheckoutEvent>().payTabby(data: CheckoutData(user:stored.userdata!, methode: PaymentMethode.tabby))).availableProducts.installments!.webUrl,
-                                      onResult: (WebViewResult resultCode) {
-                                        if (kDebugMode) {
-                                          print("Tabby response: ${resultCode.name}");
-                                        }
-                                      },
-                                    );
+                                    // if(stored.userdata!=null){
+                                    //   TabbyWebView.showWebView(
+                                    //     context: context,
+                                    //     webUrl:(await sl<CheckoutEvent>().payTabby(data: CheckoutData(user:stored.userdata!, methode: PaymentMethode.tabby))).availableProducts.installments!.webUrl,
+                                    //     onResult: (WebViewResult resultCode) {
+                                    //       if (kDebugMode) {
+                                    //         print("Tabby response: ${resultCode.name}");
+                                    //       }
+                                    //     },
+                                    //   );
+                                    // }else{
+                                    //   CToast.toast(context, msg: "Some Thing Went Wrong We Suggest you To Re-Login").error;
+                                    // }
+
                                   },
                                   text: 'Proceed',
                                   icon: Icon(
@@ -357,7 +364,7 @@ class CheckOut extends StatelessWidget {
                                       width: 2,
                                     ),
                                   ),
-                                ),
+                                ):const Text("Not Available"),
                               ],
                             );
                           });

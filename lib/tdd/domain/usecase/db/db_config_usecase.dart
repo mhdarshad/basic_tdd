@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:cloud_me_v2/core/controller/json_controller/json_save.dart';
-import 'package:cloud_me_v2/core/data/hive_db.dart';
-import 'package:cloud_me_v2/core/error/failuers.dart';
-import 'package:cloud_me_v2/tdd/data/models/exception_modle.dart';
+import 'package:rising_gym/core/controller/json_controller/json_save.dart';
+import 'package:rising_gym/core/data/hive_db.dart';
+import 'package:rising_gym/core/error/failuers.dart';
+import 'package:rising_gym/tdd/data/models/exception_modle.dart';
 
 import 'package:dartz/dartz.dart';
 

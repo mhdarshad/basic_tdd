@@ -1,5 +1,5 @@
 
-import 'package:cloud_me_v2/tdd/presentaion/view/components/sign_up/otp_signup.dart';
+import 'package:rising_gym/tdd/presentaion/view/components/sign_up/otp_signup.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/util/config/user_config.dart';

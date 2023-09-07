@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/core/controller/json_controller/json_save.dart';
+import 'package:rising_gym/core/controller/json_controller/json_save.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 

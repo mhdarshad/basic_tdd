@@ -1,8 +1,10 @@
-import 'package:cloud_me_v2/core/util/presentation/flutter_flow/flutter_flow_theme.dart';
+import 'package:rising_gym/core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../../../../../rought_genrator.dart';
 
 class Webview extends StatefulWidget {
    Webview({Key? key}) : super(key: key);
@@ -27,9 +29,10 @@ class _WebviewState extends State<Webview> {
   void initState() {
     // TODO: implement initState
     // controller.);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      showDialog(context: context, builder: (context) => spinkit);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   loading.value = true;
+    //   showDialog(context: context, builder: (context) => spinkit);
+    // });
     super.initState();
   }
   WebViewController get controller => WebViewController()
@@ -48,15 +51,21 @@ class _WebviewState extends State<Webview> {
 
         },
         onPageFinished: (String url) {
-          context.pop();
+          // if(loading.value) {
+          //   loading.value == false;
+          //   navigate.pop(context);
+          // }
+
         },
         onWebResourceError: (WebResourceError error) {
           // context.pop();
         },
         onNavigationRequest: (NavigationRequest request) {
-          if (request.url.startsWith('https://risinggym.com/')) {
-            return NavigationDecision.prevent;
-          }
+          // if (request.url.startsWith('https://risinggym.com/')) {
+          //   return NavigationDecision.prevent;
+          // }
+          // loading.value = true;
+          // showDialog(context: context, builder: (context) => spinkit);
           return NavigationDecision.navigate;
         },
       ),
@@ -67,13 +76,8 @@ class _WebviewState extends State<Webview> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async =>false,
-      child: ValueListenableBuilder<bool>(
-          valueListenable: loading,
-          builder: (context,isloading,_) {
-            return WebViewWidget(
-              controller: controller,
-            );
-          }
+      child:  WebViewWidget(
+        controller: controller,
       ),
     );
   }

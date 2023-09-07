@@ -1,6 +1,6 @@
 
 
-import 'package:cloud_me_v2/core/util/config/config.dart';
+import 'package:rising_gym/core/util/config/config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:tekartik_app_flutter_sqflite/sqflite.dart';
 

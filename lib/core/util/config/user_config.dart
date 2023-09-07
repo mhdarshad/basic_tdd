@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/core/util/presentation/constants/ic_constants.dart';
+import 'package:rising_gym/core/util/presentation/constants/ic_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../injection_container.dart';

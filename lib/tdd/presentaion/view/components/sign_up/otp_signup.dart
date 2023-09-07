@@ -1,8 +1,8 @@
 
-import 'package:cloud_me_v2/core/util/presentation/flutter_flow/flutter_flow_util.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/login/login_form_consumer.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
+import 'package:rising_gym/core/util/presentation/flutter_flow/flutter_flow_util.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/presentaion/modules/login/login_form_consumer.dart';
+import 'package:rising_gym/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:velocity_x/velocity_x.dart';

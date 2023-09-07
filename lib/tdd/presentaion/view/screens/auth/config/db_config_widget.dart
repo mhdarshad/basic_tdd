@@ -1,5 +1,5 @@
-import 'package:cloud_me_v2/core/util/calculations/calculation.dart';
-import 'package:cloud_me_v2/injection_container.dart';
+import 'package:rising_gym/core/util/calculations/calculation.dart';
+import 'package:rising_gym/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 

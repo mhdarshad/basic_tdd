@@ -1,6 +1,6 @@
 import 'package:age_calculator/age_calculator.dart';
-import 'package:cloud_me_v2/core/util/presentation/flutter_flow/flutter_flow_util.dart';
-import 'package:cloud_me_v2/core/util/presentation/template/custom_scafold.dart';
+import 'package:rising_gym/core/util/presentation/flutter_flow/flutter_flow_util.dart';
+import 'package:rising_gym/core/util/presentation/template/custom_scafold.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';

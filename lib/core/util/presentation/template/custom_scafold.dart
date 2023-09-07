@@ -1,5 +1,5 @@
-import 'package:cloud_me_v2/core/util/presentation/flutter_flow/flutter_flow_animations.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/widgets/drawer/end_drawer.dart';
+import 'package:rising_gym/core/util/presentation/flutter_flow/flutter_flow_animations.dart';
+import 'package:rising_gym/tdd/presentaion/view/widgets/drawer/end_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_sizer/flutter_sizer.dart';

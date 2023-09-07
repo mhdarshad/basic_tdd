@@ -1,7 +1,7 @@
-import 'package:cloud_me_v2/tdd/presentaion/view/components/kiosk_container/kiosk_container.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/widgets/expansion_widget/expansion_list.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/widgets/list/expansion_drawer_list_view.dart';
+import 'package:rising_gym/tdd/presentaion/view/components/kiosk_container/kiosk_container.dart';
+import 'package:rising_gym/tdd/presentaion/view/screens/home/home.dart';
+import 'package:rising_gym/tdd/presentaion/view/widgets/expansion_widget/expansion_list.dart';
+import 'package:rising_gym/tdd/presentaion/view/widgets/list/expansion_drawer_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

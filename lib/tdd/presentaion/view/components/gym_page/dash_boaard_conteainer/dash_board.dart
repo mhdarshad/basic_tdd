@@ -1,11 +1,11 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_me_v2/core/usecases/usecase.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/scdule/scedule_api.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/user/dashboard_data.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
+import 'package:rising_gym/core/usecases/usecase.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/data/models/api/scdule/scedule_api.dart';
+import 'package:rising_gym/tdd/data/models/api/user/dashboard_data.dart';
+import 'package:rising_gym/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';

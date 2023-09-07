@@ -1,5 +1,5 @@
-import 'package:cloud_me_v2/core/error/failuers.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/product/product_consumer.dart';
+import 'package:rising_gym/core/error/failuers.dart';
+import 'package:rising_gym/tdd/presentaion/modules/product/product_consumer.dart';
 
 import 'package:dartz/dartz.dart';
 

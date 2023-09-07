@@ -7,6 +7,7 @@ class Scedule {
   int? staffId;
   int? memberCount;
   Map<String,dynamic>? days;
+  List<Attaindence>? attaindence;
   String? room_id;
   String? trainername;
 
@@ -19,6 +20,7 @@ class Scedule {
         this.trainername,
         this.staffId,
         this.memberCount,
+        this.attaindence,
         this.room_id,
         this.days});
 
@@ -31,10 +33,16 @@ class Scedule {
         date!.add(Date.fromJson(v));
       });
     }
-    if (json['appointments'] != null) {
+    if (json['attendance'] != null) {
       appointments = <Appointments>[];
       json['appointments'].forEach((v) {
         appointments!.add(Appointments.fromJson(v));
+      });
+    }
+    if (json['attendance'] != null) {
+      attaindence = <Attaindence>[];
+      json['attendance'].forEach((v) {
+        attaindence!.add(Attaindence.fromJson(v));
       });
     }
     planId = json['plan_id'];
@@ -54,8 +62,11 @@ class Scedule {
     if (date != null) {
       data['Date'] = date!.map((v) => v.toJson()).toList();
     }
-    if (appointments != null) {
+    if (attaindence != null) {
       data['appointments'] = appointments!.map((v) => v.toJson()).toList();
+    }
+    if (attaindence != null) {
+      data['attendance'] = appointments!.map((v) => v.toJson()).toList();
     }
     data['plan_id'] = planId;
     data['room_id'] = staffId;
@@ -137,6 +148,50 @@ class Days {
     data['thu'] = thu;
     data['fri'] = fri;
     data['sat'] = sat;
+    return data;
+  }
+}
+class Attaindence {
+  int? id;
+  int? custId;
+  Null? invoiceNo;
+  int? batchId;
+  String? date;
+  int? userId;
+  String? createdAt;
+  String? updatedAt;
+
+  Attaindence(
+      {this.id,
+        this.custId,
+        this.invoiceNo,
+        this.batchId,
+        this.date,
+        this.userId,
+        this.createdAt,
+        this.updatedAt});
+
+  Attaindence.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    custId = json['cust_id'];
+    invoiceNo = json['invoice_no'];
+    batchId = json['batch_id'];
+    date = json['date'];
+    userId = json['user_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['cust_id'] = this.custId;
+    data['invoice_no'] = this.invoiceNo;
+    data['batch_id'] = this.batchId;
+    data['date'] = this.date;
+    data['user_id'] = this.userId;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

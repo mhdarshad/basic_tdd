@@ -1,4 +1,6 @@
 
+import 'package:rising_gym/core/util/calculations/calculation.dart';
+
 class PlanDatas {
   PlanDatas({
     this.groupName,
@@ -41,7 +43,7 @@ class Plans {
   late final String? groupName;
   late final int itemCode;
   late final String itemDescription;
-  late final int itemPrice;
+  late final double itemPrice;
   late final int? durationByDay;
   late final int? noOfDays;
   late final int? noOfMonths;
@@ -57,7 +59,7 @@ class Plans {
     groupName = null;
     itemCode = json['item_code'];
     itemDescription = json['item_description'];
-    itemPrice = json['item_price'];
+    itemPrice = json['item_price'].toString().parseDouble??0.0;
     durationByDay = json['duration_by_day'];
     noOfDays = json['no_of_days'];
     noOfMonths = json['no_of_months'];

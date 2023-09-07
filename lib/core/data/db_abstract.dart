@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/core/data/sqlflite/db_provider/db_congfig.dart';
+import 'package:rising_gym/core/data/sqlflite/db_provider/db_congfig.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mysql1/mysql1.dart';
 

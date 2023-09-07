@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/rought_genrator.dart';
+import 'package:rising_gym/rought_genrator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class CheckOutConteainer extends StatelessWidget {
           }
           if (status == VxStatus.error) {
             navigate.push(context, name: Routename.paymentStatus,qparms: {"status":'unpaid'});
-            context.pop();
+            navigate.pop(context);
           } else if (status == VxStatus.success) {
             if (kDebugMode) {
               print("State :");

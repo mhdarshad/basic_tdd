@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/tdd/domain/usecase/product/product_usecase.dart';
+import 'package:rising_gym/tdd/domain/usecase/product/product_usecase.dart';
 
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/usecases/usecase.dart';

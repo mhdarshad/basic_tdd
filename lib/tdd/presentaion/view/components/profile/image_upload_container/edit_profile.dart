@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_me_v2/core/helper/toast_builder/toast_controller.dart';
-import 'package:cloud_me_v2/core/usecases/usecase.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/core/helper/toast_builder/toast_controller.dart';
+import 'package:rising_gym/core/usecases/usecase.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,5 +1,5 @@
-import 'package:cloud_me_v2/core/usecases/usecase.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
+import 'package:rising_gym/core/usecases/usecase.dart';
+import 'package:rising_gym/rought_genrator.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 

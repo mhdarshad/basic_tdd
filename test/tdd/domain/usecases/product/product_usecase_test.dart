@@ -1,6 +1,6 @@
-import 'package:cloud_me_v2/core/data/sqlflite/sql_db.dart';
-import 'package:cloud_me_v2/tdd/domain/repositories/repository_provider.dart';
-import 'package:cloud_me_v2/tdd/domain/usecase/product/product_usecase.dart';
+import 'package:rising_gym/core/data/sqlflite/sql_db.dart';
+import 'package:rising_gym/tdd/domain/repositories/repository_provider.dart';
+import 'package:rising_gym/tdd/domain/usecase/product/product_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/scdule/scedule_api.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/data/models/api/scdule/scedule_api.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/usecases/usecase.dart';

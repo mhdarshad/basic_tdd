@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/core/util/calculations/calculation.dart';
+import 'package:rising_gym/core/util/calculations/calculation.dart';
 
 class PersonalTrainerData {
   int addonItem;

@@ -1,9 +1,10 @@
 import 'package:calender_view_snacho/calender_page/calender_view_modle/calender_view_modle.dart';
 import 'package:calender_view_snacho/calender_page/controller/calender_controller.dart';
 import 'package:calender_view_snacho/calender_page/desktop_web/calender_view_desk_top.dart';
-import 'package:cloud_me_v2/core/util/config/user_config.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/room_scedule/room_scedule_controller.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/components/gym_page/scedule_listing/scedule_listing.dart';
+import 'package:rising_gym/core/util/calculations/convert.dart';
+import 'package:rising_gym/core/util/config/user_config.dart';
+import 'package:rising_gym/tdd/presentaion/modules/room_scedule/room_scedule_controller.dart';
+import 'package:rising_gym/tdd/presentaion/view/components/gym_page/scedule_listing/scedule_listing.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -394,7 +395,9 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
               // });
               return false;
             },
-            monthCellVIewBuilder: (context,cell)=> Padding(
+            monthCellVIewBuilder: (context,cell) {
+              final apintment =scedule.where((element) => element.id == (cell.appointments.isNotEmpty?cell.appointments.first:null)).map((e) => e.attaindence?.any((element) => element.date.toString().toDateTime?.day == cell.date.day)??false);
+              return Padding(
               padding: const EdgeInsets.all(4.0),
               child: Container(
                 // margin: const EdgeInsets.all(100.0),
@@ -414,7 +417,7 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
                         child: Center(child: Text("${cell.date.day}",style: const TextStyle(fontSize: 20),))),
                     Expanded(child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: apintment.isNotEmpty?Colors.green:Colors.black87,
                           borderRadius: const BorderRadius.only(
                               bottomLeft:Radius.circular(40),
                               bottomRight:Radius.circular(40)
@@ -433,7 +436,8 @@ class _ViewSceduleDetailState extends State<ViewSceduleDetail> {
                     )
                   ],),
               ),
-            ),
+            );
+            },
             usersData: scedule.map((e) {
               e.days?.removeWhere((key, value) => value==null);
               final startDate = DateFormat('yyyy-MM-dd').parse(e.date!.first.startDate!);

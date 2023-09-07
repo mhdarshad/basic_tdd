@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 

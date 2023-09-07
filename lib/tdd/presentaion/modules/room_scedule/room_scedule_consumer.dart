@@ -1,5 +1,5 @@
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/vx_store.dart';

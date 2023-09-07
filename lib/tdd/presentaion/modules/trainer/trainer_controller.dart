@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/core/usecases/usecase.dart';
+import 'package:rising_gym/core/usecases/usecase.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../core/event/event_hanling.dart';

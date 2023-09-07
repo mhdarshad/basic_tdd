@@ -1,7 +1,7 @@
-import 'package:cloud_me_v2/core/usecases/usecase.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/components/gym_page/dash_boaard_conteainer/dash_board.dart';
-import 'package:cloud_me_v2/tdd/presentaion/view/screens/home/home_controller.dart';
+import 'package:rising_gym/core/usecases/usecase.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/presentaion/view/components/gym_page/dash_boaard_conteainer/dash_board.dart';
+import 'package:rising_gym/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -99,7 +99,7 @@ class StatusWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
           child: Text(
-            (status==PayStatus.success)?'Payment Confirmed!':'Transaction Failed',
+            (status==PayStatus.success)?'Payment Confirmed!':paymentData?.paymentResult?.responseMessage??'Transaction Failed',
             style: FlutterFlowTheme.of(context).displaySmall.override(
               fontFamily: 'Outfit',
               color: status==PayStatus.success?FlutterFlowTheme.of(context).primary:FlutterFlowTheme.of(context).error,

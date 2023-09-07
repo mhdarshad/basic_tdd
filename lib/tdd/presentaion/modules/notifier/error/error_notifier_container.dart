@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/core/helper/toast_builder/toast_controller.dart';
+import 'package:rising_gym/core/helper/toast_builder/toast_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'error_notifier_controller.dart';

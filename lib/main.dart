@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:cloud_me_v2/core/network/http_override.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/notifier/error/error_notifier_container.dart';
+import 'package:rising_gym/core/network/http_override.dart';
+import 'package:rising_gym/tdd/presentaion/modules/notifier/error/error_notifier_container.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
       // print("theme changed ${(states.props.first as ThemesData?)?.name.name}");
       return MaterialApp.router(
         routerConfig: router,
-        title: 'Cloud Me',
+        title: 'Rising GYM',
         theme: ThemeData(brightness: Brightness.light),
         darkTheme: ThemeData(brightness: Brightness.light),
         themeMode: _themeMode,

@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/core/error/failuers.dart';
+import 'package:rising_gym/core/error/failuers.dart';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';

@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/trainers/trainers_data.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/data/models/api/trainers/trainers_data.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_icon_button.dart';

@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:azblob/azblob.dart';
-import 'package:cloud_me_v2/core/cripto_algo.dart';
-import 'package:cloud_me_v2/core/usecases/usecase.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/dashboard/dashboard_controller.dart';
+import 'package:rising_gym/core/cripto_algo.dart';
+import 'package:rising_gym/core/usecases/usecase.dart';
+import 'package:rising_gym/tdd/presentaion/modules/dashboard/dashboard_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
-import 'package:cloud_me_v2/core/util/config/user_config.dart';
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/core/util/config/user_config.dart';
+import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_paytabs_bridge/BaseBillingShippingInfo.dart';
@@ -35,7 +35,7 @@ class UpdatetrainerUseCase  extends UseCase<bool,PersonalTrainerData>{
         clientKey: "CPKM7K-V7QM6G-BM677B-62GQ7T",
         cartId: "12433",
         cartDescription: "Flowers",
-        merchantName: "Raising Gym",
+        merchantName: "Rising Gym",
         screentTitle: "Pay with Card",
         amount: (stored.selectedtrainer?.itprRetlPrice.toDouble()??0),
         showBillingInfo: true,

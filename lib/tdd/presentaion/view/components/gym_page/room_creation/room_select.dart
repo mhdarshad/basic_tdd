@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_me_v2/core/util/calculations/calculation.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/database_module/db_config_controller.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/room_scedule/room_scedule_controller.dart';
+import 'package:rising_gym/core/util/calculations/calculation.dart';
+import 'package:rising_gym/tdd/presentaion/modules/database_module/db_config_controller.dart';
+import 'package:rising_gym/tdd/presentaion/modules/room_scedule/room_scedule_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';

@@ -1,13 +1,13 @@
 
 import 'dart:convert';
 
-import 'package:cloud_me_v2/core/controller/json_controller/json_save.dart';
-import 'package:cloud_me_v2/core/cripto_algo.dart';
-import 'package:cloud_me_v2/tdd/domain/usecase/db/db_insert_usecase.dart';
-import 'package:cloud_me_v2/tdd/domain/usecase/product/product_usecase.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/checkout/checkout_controller.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/dashboard/dashboard_controller.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/product/product_controller.dart';
+import 'package:rising_gym/core/controller/json_controller/json_save.dart';
+import 'package:rising_gym/core/cripto_algo.dart';
+import 'package:rising_gym/tdd/domain/usecase/db/db_insert_usecase.dart';
+import 'package:rising_gym/tdd/domain/usecase/product/product_usecase.dart';
+import 'package:rising_gym/tdd/presentaion/modules/checkout/checkout_controller.dart';
+import 'package:rising_gym/tdd/presentaion/modules/dashboard/dashboard_controller.dart';
+import 'package:rising_gym/tdd/presentaion/modules/product/product_controller.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart' if (dart.library.html) "core/network/data_connection_checker_web.dart";
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';

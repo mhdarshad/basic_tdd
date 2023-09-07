@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:cloud_me_v2/core/error/exceptions.dart';
-import 'package:cloud_me_v2/core/usecases/usecase.dart';
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/core/error/exceptions.dart';
+import 'package:rising_gym/core/usecases/usecase.dart';
+import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

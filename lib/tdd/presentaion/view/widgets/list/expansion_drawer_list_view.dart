@@ -1,4 +1,4 @@
-import 'package:cloud_me_v2/tdd/presentaion/view/widgets/list/widget_view_holder.dart';
+import 'package:rising_gym/tdd/presentaion/view/widgets/list/widget_view_holder.dart';
 import 'package:flutter/material.dart';
 
 import '../expansion_widget/expansion_list.dart';

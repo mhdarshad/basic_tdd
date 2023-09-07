@@ -7,7 +7,7 @@ import '../../../data/models/api/user/user_data.dart';
 import '../../../domain/usecase/db/db_config_usecase.dart';
 import '../../../domain/usecase/db/db_insert_usecase.dart';
 import '../notifier/error/error_notifier_controller.dart';
-import 'package:cloud_me_v2/core/error/failuers.dart';
+import 'package:rising_gym/core/error/failuers.dart';
 
 class DBCongigMutation extends EventMutations<dynamic> {
   UseCase usecase;

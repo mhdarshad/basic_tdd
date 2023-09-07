@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="raising_gym"
+        android:label="rising_gym"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
-            android:label="Raising Gym"
+            android:label="Rising Gym"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"

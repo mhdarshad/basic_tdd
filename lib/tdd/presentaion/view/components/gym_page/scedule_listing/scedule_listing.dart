@@ -4,13 +4,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:calender_view_snacho/calender_page/calender_view_modle/calender_view_modle.dart';
 import 'package:calender_view_snacho/calender_page/controller/calender_controller.dart';
 import 'package:calender_view_snacho/calender_page/desktop_web/calender_view_desk_top.dart';
-import 'package:cloud_me_v2/core/usecases/usecase.dart';
-import 'package:cloud_me_v2/core/util/calculations/convert.dart';
-import 'package:cloud_me_v2/core/util/presentation/template/custom_scafold.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
-import 'package:cloud_me_v2/tdd/domain/entities/vx_store.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/scedule/scedule_consumer.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/scedule/scedule_controller.dart';
+import 'package:rising_gym/core/helper/toast_builder/toast_controller.dart';
+import 'package:rising_gym/core/usecases/usecase.dart';
+import 'package:rising_gym/core/util/calculations/convert.dart';
+import 'package:rising_gym/core/util/presentation/flutter_flow/flutter_flow_util.dart';
+import 'package:rising_gym/core/util/presentation/template/custom_scafold.dart';
+import 'package:rising_gym/rought_genrator.dart';
+import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/presentaion/modules/scedule/scedule_consumer.dart';
+import 'package:rising_gym/tdd/presentaion/modules/scedule/scedule_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +27,7 @@ import '../../../../modules/edit_profile/edit_profile_module_controller.dart';
 import '../../../../modules/scedule_module/scedule_module_controller.dart';
 import '../../../widgets/calender_view/calender_page/controller/calender_controller.dart';
 import '../../../widgets/calender_view/calender_page/desktop_web/calender_view_desk_top.dart';
+import '../web_view/view_all_scedule.dart';
 extension CalenderFormat on List<String>{
    List<WeekDays> get toFormatKey =>map((e) =>({
       'sun':  WeekDays.sunday,
@@ -79,11 +82,19 @@ class _SceduleListingState extends State<SceduleListing> {
           Row(
             children: [
               const Text("Filter:"),
-              DropDownContainer(hint:"Select Filter",data: SceduleEvent.filterData,builder: (context,data){
-                return Text(data,style: const TextStyle(color: Colors.white),);
+              DropDownContainer<String>(hint:"Select Filter",data: SceduleEvent.filterData,builder: (context,data){
+                return Text(data,style: const TextStyle(color: Colors.black),);
               },onSelect: (value){
                 sl<SceduleEvent>().getFilterData(value);
               }),
+              MaterialButton(onPressed: (){
+                showDialog(context: context, builder: (builder)=>  Scaffold(appBar:AppBar(leading: IconButton(icon:const Icon(Icons.arrow_back), onPressed: () { context.pop(context); },),),body: ViewAllScedule()));
+              },child: const Column(
+                children: [
+                  Icon(Icons.calendar_month,color: Colors.white,),
+                  Text("View All",style: TextStyle(color: Colors.white),)
+                ],
+              ),)
             ],
           ),
           ValueListenableBuilder(
@@ -300,12 +311,18 @@ class _SceduleListingState extends State<SceduleListing> {
                 final params =(stored.pathParameters??{});
                 if (kDebugMode) {
                   print("room id : ${event.appointments?.first.id}");
+                  print("Selected Data : ${event.date}");
+                  print("Imaginary Current Day Data : ${DateTime.now().subtract(const Duration(days: 1))}");
                 }
-                navigate.push(context, name: Routename.room,parms: params,qparms: {
+                if(event.date?.isAfter(DateTime.now().subtract(const Duration(days: 1)))??false) {
+                  navigate.push(context, name: Routename.room,parms: params,qparms: {
                   'room_id':scedule.where((element) => element.id == event.appointments?.first.id).firstOrNull().room_id.toString(),
                   'class_id':scedule.where((element) => element.id == event.appointments?.first.id).firstOrNull().id.toString(),
                   'date':DateFormat('yyyy-MM-dd').format(event.date??DateTime.now())
                 });
+                }else{
+                  CToast.toast(context, msg: "Finished Event Cannot be Edited").warning;
+                }
                 },
               calView: CalendarView.schedule,
               usersData: scedule.map((e) {
@@ -370,6 +387,8 @@ class _SceduleListingState extends State<SceduleListing> {
                 }
                 return DropdownButton<T>(
                   hint:  Text(hint,style: const TextStyle(color: Colors.white),),
+                    style: const TextStyle(color: Colors.white),
+                    selectedItemBuilder: (context)=> data.map((e) => Text(e.toString(),style: const TextStyle(color: Colors.white),)).toList(),
                     onChanged: (value) {
                       dropDownAdapter.value = value;
                       dropDownAdapter.notifyListeners();

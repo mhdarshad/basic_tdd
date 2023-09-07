@@ -1,5 +1,5 @@
-import 'package:cloud_me_v2/core/util/presentation/flutter_flow/flutter_flow_util.dart';
-import 'package:cloud_me_v2/rought_genrator.dart';
+import 'package:rising_gym/core/util/presentation/flutter_flow/flutter_flow_util.dart';
+import 'package:rising_gym/rought_genrator.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 

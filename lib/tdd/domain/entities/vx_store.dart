@@ -1,13 +1,13 @@
 
 
-import 'package:cloud_me_v2/tdd/data/models/api/invoice/purchase_invoce_data.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/pland/plans_trainer_data.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/scdule/room_scedule.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/scdule/scedule_api.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/trainers/trainers_data.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/user/dashboard_data.dart';
-import 'package:cloud_me_v2/tdd/data/models/api/user/plans_data.dart';
-import 'package:cloud_me_v2/tdd/presentaion/modules/product/product_consumer.dart';
+import 'package:rising_gym/tdd/data/models/api/invoice/purchase_invoce_data.dart';
+import 'package:rising_gym/tdd/data/models/api/pland/plans_trainer_data.dart';
+import 'package:rising_gym/tdd/data/models/api/scdule/room_scedule.dart';
+import 'package:rising_gym/tdd/data/models/api/scdule/scedule_api.dart';
+import 'package:rising_gym/tdd/data/models/api/trainers/trainers_data.dart';
+import 'package:rising_gym/tdd/data/models/api/user/dashboard_data.dart';
+import 'package:rising_gym/tdd/data/models/api/user/plans_data.dart';
+import 'package:rising_gym/tdd/presentaion/modules/product/product_consumer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../data/models/api/scdule/mat_data_scedule.dart';

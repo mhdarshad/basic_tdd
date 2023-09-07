@@ -1,6 +1,6 @@
-// import 'package:cloud_me_v2/core/data/hive_db.dart';
-// import 'package:cloud_me_v2/core/error/failuers.dart';
-// import 'package:cloud_me_v2/tdd/data/models/db/business.dart';
+// import 'package:rising_gym/core/data/hive_db.dart';
+// import 'package:rising_gym/core/error/failuers.dart';
+// import 'package:rising_gym/tdd/data/models/db/business.dart';
 //
 // import 'package:dartz/dartz.dart';
 //
