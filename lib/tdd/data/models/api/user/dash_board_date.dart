@@ -1,4 +1,6 @@
 
+import 'package:rising_gym/core/util/calculations/calculation.dart';
+
 import 'user_data.dart';
 
 class DashBoardData {
@@ -68,33 +70,33 @@ class DashBoardData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    if (this.customer != null) {
-      data['customer'] = this.customer!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (customer != null) {
+      data['customer'] = customer!.toJson();
     }
-    if (this.subscribedPlans != null) {
+    if (subscribedPlans != null) {
       data['subscribed_plans'] =
-          this.subscribedPlans!.map((v) => v.toJson()).toList();
+          subscribedPlans!.map((v) => v.toJson()).toList();
     }
-    if (this.currentPlans != null) {
+    if (currentPlans != null) {
       data['current_plans'] =
-          this.currentPlans!.map((v) => v.toJson()).toList();
+          currentPlans!.map((v) => v.toJson()).toList();
     }
-    data['payment_details'] = this.paymentDetails;
-    data['currency'] = this.currency;
-    if (this.paymentTableDetails != null) {
+    data['payment_details'] = paymentDetails;
+    data['currency'] = currency;
+    if (paymentTableDetails != null) {
       // data['payment_table_details'] =
           // this.paymentTableDetails!.map((v) => v.toJson()).toList();
     }
-    if (this.upload != null) {
+    if (upload != null) {
       // data['upload'] = this.upload!.map((v) => v.toJson()).toList();
     }
-    if (this.schedules != null) {
-      data['schedules'] = this.schedules!.map((v) => v.toJson()).toList();
+    if (schedules != null) {
+      data['schedules'] = schedules!.map((v) => v.toJson()).toList();
     }
-    if (this.joinSchedule != null) {
+    if (joinSchedule != null) {
       data['join_schedule'] =
-          this.joinSchedule!.map((v) => v.toJson()).toList();
+          joinSchedule!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -283,36 +285,36 @@ class SubscribedPlans {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['cust_id'] = this.custId;
-    data['id'] = this.id;
-    data['invoice_no'] = this.invoiceNo;
-    data['item_code'] = this.itemCode;
-    data['invoice_return_no'] = this.invoiceReturnNo;
-    data['from_date'] = this.fromDate;
-    data['to_date'] = this.toDate;
-    data['actual_start_date'] = this.actualStartDate;
-    data['actual_expiry_date'] = this.actualExpiryDate;
-    data['return_status'] = this.returnStatus;
-    data['active_status'] = this.activeStatus;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['detail_sno'] = this.detailSno;
-    data['sessions'] = this.sessions;
-    data['start_time'] = this.startTime;
-    data['duration_time'] = this.durationTime;
-    data['invoice_plan_id'] = this.invoicePlanId;
-    data['total_sessions'] = this.totalSessions;
-    data['remaining_sessions'] = this.remainingSessions;
-    data['group_schedule_id'] = this.groupScheduleId;
-    data['cust_id_1'] = this.custId1;
-    if (this.invoiceDetails != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['cust_id'] = custId;
+    data['id'] = id;
+    data['invoice_no'] = invoiceNo;
+    data['item_code'] = itemCode;
+    data['invoice_return_no'] = invoiceReturnNo;
+    data['from_date'] = fromDate;
+    data['to_date'] = toDate;
+    data['actual_start_date'] = actualStartDate;
+    data['actual_expiry_date'] = actualExpiryDate;
+    data['return_status'] = returnStatus;
+    data['active_status'] = activeStatus;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['detail_sno'] = detailSno;
+    data['sessions'] = sessions;
+    data['start_time'] = startTime;
+    data['duration_time'] = durationTime;
+    data['invoice_plan_id'] = invoicePlanId;
+    data['total_sessions'] = totalSessions;
+    data['remaining_sessions'] = remainingSessions;
+    data['group_schedule_id'] = groupScheduleId;
+    data['cust_id_1'] = custId1;
+    if (invoiceDetails != null) {
       data['invoice_details'] =
-          this.invoiceDetails!.map((v) => v.toJson()).toList();
+          invoiceDetails!.map((v) => v.toJson()).toList();
     }
-    data['frozen_plan'] = this.frozenPlan;
-    if (this.pTInfo != null) {
-      data['p_t_info'] = this.pTInfo!.toJson();
+    data['frozen_plan'] = frozenPlan;
+    if (pTInfo != null) {
+      data['p_t_info'] = pTInfo!.toJson();
     }
     return data;
   }
@@ -324,10 +326,10 @@ class InvoiceDetails {
   int? invoiceItemCode;
   String? invoiceItemDiscription;
   int? invoiceItemQty;
-  int? invoiceItemPrice;
-  int? invoiceItemGross;
-  int? invoiceItemDisount;
-  int? invoiceItemNett;
+  double? invoiceItemPrice;
+  double? invoiceItemGross;
+  double? invoiceItemDisount;
+  double? invoiceItemNett;
   String? returnQty;
   String? travelAgentCost;
   String? passengerName;
@@ -492,10 +494,10 @@ class InvoiceDetails {
     invoiceItemCode = json['Invoice_Item_code'];
     invoiceItemDiscription = json['Invoice_Item_discription'];
     invoiceItemQty = json['Invoice_item_qty'];
-    invoiceItemPrice = json['Invoice_Item_price'];
-    invoiceItemGross = json['Invoice_Item_gross'];
-    invoiceItemDisount = json['Invoice_Item_disount'];
-    invoiceItemNett = json['Invoice_Item_nett'];
+    invoiceItemPrice = json['Invoice_Item_price'].toString().parseDouble;
+    invoiceItemGross = json['Invoice_Item_gross'].toString().parseDouble;
+    invoiceItemDisount = json['Invoice_Item_disount'].toString().parseDouble;
+    invoiceItemNett = json['Invoice_Item_nett'].toString().parseDouble;
     returnQty = json['Return_qty'];
     travelAgentCost = json['Travel_agent_cost'];
     passengerName = json['Passenger_name'];
@@ -574,90 +576,90 @@ class InvoiceDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['Invoice_tran_no'] = this.invoiceTranNo;
-    data['Invoice_no'] = this.invoiceNo;
-    data['Invoice_Item_code'] = this.invoiceItemCode;
-    data['Invoice_Item_discription'] = this.invoiceItemDiscription;
-    data['Invoice_item_qty'] = this.invoiceItemQty;
-    data['Invoice_Item_price'] = this.invoiceItemPrice;
-    data['Invoice_Item_gross'] = this.invoiceItemGross;
-    data['Invoice_Item_disount'] = this.invoiceItemDisount;
-    data['Invoice_Item_nett'] = this.invoiceItemNett;
-    data['Return_qty'] = this.returnQty;
-    data['Travel_agent_cost'] = this.travelAgentCost;
-    data['Passenger_name'] = this.passengerName;
-    data['Route'] = this.route;
-    data['PNR_no'] = this.pNRNo;
-    data['Travel_date'] = this.travelDate;
-    data['Travel_reference'] = this.travelReference;
-    data['Travel_carrier'] = this.travelCarrier;
-    data['Travel_flight_class'] = this.travelFlightClass;
-    data['Travel_time'] = this.travelTime;
-    data['Travel_status'] = this.travelStatus;
-    data['Travel_Cust_id'] = this.travelCustId;
-    data['Travel_tran_date'] = this.travelTranDate;
-    data['history_value1'] = this.historyValue1;
-    data['history_value2'] = this.historyValue2;
-    data['Travel_passenger_type'] = this.travelPassengerType;
-    data['supp_id'] = this.suppId;
-    data['Invoice_item_wac'] = this.invoiceItemWac;
-    data['Travel_return_date'] = this.travelReturnDate;
-    data['Return_status'] = this.returnStatus;
-    data['Travel_fare'] = this.travelFare;
-    data['Travel_tax'] = this.travelTax;
-    data['Travel_commision'] = this.travelCommision;
-    data['Travel_Return_class'] = this.travelReturnClass;
-    data['Sale_person_id'] = this.salePersonId;
-    data['Invoice_business_date'] = this.invoiceBusinessDate;
-    data['slot_name'] = this.slotName;
-    data['Rest_item_option'] = this.restItemOption;
-    data['redeem_balance'] = this.redeemBalance;
-    data['Saloon_item_Redeem_status'] = this.saloonItemRedeemStatus;
-    data['booking_date'] = this.bookingDate;
-    data['Serial_no'] = this.serialNo;
-    data['server_update_flag'] = this.serverUpdateFlag;
-    data['BatchNo'] = this.batchNo;
-    data['item_size'] = this.itemSize;
-    data['item_memo'] = this.itemMemo;
-    data['item_sizeB'] = this.itemSizeB;
-    data['item_sizeL'] = this.itemSizeL;
-    data['item_temp_qty'] = this.itemTempQty;
-    data['voucher_value'] = this.voucherValue;
-    data['sales_person'] = this.salesPerson;
-    data['Course'] = this.course;
-    data['Addons'] = this.addons;
-    data['sno'] = this.sno;
-    data['invoice_item_vat'] = this.invoiceItemVat;
-    data['invoice_item_vat_PER'] = this.invoiceItemVatPER;
-    data['unitpriceExvat'] = this.unitpriceExvat;
-    data['item_barcode'] = this.itemBarcode;
-    data['addon_code'] = this.addonCode;
-    data['audit_upload_status'] = this.auditUploadStatus;
-    data['igst_india'] = this.igstIndia;
-    data['cgst_india'] = this.cgstIndia;
-    data['sgst_india'] = this.sgstIndia;
-    data['delivery_date'] = this.deliveryDate;
-    data['stiching_charge'] = this.stichingCharge;
-    data['discount_type'] = this.discountType;
-    data['net_discount_value'] = this.netDiscountValue;
-    data['stiching_cost'] = this.stichingCost;
-    data['exp_charge'] = this.expCharge;
-    data['booking_status'] = this.bookingStatus;
-    data['route_cost'] = this.routeCost;
-    data['route_cost_redeem_status'] = this.routeCostRedeemStatus;
-    data['disc_type_id'] = this.discTypeId;
-    data['from_location'] = this.fromLocation;
-    data['service_charge'] = this.serviceCharge;
-    data['extra_tax'] = this.extraTax;
-    data['tax_type'] = this.taxType;
-    data['base_time'] = this.baseTime;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['combo_pid'] = this.comboPid;
-    data['combo_title'] = this.comboTitle;
-    if (this.invoiceSaleperson != null) {
-      data['invoice_saleperson'] = this.invoiceSaleperson!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Invoice_tran_no'] = invoiceTranNo;
+    data['Invoice_no'] = invoiceNo;
+    data['Invoice_Item_code'] = invoiceItemCode;
+    data['Invoice_Item_discription'] = invoiceItemDiscription;
+    data['Invoice_item_qty'] = invoiceItemQty;
+    data['Invoice_Item_price'] = invoiceItemPrice;
+    data['Invoice_Item_gross'] = invoiceItemGross;
+    data['Invoice_Item_disount'] = invoiceItemDisount;
+    data['Invoice_Item_nett'] = invoiceItemNett;
+    data['Return_qty'] = returnQty;
+    data['Travel_agent_cost'] = travelAgentCost;
+    data['Passenger_name'] = passengerName;
+    data['Route'] = route;
+    data['PNR_no'] = pNRNo;
+    data['Travel_date'] = travelDate;
+    data['Travel_reference'] = travelReference;
+    data['Travel_carrier'] = travelCarrier;
+    data['Travel_flight_class'] = travelFlightClass;
+    data['Travel_time'] = travelTime;
+    data['Travel_status'] = travelStatus;
+    data['Travel_Cust_id'] = travelCustId;
+    data['Travel_tran_date'] = travelTranDate;
+    data['history_value1'] = historyValue1;
+    data['history_value2'] = historyValue2;
+    data['Travel_passenger_type'] = travelPassengerType;
+    data['supp_id'] = suppId;
+    data['Invoice_item_wac'] = invoiceItemWac;
+    data['Travel_return_date'] = travelReturnDate;
+    data['Return_status'] = returnStatus;
+    data['Travel_fare'] = travelFare;
+    data['Travel_tax'] = travelTax;
+    data['Travel_commision'] = travelCommision;
+    data['Travel_Return_class'] = travelReturnClass;
+    data['Sale_person_id'] = salePersonId;
+    data['Invoice_business_date'] = invoiceBusinessDate;
+    data['slot_name'] = slotName;
+    data['Rest_item_option'] = restItemOption;
+    data['redeem_balance'] = redeemBalance;
+    data['Saloon_item_Redeem_status'] = saloonItemRedeemStatus;
+    data['booking_date'] = bookingDate;
+    data['Serial_no'] = serialNo;
+    data['server_update_flag'] = serverUpdateFlag;
+    data['BatchNo'] = batchNo;
+    data['item_size'] = itemSize;
+    data['item_memo'] = itemMemo;
+    data['item_sizeB'] = itemSizeB;
+    data['item_sizeL'] = itemSizeL;
+    data['item_temp_qty'] = itemTempQty;
+    data['voucher_value'] = voucherValue;
+    data['sales_person'] = salesPerson;
+    data['Course'] = course;
+    data['Addons'] = addons;
+    data['sno'] = sno;
+    data['invoice_item_vat'] = invoiceItemVat;
+    data['invoice_item_vat_PER'] = invoiceItemVatPER;
+    data['unitpriceExvat'] = unitpriceExvat;
+    data['item_barcode'] = itemBarcode;
+    data['addon_code'] = addonCode;
+    data['audit_upload_status'] = auditUploadStatus;
+    data['igst_india'] = igstIndia;
+    data['cgst_india'] = cgstIndia;
+    data['sgst_india'] = sgstIndia;
+    data['delivery_date'] = deliveryDate;
+    data['stiching_charge'] = stichingCharge;
+    data['discount_type'] = discountType;
+    data['net_discount_value'] = netDiscountValue;
+    data['stiching_cost'] = stichingCost;
+    data['exp_charge'] = expCharge;
+    data['booking_status'] = bookingStatus;
+    data['route_cost'] = routeCost;
+    data['route_cost_redeem_status'] = routeCostRedeemStatus;
+    data['disc_type_id'] = discTypeId;
+    data['from_location'] = fromLocation;
+    data['service_charge'] = serviceCharge;
+    data['extra_tax'] = extraTax;
+    data['tax_type'] = taxType;
+    data['base_time'] = baseTime;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['combo_pid'] = comboPid;
+    data['combo_title'] = comboTitle;
+    if (invoiceSaleperson != null) {
+      data['invoice_saleperson'] = invoiceSaleperson!.toJson();
     }
     return data;
   }
@@ -677,10 +679,10 @@ class InvoiceSaleperson {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['saleperson_id'] = this.salepersonId;
-    data['details_row_id'] = this.detailsRowId;
-    data['remarks'] = this.remarks;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['saleperson_id'] = salepersonId;
+    data['details_row_id'] = detailsRowId;
+    data['remarks'] = remarks;
     return data;
   }
 }
@@ -699,10 +701,10 @@ class PTInfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['invoice_no'] = this.invoiceNo;
-    data['item_Description'] = this.itemDescription;
-    data['parent_item'] = this.parentItem;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['invoice_no'] = invoiceNo;
+    data['item_Description'] = itemDescription;
+    data['parent_item'] = parentItem;
     return data;
   }
 }
@@ -763,26 +765,26 @@ class Schedules {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    if (this.dates != null) {
-      data['dates'] = this.dates!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    if (dates != null) {
+      data['dates'] = dates!.map((v) => v.toJson()).toList();
     }
-    if (this.appointments != null) {
-      data['appointments'] = this.appointments!.map((v) => v.toJson()).toList();
+    if (appointments != null) {
+      data['appointments'] = appointments!.map((v) => v.toJson()).toList();
     }
-    data['plan_id'] = this.planId;
-    data['staff_id'] = this.staffId;
-    data['member_count'] = this.memberCount;
-    if (this.days != null) {
-      data['days'] = this.days!.toJson();
+    data['plan_id'] = planId;
+    data['staff_id'] = staffId;
+    data['member_count'] = memberCount;
+    if (days != null) {
+      data['days'] = days!.toJson();
     }
-    data['room_name'] = this.roomName;
-    data['room_id'] = this.roomId;
-    if (this.attendanceDetails != null) {
+    data['room_name'] = roomName;
+    data['room_id'] = roomId;
+    if (attendanceDetails != null) {
       data['attendance_details'] =
-          this.attendanceDetails!.map((v) => v.toJson()).toList();
+          attendanceDetails!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -800,9 +802,9 @@ class Dates {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['start_date'] = this.startDate;
-    data['end_date'] = this.endDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['start_date'] = startDate;
+    data['end_date'] = endDate;
     return data;
   }
 }
@@ -819,9 +821,9 @@ class Appointments {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
     return data;
   }
 }
@@ -848,14 +850,14 @@ class Days {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['sun'] = this.sun;
-    data['mon'] = this.mon;
-    data['tue'] = this.tue;
-    data['wed'] = this.wed;
-    data['thu'] = this.thu;
-    data['fri'] = this.fri;
-    data['sat'] = this.sat;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['sun'] = sun;
+    data['mon'] = mon;
+    data['tue'] = tue;
+    data['wed'] = wed;
+    data['thu'] = thu;
+    data['fri'] = fri;
+    data['sat'] = sat;
     return data;
   }
 }
@@ -877,11 +879,11 @@ class AttendanceDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['cust_id'] = this.custId;
-    data['date'] = this.date;
-    data['batch_id'] = this.batchId;
-    data['attendance_status'] = this.attendanceStatus;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['cust_id'] = custId;
+    data['date'] = date;
+    data['batch_id'] = batchId;
+    data['attendance_status'] = attendanceStatus;
     return data;
   }
 }
@@ -909,12 +911,12 @@ class JoinSchedule {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['title'] = this.title;
-    data['plan_id'] = this.planId;
-    data['member_count'] = this.memberCount;
-    data['staff_id'] = this.staffId;
-    data['item_Description'] = this.itemDescription;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['plan_id'] = planId;
+    data['member_count'] = memberCount;
+    data['staff_id'] = staffId;
+    data['item_Description'] = itemDescription;
     return data;
   }
 }

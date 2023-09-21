@@ -1,3 +1,5 @@
+import 'package:rising_gym/core/util/calculations/calculation.dart';
+
 class Scedule {
   int? id;
   String? title;
@@ -45,7 +47,7 @@ class Scedule {
         attaindence!.add(Attaindence.fromJson(v));
       });
     }
-    planId = json['plan_id'];
+    planId = json['plan_id'].toString().parseInt;
     trainername = json['staff_name'];
     room_id = json['room_id'];
     staffId = json['staff_id'];

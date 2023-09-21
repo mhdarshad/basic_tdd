@@ -301,73 +301,72 @@ class CheckOut extends StatelessWidget {
                       ),
                       FFButtonWidget(
                         onPressed: () async{
-                          showBottomSheet(context: context, builder: (context){
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                                  child: TabbyPresentationSnippet(
-                                    price: '${(planData?.itemPrice??0)+(trainerData?.itprRetlPrice??0)}',
-                                    currency: Currency.aed,
-                                    lang: Lang.en,
-                                  ),
-                                ),
-                                 const SizedBox(height: 24),
-                                 Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: TabbyCheckoutSnippet(
-                                    price: '${(planData?.itemPrice??0)+(trainerData?.itprRetlPrice??0)}',
-                                    currency: Currency.aed,
-                                    lang: Lang.en,
-                                  ),
-                                ),
-                                (false)?
-                                FFButtonWidget(
-                                  onPressed: () async{
-                                    // if(stored.userdata!=null){
-                                    //   TabbyWebView.showWebView(
-                                    //     context: context,
-                                    //     webUrl:(await sl<CheckoutEvent>().payTabby(data: CheckoutData(user:stored.userdata!, methode: PaymentMethode.tabby))).availableProducts.installments!.webUrl,
-                                    //     onResult: (WebViewResult resultCode) {
-                                    //       if (kDebugMode) {
-                                    //         print("Tabby response: ${resultCode.name}");
-                                    //       }
-                                    //     },
-                                    //   );
-                                    // }else{
-                                    //   CToast.toast(context, msg: "Some Thing Went Wrong We Suggest you To Re-Login").error;
-                                    // }
-
-                                  },
-                                  text: 'Proceed',
-                                  icon: Icon(
-                                    Icons.payment_sharp,
-                                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                                    size: 20,
-                                  ),
-                                  options: FFButtonOptions(
-                                    width: 160,
-                                    height: 50,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                      fontFamily: 'Outfit',
-                                      color:FlutterFlowTheme.of(context).secondaryBackground,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    elevation: 0,
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).alternate,
-                                      width: 2,
-                                    ),
-                                  ),
-                                ):const Text("Not Available"),
-                              ],
-                            );
-                          });
+                          // showBottomSheet(context: context, builder: (context){
+                          //   return Column(
+                          //     mainAxisSize: MainAxisSize.min,
+                          //     children: [
+                          //       Padding(
+                          //         padding: const EdgeInsets.symmetric(horizontal: 16),
+                          //         child: TabbyPresentationSnippet(
+                          //           price: '${(planData?.itemPrice??0)+(trainerData?.itprRetlPrice??0)}',
+                          //           currency: Currency.aed,
+                          //           lang: Lang.en,
+                          //         ),
+                          //       ),
+                          //        const SizedBox(height: 24),
+                          //        Padding(
+                          //         padding: const EdgeInsets.all(16),
+                          //         child: TabbyCheckoutSnippet(
+                          //           price: '${(planData?.itemPrice??0)+(trainerData?.itprRetlPrice??0)}',
+                          //           currency: Currency.aed,
+                          //           lang: Lang.en,
+                          //         ),
+                          //       ),
+                          //       FFButtonWidget(
+                          //         onPressed: () async{
+                          //           // if(stored.userdata!=null){
+                          //           //   TabbyWebView.showWebView(
+                          //           //     context: context,
+                          //           //     webUrl:(await sl<CheckoutEvent>().payTabby(data: CheckoutData(user:stored.userdata!, methode: PaymentMethode.tabby))).availableProducts.installments!.webUrl,
+                          //           //     onResult: (WebViewResult resultCode) {
+                          //           //       if (kDebugMode) {
+                          //           //         print("Tabby response: ${resultCode.name}");
+                          //           //       }
+                          //           //     },
+                          //           //   );
+                          //           // }else{
+                          //           //   CToast.toast(context, msg: "Some Thing Went Wrong We Suggest you To Re-Login").error;
+                          //           // }
+                          //
+                          //         },
+                          //         text: 'Proceed',
+                          //         icon: Icon(
+                          //           Icons.payment_sharp,
+                          //           color: FlutterFlowTheme.of(context).secondaryBackground,
+                          //           size: 20,
+                          //         ),
+                          //         options: FFButtonOptions(
+                          //           width: 160,
+                          //           height: 50,
+                          //           padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          //           iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                          //           color: Colors.grey,/*FlutterFlowTheme.of(context).primary,*/
+                          //           textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          //             fontFamily: 'Outfit',
+                          //             color:FlutterFlowTheme.of(context).secondaryBackground,
+                          //             fontSize: 16,
+                          //             fontWeight: FontWeight.w500,
+                          //           ),
+                          //           elevation: 0,
+                          //           borderSide: BorderSide(
+                          //             color: FlutterFlowTheme.of(context).alternate,
+                          //             width: 2,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   );
+                          // });
                         },
                         text: 'Tabby',
                         icon: const Icon(
@@ -379,7 +378,7 @@ class CheckOut extends StatelessWidget {
                           height: 50,
                           padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          color: FlutterFlowTheme.of(context).primary,
+                          color: Colors.grey,/*FlutterFlowTheme.of(context).primary,*/
                           textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                             fontFamily: 'Outfit',
                             color: Colors.white,
