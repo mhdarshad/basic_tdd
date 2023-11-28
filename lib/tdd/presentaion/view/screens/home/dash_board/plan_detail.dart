@@ -1,21 +1,17 @@
 import 'dart:ui';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rising_gym/rought_genrator.dart';
-import 'package:rising_gym/tdd/data/models/api/trainers/trainers_data.dart';
+import 'package:rising_gym/tdd/data/entities/api/trainers/trainers_data.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_icon_button.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
-import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_widgets.dart';
 import '../../../../../../injection_container.dart';
-import '../../../../../domain/entities/vx_store.dart';
+import '../../../../../domain/modle/vx_store.dart';
 import '../../../../modules/plan_trainer_data/plan_trainer_detail_consumer.dart';
 import '../../../../modules/plan_trainer_data/plan_trainer_detail_controller.dart';
-import '../../../../modules/update_trainer/updateTrainer_consumer.dart';
 import '../../../../modules/update_trainer/updateTrainer_controller.dart';
-import '../../../components/gym_page/select_trainer_container/select_trainer.dart';
 
 class PlanDetail extends StatefulWidget {
   final String? planId;

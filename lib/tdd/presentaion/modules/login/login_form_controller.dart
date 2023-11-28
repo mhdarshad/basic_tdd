@@ -3,7 +3,7 @@
 import 'package:rising_gym/core/cripto_algo.dart';
 import 'package:rising_gym/core/util/presentation/constants/ic_constants.dart';
 import 'package:rising_gym/rought_genrator.dart';
-import 'package:rising_gym/tdd/data/models/exception_modle.dart';
+import 'package:rising_gym/tdd/data/entities/exception_modle.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +17,7 @@ import '../../../../core/util/config/user_config.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../../core/util/presentation/flutter_flow/form_field_controller.dart';
 import '../../../../injection_container.dart';
-import '../../../data/models/api/user/user_data.dart';
+import '../../../data/entities/api/user/user_data.dart';
 import '../../../domain/repositories/repository_provider.dart';
 import '../../../domain/usecase/db/db_insert_usecase.dart';
 import '../../../domain/usecase/auth/user_login.dart';

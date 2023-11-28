@@ -6,8 +6,8 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/config/user_config.dart';
 import '../../../../injection_container.dart';
-import '../../../data/models/api/scdule/room_scedule.dart';
-import '../../../data/models/api/scdule/scedule_api.dart';
+import '../../../data/entities/api/scdule/room_scedule.dart';
+import '../../../data/entities/api/scdule/scedule_api.dart';
 import '../../repositories/repository_provider.dart';
 
 class RoomSceduleUseCase extends UseCase<RoomSceduels,Map<String,dynamic>>{

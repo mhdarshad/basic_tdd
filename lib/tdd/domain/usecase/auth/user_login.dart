@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/config/user_config.dart';
 import '../../../../injection_container.dart';
-import '../../../data/models/api/user/user_data.dart';
+import '../../../data/entities/api/user/user_data.dart';
 import '../../repositories/repository_provider.dart';
 
 class LoginUseCase extends UseCase<UserAcsessData,LoginData>{

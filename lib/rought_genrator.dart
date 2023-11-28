@@ -293,7 +293,7 @@
 // }
 //
 
-import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/domain/modle/vx_store.dart';
 import 'package:rising_gym/tdd/presentaion/view/components/gym_page/room_creation/room_select.dart';
 import 'package:rising_gym/tdd/presentaion/view/screens/home/home.dart';
 import 'package:flutter/cupertino.dart';

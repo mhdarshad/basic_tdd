@@ -14,7 +14,7 @@ import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../injection_container.dart';
-import '../../../tdd/domain/entities/vx_store.dart';
+import '../../../tdd/domain/modle/vx_store.dart';
 import '../config/user_config.dart';
 
 class Filemanager {

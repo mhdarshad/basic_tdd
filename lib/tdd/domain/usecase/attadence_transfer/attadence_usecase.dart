@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../core/error/failuers.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../data/models/api/trainers/trainers_data.dart';
+import '../../../data/entities/api/trainers/trainers_data.dart';
 import '../../repositories/repository_provider.dart';
 
 class AttaidenceUseCase extends UseCase<List<PersonalTrainerData>, Map<String,dynamic>>{

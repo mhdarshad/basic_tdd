@@ -1,13 +1,13 @@
 import 'package:rising_gym/core/usecases/usecase.dart';
-import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/domain/modle/vx_store.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
-import '../../../data/models/api/scdule/scedule_api.dart';
-import '../../../data/models/api/user/dash_board_date.dart';
-import '../../../data/models/api/user/dashboard_data.dart';
-import '../../../domain/entities/plans/subscribed_plans_listing.dart';
+import '../../../data/entities/api/scdule/scedule_api.dart';
+import '../../../data/entities/api/user/dash_board_date.dart';
+import '../../../data/entities/api/user/dashboard_data.dart';
+import '../../../domain/modle/plans/subscribed_plans_listing.dart';
 import '../../../domain/usecase/dashboard/dashboard_usecase.dart';
 import '../../../domain/usecase/scedule/scedule_usecase.dart';
 import '../../../domain/usecase/trainer/trainer_usecase.dart';

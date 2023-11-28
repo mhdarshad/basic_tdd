@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:rising_gym/core/usecases/usecase.dart';
-import 'package:rising_gym/tdd/data/models/api/invoice/purchase_invoce_data.dart';
-import 'package:rising_gym/tdd/data/models/api/user/plans_data.dart';
-import 'package:rising_gym/tdd/data/models/db/users.dart';
+import 'package:rising_gym/tdd/data/entities/api/invoice/purchase_invoce_data.dart';
+import 'package:rising_gym/tdd/data/entities/api/user/plans_data.dart';
+import 'package:rising_gym/tdd/data/entities/db/users.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paytabs_bridge/BaseBillingShippingInfo.dart';
@@ -18,9 +18,9 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../../rought_genrator.dart';
-import '../../../data/models/api/trainers/trainers_data.dart';
-import '../../../data/models/api/user/user_data.dart';
-import '../../../domain/entities/vx_store.dart';
+import '../../../data/entities/api/trainers/trainers_data.dart';
+import '../../../data/entities/api/user/user_data.dart';
+import '../../../domain/modle/vx_store.dart';
 import '../../../domain/usecase/dashboard/dashboard_usecase.dart';
 import 'transaction_sucsess_controller.dart';
 class CheckoutEvent extends LogicHandler<DashBoardUseCase, CheckoutData>{

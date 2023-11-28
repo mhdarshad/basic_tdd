@@ -1,7 +1,7 @@
 
 import 'package:equatable/equatable.dart';
 
-import '../../tdd/data/models/exception_modle.dart';
+import '../../tdd/data/entities/exception_modle.dart';
 
 abstract class Failure extends Equatable{
   List properties;

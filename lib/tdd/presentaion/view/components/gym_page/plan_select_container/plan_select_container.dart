@@ -5,7 +5,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../injection_container.dart';
-import '../../../../../domain/entities/vx_store.dart';
+import '../../../../../domain/modle/vx_store.dart';
 import '../../../../modules/plans/plans_list_consumer.dart';
 import '../../../../modules/plans/plans_list_controller.dart';
 import '../../../widgets/cards/project_plans_card.dart';

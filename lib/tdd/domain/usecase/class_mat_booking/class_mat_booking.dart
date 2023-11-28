@@ -5,11 +5,11 @@ import '../../../../core/error/failuers.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/config/user_config.dart';
 import '../../../../injection_container.dart';
-import '../../../data/models/api/scdule/mat_data_scedule.dart';
-import '../../../data/models/api/scdule/scedule_api.dart';
-import '../../../data/models/api/user/dash_board_date.dart';
-import '../../../data/models/api/user/dashboard_data.dart';
-import '../../../data/models/api/user/plans_data.dart';
+import '../../../data/entities/api/scdule/mat_data_scedule.dart';
+import '../../../data/entities/api/scdule/scedule_api.dart';
+import '../../../data/entities/api/user/dash_board_date.dart';
+import '../../../data/entities/api/user/dashboard_data.dart';
+import '../../../data/entities/api/user/plans_data.dart';
 import '../../repositories/repository_provider.dart';
 
 class MatDetailesSceduleUseCase extends UseCase<List<SceduleMat>,String>{

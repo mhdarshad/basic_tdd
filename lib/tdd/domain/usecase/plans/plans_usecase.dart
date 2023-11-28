@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../core/error/failuers.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../data/models/api/user/plans_data.dart';
+import '../../../data/entities/api/user/plans_data.dart';
 import '../../repositories/repository_provider.dart';
 
 class PlansUseCase extends UseCase<List<PlanDatas>,NoPrams>{

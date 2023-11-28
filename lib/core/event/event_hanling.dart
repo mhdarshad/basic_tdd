@@ -1,6 +1,6 @@
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../tdd/domain/entities/vx_store.dart';
+import '../../tdd/domain/modle/vx_store.dart';
 import '../../tdd/presentaion/modules/notifier/error/error_notifier_controller.dart';
 import '../error/failuers.dart';
 

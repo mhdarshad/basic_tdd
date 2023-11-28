@@ -4,8 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../core/data/hive_db.dart';
-import '../models/modle_entities.dart';
-import '../models/repository_modle.dart';
+import '../entities/modle_entities.dart';
+import '../entities/repository_modle.dart';
 
 
 abstract class LocalDataSource{

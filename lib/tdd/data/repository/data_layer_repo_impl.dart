@@ -12,8 +12,8 @@ import '../../domain/repositories/repository_provider.dart';
 import '../datasource/local_data_source.dart';
 import '../datasource/remote_data_sources.dart';
 
-import '../models/exception_modle.dart';
-import '../models/repository_modle.dart';
+import '../entities/exception_modle.dart';
+import '../entities/repository_modle.dart';
 
 typedef GetRequest = Future<RepositoryModel> Function();
 class DataLayerRepositoryImpl implements DependencyRepostProvider<dynamic>{

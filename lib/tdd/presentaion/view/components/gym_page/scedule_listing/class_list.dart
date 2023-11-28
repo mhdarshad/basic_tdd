@@ -1,13 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:rising_gym/rought_genrator.dart';
-import 'package:rising_gym/tdd/data/models/api/scdule/scedule_api.dart';
+import 'package:rising_gym/tdd/data/entities/api/scdule/scedule_api.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/usecases/usecase.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../injection_container.dart';
-import '../../../../../domain/entities/plans/subscribed_plans_listing.dart';
-import '../../../../../domain/entities/vx_store.dart';
+import '../../../../../domain/modle/plans/subscribed_plans_listing.dart';
+import '../../../../../domain/modle/vx_store.dart';
 import '../../../../modules/scedule/scedule_consumer.dart';
 import '../../../../modules/scedule/scedule_controller.dart';
 

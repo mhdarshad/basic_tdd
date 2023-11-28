@@ -1,12 +1,12 @@
 // import 'package:rising_gym/core/data/hive_db.dart';
 // import 'package:rising_gym/core/error/failuers.dart';
-// import 'package:rising_gym/tdd/data/models/db/business.dart';
+// import 'package:rising_gym/tdd/data/entities/db/business.dart';
 //
 // import 'package:dartz/dartz.dart';
 //
 // import '../../../../core/usecases/usecase.dart';
-// import '../../../data/models/api/user/user_data.dart';
-// import '../../../data/models/db/users.dart';
+// import '../../../data/entities/api/user/user_data.dart';
+// import '../../../data/entities/db/users.dart';
 // import '../../repositories/repository_provider.dart';
 //
 // class DBInsertUseCase extends UseCase<bool,UserAcsessData>{

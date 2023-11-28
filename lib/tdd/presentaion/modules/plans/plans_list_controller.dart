@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
-import '../../../data/models/api/user/plans_data.dart';
+import '../../../data/entities/api/user/plans_data.dart';
 import '../../../domain/usecase/auth/user_login.dart';
 import '../../../domain/usecase/plans/plans_usecase.dart';
 class   PlansListEvent extends LogicHandler<PlansUseCase, NoPrams>{

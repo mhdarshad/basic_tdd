@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:rising_gym/core/controller/json_controller/json_save.dart';
 import 'package:rising_gym/core/data/hive_db.dart';
 import 'package:rising_gym/core/error/failuers.dart';
-import 'package:rising_gym/tdd/data/models/exception_modle.dart';
+import 'package:rising_gym/tdd/data/entities/exception_modle.dart';
 
 import 'package:dartz/dartz.dart';
 

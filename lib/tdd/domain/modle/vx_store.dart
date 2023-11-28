@@ -1,18 +1,18 @@
 
 
-import 'package:rising_gym/tdd/data/models/api/invoice/purchase_invoce_data.dart';
-import 'package:rising_gym/tdd/data/models/api/pland/plans_trainer_data.dart';
-import 'package:rising_gym/tdd/data/models/api/scdule/room_scedule.dart';
-import 'package:rising_gym/tdd/data/models/api/scdule/scedule_api.dart';
-import 'package:rising_gym/tdd/data/models/api/trainers/trainers_data.dart';
-import 'package:rising_gym/tdd/data/models/api/user/dashboard_data.dart';
-import 'package:rising_gym/tdd/data/models/api/user/plans_data.dart';
+import 'package:rising_gym/tdd/data/entities/api/invoice/purchase_invoce_data.dart';
+import 'package:rising_gym/tdd/data/entities/api/pland/plans_trainer_data.dart';
+import 'package:rising_gym/tdd/data/entities/api/scdule/room_scedule.dart';
+import 'package:rising_gym/tdd/data/entities/api/scdule/scedule_api.dart';
+import 'package:rising_gym/tdd/data/entities/api/trainers/trainers_data.dart';
+import 'package:rising_gym/tdd/data/entities/api/user/dashboard_data.dart';
+import 'package:rising_gym/tdd/data/entities/api/user/plans_data.dart';
 import 'package:rising_gym/tdd/presentaion/modules/product/product_consumer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../data/models/api/scdule/mat_data_scedule.dart';
-import '../../data/models/api/user/dash_board_date.dart';
-import '../../data/models/api/user/user_data.dart';
+import '../../data/entities/api/scdule/mat_data_scedule.dart';
+import '../../data/entities/api/user/dash_board_date.dart';
+import '../../data/entities/api/user/user_data.dart';
 import 'plans/subscribed_plans_listing.dart';
 
 

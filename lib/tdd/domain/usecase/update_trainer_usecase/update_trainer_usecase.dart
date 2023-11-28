@@ -1,5 +1,5 @@
 import 'package:rising_gym/core/util/config/user_config.dart';
-import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/domain/modle/vx_store.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_paytabs_bridge/BaseBillingShippingInfo.dart';
@@ -13,8 +13,8 @@ import '../../../../core/error/failuers.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/presentation/flutter_flow/flutter_flow_util.dart';
 import '../../../../injection_container.dart';
-import '../../../data/models/api/invoice/purchase_invoce_data.dart';
-import '../../../data/models/api/trainers/trainers_data.dart';
+import '../../../data/entities/api/invoice/purchase_invoce_data.dart';
+import '../../../data/entities/api/trainers/trainers_data.dart';
 import '../../../presentaion/modules/update_trainer/updateTrainer_controller.dart';
 import '../../repositories/repository_provider.dart';
 

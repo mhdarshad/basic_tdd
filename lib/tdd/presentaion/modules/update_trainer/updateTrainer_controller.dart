@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
-import '../../../data/models/api/trainers/trainers_data.dart';
+import '../../../data/entities/api/trainers/trainers_data.dart';
 import '../../../domain/usecase/update_trainer_usecase/update_trainer_usecase.dart';
 
 class UpdatetrainerEvent

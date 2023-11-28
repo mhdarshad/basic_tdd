@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rising_gym/rought_genrator.dart';
-import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/domain/modle/vx_store.dart';
 import 'package:rising_gym/tdd/presentaion/modules/trainer/trainer_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_icon_button.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../injection_container.dart';
-import '../../../../../data/models/api/trainers/trainers_data.dart';
+import '../../../../../data/entities/api/trainers/trainers_data.dart';
 import '../../../../modules/trainer/trainer_consumer.dart';
 
   class SelectTrainer extends StatelessWidget {

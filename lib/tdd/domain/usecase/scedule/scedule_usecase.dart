@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/config/user_config.dart';
 import '../../../../injection_container.dart';
-import '../../../data/models/api/scdule/scedule_api.dart';
+import '../../../data/entities/api/scdule/scedule_api.dart';
 import '../../../presentaion/modules/scedule/scedule_controller.dart';
 import '../../repositories/repository_provider.dart';
 

@@ -1,5 +1,5 @@
 // import 'package:rising_gym/core/util/calculations/calculation.dart';
-// import 'package:rising_gym/tdd/data/models/api/scdule/scedule_api.dart';
+// import 'package:rising_gym/tdd/data/entities/api/scdule/scedule_api.dart';
 //
 // import '../../db/customer.dart';
 // import 'user_data.dart';

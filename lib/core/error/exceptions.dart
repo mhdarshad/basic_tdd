@@ -1,4 +1,4 @@
-import '../../tdd/data/models/exception_modle.dart';
+import '../../tdd/data/entities/exception_modle.dart';
 
 class ServerExceptions implements Exception{
   int? code;

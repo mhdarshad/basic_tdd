@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:rising_gym/core/error/exceptions.dart';
 import 'package:rising_gym/core/usecases/usecase.dart';
-import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/domain/modle/vx_store.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +18,7 @@ import '../../../../core/util/config/user_config.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../../core/util/presentation/flutter_flow/flutter_flow_util.dart';
 import '../../../../injection_container.dart';
-import '../../../data/models/api/user/plans_data.dart';
+import '../../../data/entities/api/user/plans_data.dart';
 import '../../../domain/usecase/genrateInvoice/trainer_usecase.dart';
 import '../../view/widgets/dateTime/time_picker.dart';
 typedef UseCaseData = GenrateInvoiceUseCase;

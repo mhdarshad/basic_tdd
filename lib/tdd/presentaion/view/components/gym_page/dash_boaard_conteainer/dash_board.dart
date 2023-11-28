@@ -3,14 +3,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rising_gym/core/usecases/usecase.dart';
 import 'package:rising_gym/rought_genrator.dart';
-import 'package:rising_gym/tdd/data/models/api/scdule/scedule_api.dart';
-import 'package:rising_gym/tdd/data/models/api/user/dashboard_data.dart';
+import 'package:rising_gym/tdd/data/entities/api/scdule/scedule_api.dart';
+import 'package:rising_gym/tdd/data/entities/api/user/dashboard_data.dart';
 import 'package:rising_gym/tdd/presentaion/view/screens/home/home_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../injection_container.dart';
-import '../../../../../data/models/api/user/dash_board_date.dart';
+import '../../../../../data/entities/api/user/dash_board_date.dart';
 import '../../../../modules/dashboard/dashboard_consumer.dart';
 import '../../../../modules/dashboard/dashboard_controller.dart';
 

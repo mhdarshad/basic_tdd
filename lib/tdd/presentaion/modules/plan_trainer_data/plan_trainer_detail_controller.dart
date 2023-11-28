@@ -1,4 +1,4 @@
-import 'package:rising_gym/tdd/data/models/api/pland/plans_trainer_data.dart';
+import 'package:rising_gym/tdd/data/entities/api/pland/plans_trainer_data.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../core/event/event_hanling.dart';

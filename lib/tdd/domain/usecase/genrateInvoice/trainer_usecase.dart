@@ -1,4 +1,4 @@
-import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/domain/modle/vx_store.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 
@@ -21,7 +21,7 @@ class GenrateInvoiceUseCase extends UseCase<bool,Map<String,dynamic>>{
       if (kDebugMode) {
         print(r);
       }
-      return  Right(true);
+      return  const Right(true);
     });
   }
 }

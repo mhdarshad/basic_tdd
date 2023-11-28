@@ -1,10 +1,10 @@
-import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/domain/modle/vx_store.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../core/error/failuers.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../data/models/api/pland/plans_trainer_data.dart';
+import '../../../data/entities/api/pland/plans_trainer_data.dart';
 import '../../repositories/repository_provider.dart';
 
 class PlanTrainerDetailUseCase extends UseCase<PlansAndTrainerData,String>{

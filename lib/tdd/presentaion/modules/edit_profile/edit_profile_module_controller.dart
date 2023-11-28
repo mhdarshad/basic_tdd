@@ -7,9 +7,9 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
-import '../../../domain/entities/contry_data.dart';
-import '../../../domain/entities/edit_profile/edit_profile_modle.dart';
-import '../../../domain/entities/vx_store.dart';
+import '../../../domain/modle/contry_data.dart';
+import '../../../domain/modle/edit_profile/edit_profile_modle.dart';
+import '../../../domain/modle/vx_store.dart';
 import '../../../domain/usecase/edit_profile/edit_profile_usecase.dart';
 enum EditMethode{
   personal,professional, emiratesid

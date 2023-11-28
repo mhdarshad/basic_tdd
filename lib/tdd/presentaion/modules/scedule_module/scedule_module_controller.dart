@@ -7,7 +7,7 @@ import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/config/user_config.dart';
 import '../../../../core/util/presentation/Events/logic_event_handler.dart';
 import '../../../../injection_container.dart';
-import '../../../data/models/api/scdule/scedule_api.dart';
+import '../../../data/entities/api/scdule/scedule_api.dart';
 import '../../../domain/repositories/repository_provider.dart';
 
 class SceduleModuleEvent

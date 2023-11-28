@@ -10,7 +10,7 @@ import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_icon_
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_widgets.dart';
 import '../../../../../../injection_container.dart';
-import '../../../../../domain/entities/vx_store.dart';
+import '../../../../../domain/modle/vx_store.dart';
 import '../../../../modules/genrateInvoice/genrate_Invoice_consumer.dart';
 import '../../../../modules/genrateInvoice/genrate_Invoice_controller.dart';
 

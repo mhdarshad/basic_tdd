@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../core/event/event_hanling.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../data/models/api/user/user_data.dart';
+import '../../../data/entities/api/user/user_data.dart';
 import '../../../domain/usecase/db/db_config_usecase.dart';
 import '../../../domain/usecase/db/db_insert_usecase.dart';
 import '../notifier/error/error_notifier_controller.dart';

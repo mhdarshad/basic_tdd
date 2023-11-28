@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/config/user_config.dart';
 import '../../../../injection_container.dart';
-import '../../entities/edit_profile/edit_profile_modle.dart';
+import '../../modle/edit_profile/edit_profile_modle.dart';
 import '../../repositories/repository_provider.dart';
 
 class EditProfileModuleUseCase {

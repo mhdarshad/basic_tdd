@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/vx_store.dart';
+import '../../../domain/modle/vx_store.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../room_scedule/room_scedule_controller.dart';
 import '../trainer/trainer_controller.dart';

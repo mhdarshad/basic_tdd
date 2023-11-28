@@ -12,7 +12,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_util.dart';
 import '../../../../../injection_container.dart';
-import '../../../../domain/entities/vx_store.dart';
+import '../../../../domain/modle/vx_store.dart';
 import '../../../modules/mat_details_for_scedule/mat_detailes_scedule_consumer.dart';
 import '../../../modules/mat_details_for_scedule/mat_detailes_scedule_controller.dart';
 import '../../../modules/scedule/scedule_consumer.dart';

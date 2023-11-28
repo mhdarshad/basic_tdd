@@ -6,9 +6,9 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../injection_container.dart';
 import '../../../../../rought_genrator.dart';
-import '../../../../data/models/api/scdule/room_scedule.dart';
-import '../../../../data/models/api/scdule/scedule_api.dart';
-import '../../../../domain/entities/vx_store.dart';
+import '../../../../data/entities/api/scdule/room_scedule.dart';
+import '../../../../data/entities/api/scdule/scedule_api.dart';
+import '../../../../domain/modle/vx_store.dart';
 import '../../../modules/room_scedule/room_scedule_controller.dart';
 import '../../screens/home/home_controller.dart';
 

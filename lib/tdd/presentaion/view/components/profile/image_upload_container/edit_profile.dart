@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:rising_gym/core/helper/toast_builder/toast_controller.dart';
 import 'package:rising_gym/core/usecases/usecase.dart';
 import 'package:rising_gym/rought_genrator.dart';
-import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/domain/modle/vx_store.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +17,7 @@ import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_icon_
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_widgets.dart';
 import '../../../../../../injection_container.dart';
-import '../../../../../domain/entities/contry_data.dart';
+import '../../../../../domain/modle/contry_data.dart';
 import '../../../../modules/edit_profile/edit_profile_module_consumer.dart';
 import '../../../../modules/edit_profile/edit_profile_module_controller.dart';
 

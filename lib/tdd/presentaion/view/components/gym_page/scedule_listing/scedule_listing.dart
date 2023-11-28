@@ -10,7 +10,7 @@ import 'package:rising_gym/core/util/calculations/convert.dart';
 import 'package:rising_gym/core/util/presentation/flutter_flow/flutter_flow_util.dart';
 import 'package:rising_gym/core/util/presentation/template/custom_scafold.dart';
 import 'package:rising_gym/rought_genrator.dart';
-import 'package:rising_gym/tdd/domain/entities/vx_store.dart';
+import 'package:rising_gym/tdd/domain/modle/vx_store.dart';
 import 'package:rising_gym/tdd/presentaion/modules/scedule/scedule_consumer.dart';
 import 'package:rising_gym/tdd/presentaion/modules/scedule/scedule_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -22,7 +22,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../../../core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import '../../../../../../injection_container.dart';
-import '../../../../../domain/entities/contry_data.dart';
+import '../../../../../domain/modle/contry_data.dart';
 import '../../../../modules/edit_profile/edit_profile_module_controller.dart';
 import '../../../../modules/scedule_module/scedule_module_controller.dart';
 import '../../../widgets/calender_view/calender_page/controller/calender_controller.dart';

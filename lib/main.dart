@@ -15,7 +15,7 @@ import 'core/util/presentation/flutter_flow/flutter_flow_theme.dart';
 import 'injection_container.dart' as di;
 import 'generated/l10n.dart';
 import 'rought_genrator.dart';
-import 'tdd/domain/entities/vx_store.dart';
+import 'tdd/domain/modle/vx_store.dart';
 
 void main() async{
 

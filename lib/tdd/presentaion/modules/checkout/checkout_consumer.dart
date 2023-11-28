@@ -2,7 +2,7 @@ import 'package:rising_gym/rought_genrator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/vx_store.dart';
+import '../../../domain/modle/vx_store.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'checkout_controller.dart';
 import 'transaction_sucsess_controller.dart';

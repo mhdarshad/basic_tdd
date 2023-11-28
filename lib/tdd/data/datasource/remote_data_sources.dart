@@ -13,8 +13,8 @@ import '../../../core/util/config/user_config.dart';
 import '../../../core/util/presentation/constants/ic_constants.dart';
 import '../../../injection_container.dart';
 import '../../domain/repositories/repository_provider.dart';
-import '../models/exception_modle.dart';
-import '../models/repository_modle.dart';
+import '../entities/exception_modle.dart';
+import '../entities/repository_modle.dart';
 
 abstract class RemoteDataSource{
   Future<RepositoryModel> getRequest(Params param);

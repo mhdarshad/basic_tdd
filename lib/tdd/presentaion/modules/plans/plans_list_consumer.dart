@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/vx_store.dart';
+import '../../../domain/modle/vx_store.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'plans_list_controller.dart';
 

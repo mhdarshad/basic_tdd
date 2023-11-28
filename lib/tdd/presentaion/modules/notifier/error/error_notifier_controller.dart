@@ -1,4 +1,4 @@
-import '../../../../domain/entities/vx_store.dart';
+import '../../../../domain/modle/vx_store.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ErrorNotifierMutation extends VxMutation<ProjectStore>  {
