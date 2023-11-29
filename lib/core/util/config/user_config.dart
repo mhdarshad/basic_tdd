@@ -6,8 +6,10 @@ import '../../../injection_container.dart';
 class Configration{
   String? dbType;
   Map<String,dynamic>? dbData ;
-  String? tocken;
-  String? get custTocken=>sl<SharedPreferences>().getString(SFkeys.token.toString());//
-  String? custId;
-  int? get cid =>sl<SharedPreferences>().getInt(SFkeys.ID);
+  String? get deviceId => sf.getString(SFkeys.DEVICE_ID.toString());
+  SharedPreferences sf;
+  Configration(this.sf);
+  String? get custTocken=>sf.getString(SFkeys.token.toString());//
+  String?  get custId => sf.getString(SFkeys.UID);
+  int? get cid =>sf.getInt(SFkeys.UID);
 }

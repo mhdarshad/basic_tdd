@@ -24,7 +24,7 @@ import '../../../domain/usecase/auth/user_login.dart';
 import '../database_module/do_congig_module.dart';
 import 'login_form_interfrence.dart';
 
-class   GetUserController extends LogicHandler<LoginUseCase, LoginData> with GetUserInterference{
+class   GetUserController extends LogicHandler<LoginUseCase, LoginData> {
   LoginUseCase usecase;
   OtpUseCase verifyOtpUseCase;
   SingUpUseCase signUpUseCase;
@@ -158,14 +158,12 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
                 final UserAcsessData result = UserAcsessData.fromJson(r);
                 // sl<Configration>().custTocken = r['customer_auth'].toString().encript;
                 sl<SharedPreferences>().setString(SFkeys.token, result.customerAuth?.encript??'');
-                sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer?.id??0);
+                // sl<SharedPreferences>().setInt(SFkeys.CLIENT_ID,  result.customer?.id??0);
                 // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
 
                 sl<SharedPreferences>().setString(SFkeys.UID, result.customerID.toString());
-                sl<Configration>().custId = result.customerID.toString();
                 sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
-                sl<Configration>().custId =r['customer_id'].toString();
-              });
+                sl<SharedPreferences>().setString(SFkeys.UID,r['customer_id']);              });
             }else{
               request.forEach((r) {
                 print("OTP Verified Success From API $r" );
@@ -175,7 +173,7 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
             }
           }else{
             request.forEach((r) {
-              sl<SharedPreferences>().setInt(SFkeys.ID,  r['cus_id']);
+              // sl<SharedPreferences>().setInt(SFkeys.CLIENT_ID,  r['cus_id']);
               // sl<Configration>().cid = r['cus_id'];
               print("OTP Sent  :${r['cus_id']}");
               otpSent = true;
@@ -218,11 +216,10 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
           final UserAcsessData result = r;
           print("customer tocken on logibn: ${result.customerAuth}");
           sl<SharedPreferences>().setString(SFkeys.token, result.customerAuth?.encript??'');
-          sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer?.id??0);
+          // sl<SharedPreferences>().setInt(SFkeys.CLIENT_ID,  result.customer?.id??0);
           // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
 
           sl<SharedPreferences>().setString(SFkeys.UID, result.customerID.toString());
-          sl<Configration>().custId = result.customerID.toString();
           // sl<Configration>() = result.customerAuth?.encript;
           store?.userdata = result.customer;
         });
@@ -247,18 +244,17 @@ class GetUserEvents extends EventMutations<AuthParamsAbstarct> {
           final UserAcsessData result = r;
           // sl<Configration>().custTocken = result.customerAuth?.encript;
           sl<SharedPreferences>().setString(SFkeys.token, result.customerAuth?.encript??'');
-          sl<SharedPreferences>().setInt(SFkeys.ID,  result.customer?.id??0);
+          // sl<SharedPreferences>().setString(SFkeys.CLIENT_ID,  result.customer?.id??0);
           // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
 
           sl<SharedPreferences>().setString(SFkeys.UID, result.customerID.toString());
-          sl<Configration>().custId = result.customerID.toString();
           // sl<SharedPreferences>().setString(SFkeys.token,r['customer_auth'].toString().encript);
           // sl<Configration>().cid = result.customer.id;
           store?.userdata = result.customer;
         });
       } else{
         // sl<Configration>().cid = null;
-        sl<SharedPreferences>().remove(SFkeys.ID,);
+        // sl<SharedPreferences>().remove(SFkeys.CLIENT_ID,);
 
         errorToast("Phone number already registered");
         // throw ServerExceptions(400,ExceptiomModle(message: "Phone number already registered",errors: {}));

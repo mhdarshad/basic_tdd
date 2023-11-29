@@ -5,10 +5,11 @@ import 'package:mysql1/mysql1.dart';
 import '../../tdd/domain/usecase/db/db_config_usecase.dart';
 import '../../tdd/domain/usecase/db/db_insert_usecase.dart';
 import '../controller/json_controller/json_save.dart';
+import 'dependecy_abstact_db.dart';
 
-abstract class DBBaseFunctions{
+abstract class DBBaseFunctions extends DBConstruct{
   final String _dbname;
-  const DBBaseFunctions(String dbname):_dbname = dbname;
+  DBBaseFunctions(String dbname):_dbname = dbname;
   fetchAll();
   updateAll(List<Map<String, dynamic>> data);
   updateWhere(List<Map<String, dynamic>> data,String where);

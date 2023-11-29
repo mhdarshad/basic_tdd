@@ -90,28 +90,55 @@ _bloc(){
     environment: Environment.production, // Or use Environment.production
   );
 
-  // sl.registerFactory(() => GetUserController(LoginUseCase( repo: sl(),),));
-  // sl.registerFactory(() => RegisterEvent(RegisterUseCase(sll()),));
-  // sl.registerFactory(() => RegisterBloc(customerRegisterUsecase: CustomerRegisterUsecase(repo: sll()), checkEmailUsecase: CheckEmailUsecase(repo: sll()), checkMobileUsecase: CheckMobileUsecase(repo: sll()),
-  // ));
-  // sl.registerFactory(() => LoyaltyBloc(getLoyaltyUsecase: GetLoyaltyUsecase(sll(),), checkLoyaltyUsecase: CheckLoyaltyUsecase( DataLayerRepositoryImpl (
-  //   remoteDataSource:  RemoteDataSourceImpl(client: sl()),
-  //   localDataSource: LocalDataSourceImpl(sharedPreferences: sl()),
-  //   networkInfo: NetworkInfoImpl(sl()),
-  // ),),
-  // ));
-  // //Bloc
-  // sl.registerFactory(() => CategoryBloc(GetCategory( sll()),));//Bloc
-  // sl.registerFactory(() => SubcategoryBloc(GetSubCategory( sll()),));//Bloc
-  // sl.registerFactory(() => ProductBloc(GetCategoryProduct( sll()),));//Bloc
-  // sl.registerFactory(() => MyShopBloc(GetShopUseCase( repo:  sll(),),));//Bloc
-  //   sl.registerFactory(() => CartItemBloc(CartItemUseCase( sll()),));//Bloc
-  //   // sl.registerFactory(() => CartItemBloc(CartItemUseCase( sll()),));//Bloc
-  //     sl.registerFactory(() => CheckOutBloc(CheckOutUsecase( sll()),));
-  // sl.registerFactory(() => UserProfileBloc(profileUserUsecase:GetProfileCustomerUcase(repo:  sll()),),);
-  // sl.registerFactory(() => SearchBloc(searchUserrUsecase:SearchUserUsecase(repo:  sll()), searchProductUsecase: SearchProductUsecase(repo:  sll()),),);//Bloc/Bloc
 }
-
+_external()async {
+  //! External
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+  //
+  // Hive.registerAdapter(ModelEntitiesAdapter() );
+  // await sl<SQLDBFunctions>().initilaize(DBType.sqlfite);
+  ///Get DB data from CI \ CD Methode if no CI\ CD than take from Json
+  final userDbConfig = Config.stgConstants[Config.DB_DATA] ?? await JsonSave.getJsonData(JsonDatakey.db_config);
+  debugPrint(userDbConfig.toString());
+  /// Getting the Configuration File from Local Json File
+  sl<Configration>().dbData = userDbConfig!=null?userDbConfig is String?jsonDecode(userDbConfig):userDbConfig:null;
+  /// Checking the Configuration File Exist
+  sl<SharedPreferences>().setString(SFkeys.DEVICE_ID,  const String.fromEnvironment(Config.CLIENT_ID)) ;
+  if (kDebugMode) {
+    print("Token: ${sl<Configration>().deviceId}");
+  }
+  if(sl<SharedPreferences>().containsKey(SFkeys.token)){
+    sl<SharedPreferences>().getString(SFkeys.token);
+  }
+  if(sl<Configration>().dbData!=null){
+    /// Providing the table name to fetch from SQL
+    sl<Configration>().dbType = sl<Configration>().dbData!['db_type'];
+    sl<SQLDBFunctions>().tablename = 'business';
+    try {
+      await sl<SQLDBFunctions>().initilaize(sl<Configration>().dbType!,DBConnectionParams.fromJson(sl<Configration>().dbData!));
+    } catch (e) {
+      await JsonSave.deleteFile('db_config');
+      debugPrint(e.toString());
+    }
+    try {
+      /// fetching the Business table which has already Provided in [sl<SQLDBFunctions>().tablename]
+      final data = await sl<SQLDBFunctions>().fetchAll();
+      /// getting the token and Adding in Json Configuration File
+      sl<SharedPreferences>().setString(SFkeys.DEVICE_ID,  const String.fromEnvironment(Config.CLIENT_ID)) ;
+      if (kDebugMode) {
+        print("Token: ${sl<Configration>().deviceId}");
+      }
+    } on Exception catch (e) {
+      //TODO: Need Log Implementation
+      debugPrint('Need Login');
+    }
+  }else{
+    //TODO: Need Log Implementation
+    debugPrint('Need Configuration');
+  }
+  // sl.registerLazySingleton<SQLDBFunctions>(() => init);
+}
 // _repo(){
 //   sl.registerLazySingleton<DependencyRepostProvider<Map<String,dynamic>>>(
 //         () => DataLayerRepositoryImpl(
@@ -139,70 +166,14 @@ _core(){
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
   sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => DataConnectionChecker());
-  sl.registerLazySingleton<Configration>(() => Configration());
+  sl.registerLazySingleton<Configration>(() => Configration(sl()));
 }
-_external()async {
-  //! External
-  final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
-  //
-  // Hive.registerAdapter(ModelEntitiesAdapter() );
-  // await sl<SQLDBFunctions>().initilaize(DBType.sqlfite);
-  ///Get DB data from CI \ CD Methode if no CI\ CD than take from Json
-  final userDbConfig = Config.stgConstants[Config.DB_DATA] ?? await JsonSave.getJsonData(JsonDatakey.db_config);
-  debugPrint(userDbConfig.toString());
-  /// Getting the Configuration File from Local Json File
-  sl<Configration>().dbData = userDbConfig!=null?userDbConfig is String?jsonDecode(userDbConfig):userDbConfig:null;
-  /// Checking the Configuration File Exist
-     sl<Configration>().tocken = const String.fromEnvironment(Config.CLIENT_ID).encript;
-  if (kDebugMode) {
-    print("Token: ${sl<Configration>().tocken}");
-  }
-  if(sl<SharedPreferences>().containsKey(SFkeys.token)){
-     sl<SharedPreferences>().getString(SFkeys.token);
-  }
-  if(sl<SharedPreferences>().containsKey(SFkeys.UID)){
-    sl<Configration>().custId =  sl<SharedPreferences>().getString(SFkeys.UID);
-  }
-  if(sl<Configration>().dbData!=null){
-    /// Providing the table name to fetch from SQL
-    sl<Configration>().dbType = sl<Configration>().dbData!['db_type'];
-    sl<SQLDBFunctions>().tablename = 'business';
-    try {
-      await sl<SQLDBFunctions>().initilaize(sl<Configration>().dbType!,DBConnectionParams.fromJson(sl<Configration>().dbData!));
-    } catch (e) {
-      await JsonSave.deleteFile('db_config');
-      debugPrint(e.toString());
-    }
-    try {
-      /// fetching the Business table which has already Provided in [sl<SQLDBFunctions>().tablename]
-      final data = await sl<SQLDBFunctions>().fetchAll();
-      /// getting the token and Adding in Json Configuration File
-      sl<Configration>().tocken = const String.fromEnvironment(Config.CLIENT_ID);
-      if (kDebugMode) {
-        print("Token: ${sl<Configration>().tocken}");
-      }
-    } on Exception catch (e) {
-      //TODO: Need Log Implementation
-      debugPrint('Need Login');
-    }
-  }else{
-    //TODO: Need Log Implementation
-    debugPrint('Need Configuration');
-  }
-  // sl.registerLazySingleton<SQLDBFunctions>(() => init);
-}
+
 sll(){
   sl.registerLazySingleton<DependencyRepostProvider<dynamic>>(() => DataLayerRepositoryImpl (
-    remoteDataSource:  sl<RemoteDataSource>(),
-    localDataSource: sl<LocalDataSource>(),
-    networkInfo: sl<NetworkInfo>(),
-    sqlDataSourceImpl: sl<SQLDBFunctions>(),
+    remoteDataSource:  sl(),
+    localDataSource: sl(),
+    networkInfo: sl(),
+    sqlDataSourceImpl: sl(),
   ));
-  // sl.registerLazySingleton<DependencyRepostProvider>(() => DataLayerRepositoryImpl (
-  //   remoteDataSource:  sl<RemoteDataSource>(),
-  //   localDataSource: sl<LocalDataSource>(),
-  //   networkInfo: sl<NetworkInfo>(),
-  //   sqlDataSourceImpl: sl<SQLDBFunctions>(),
-  // ));
 }

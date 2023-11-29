@@ -322,7 +322,7 @@ class UserProfile extends StatelessWidget {
             },),
             ListIconButton(icon:Icons.logout,text:'LogOut',onClick:() async {
               sl<SharedPreferences>().remove(SFkeys.token);
-              sl<SharedPreferences>().remove(SFkeys.ID);
+              sl<SharedPreferences>().remove(SFkeys.DEVICE_ID);
               sl<SharedPreferences>().remove(SFkeys.UID);
            navigate.pushReplace(context, name: Routename.login);
             },),
