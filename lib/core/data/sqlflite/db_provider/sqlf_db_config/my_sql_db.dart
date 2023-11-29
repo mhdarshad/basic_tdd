@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:tekartik_common_utils/common_utils_import.dart';
 
-class MySqlDBProvider {
+mixin class MySqlDBProvider {
   final lock = Lock(reentrant: true);
   /// MySql DB Factory..
   late MySqlConnection conn;

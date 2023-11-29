@@ -112,7 +112,7 @@ class DataLayerRepositoryImpl implements DependencyRepostProvider<dynamic>{
         break;
     }
     // sqlDataSourceImpl.
-    print(await sqlDataSourceImpl.fetchAll());
+    // print(await sqlDataSourceImpl.fetchAll());
     return Right(sqlDataSourceImpl.fetchAll());
   }
 

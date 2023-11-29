@@ -293,7 +293,6 @@
 // }
 //
 
-import 'package:rising_gym/tdd/domain/modle/vx_store.dart';
 import 'package:rising_gym/tdd/presentaion/view/components/gym_page/room_creation/room_select.dart';
 import 'package:rising_gym/tdd/presentaion/view/screens/home/home.dart';
 import 'package:flutter/cupertino.dart';
@@ -301,6 +300,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'core/util/config/user_config.dart';
+import 'core/util/presentation/controller/navigation_route_controler.dart';
 import 'injection_container.dart';
 import 'tdd/presentaion/modules/edit_profile/edit_profile_module_controller.dart';
 import 'tdd/presentaion/view/components/gym_page/check_out/check_out.dart';
@@ -316,50 +316,40 @@ import 'tdd/presentaion/view/screens/auth/config/db_config_widget.dart';
 import 'tdd/presentaion/view/screens/auth/forget_password_container.dart';
 import 'tdd/presentaion/view/screens/auth/otp_login.dart';
 import 'tdd/presentaion/view/screens/home/dash_board/plan_detail.dart';
-
+export 'core/util/presentation/controller/navigation_route_controler.dart';
 enum Routename{
   home,login,checkout,editvenodreproduct,kyc, config, signup, form, trainers, paymentStatus, scedule, room, profile, planDetail, editprofile, officialDetails, editEmiratesid, sceduleDetais, resetPassword
 }
-extension ListToString on List<String> {
-  String toRequiredParamsString() {
-    var str = '';
-    for(var param in this) {
-      str += '/:$param';
-    }
-    print(str);
-    return str;
-  }
-}
 extension GoNavigations on Routename{
   CUri get nUri{
-    switch(this){
-      case Routename.home:return  CUri("home");
-      case Routename.login:return CUri("login");
-      case Routename.config:return CUri("config");
-      case Routename.kyc:  return  CUri("kyc");
-      case Routename.profile:  return  CUri("profile");
-      case Routename.checkout:return  CUri("checkout");
-      case Routename.editvenodreproduct: return  CUri("editvenodreproduct");
-      case Routename.signup: return  CUri("signup");
-      case Routename.form:return  CUri("form");
-      case Routename.trainers:return  CUri("trainer");
-      case Routename.paymentStatus:return CUri("status/payment");
-      case Routename.scedule:return CUri("schedules");
-      case Routename.room:return CUri("room");
-      case Routename.planDetail:return CUri("details/plan");
-      case Routename.editprofile:return CUri("edit/profile");
-      case Routename.officialDetails:return CUri("edit/professional");
-      case Routename.editEmiratesid:return CUri("edit/verification");
-      case Routename.sceduleDetais:return CUri('view/schedule');
-      case Routename.resetPassword:return CUri('password/reset');
-    }
+    return switch(this){
+      Routename.home => CUri("home"),
+      Routename.login => CUri("login"),
+      Routename.config => CUri("config"),
+      Routename.kyc => CUri("kyc"),
+      Routename.profile => CUri("profile"),
+      Routename.checkout => CUri("checkout"),
+      Routename.editvenodreproduct => CUri("editvenodreproduct"),
+      Routename.signup => CUri("signup"),
+      Routename.form => CUri("form"),
+      Routename.trainers => CUri("trainer"),
+      Routename.paymentStatus => CUri("status/payment"),
+      Routename.scedule => CUri("schedules"),
+      Routename.room => CUri("room"),
+      Routename.planDetail => CUri("details/plan"),
+      Routename.editprofile => CUri("edit/profile"),
+      Routename.officialDetails => CUri("edit/professional"),
+      Routename.editEmiratesid => CUri("edit/verification"),
+      Routename.sceduleDetais => CUri('view/schedule'),
+      Routename.resetPassword => CUri('password/reset')
+    };
   }
 }
 ///const toRequiredParamsString = (imEnd) => {
 ///   return Object.entries(imEnd).map(([key, value]) => `${key}=${value}`).join('&');
 /// };
-class PageControler{
-  static get routs =>[
+class PageControler extends RouterData{
+   get routs =>[
     GoRoute(path: '/',redirect: (_,__)=>"/${Routename.login.nUri.name}"),
     goRoute(Routename.login,(BuildContext context, GoRouterState state)=> Auth(key: state.pageKey,),routes: [
       goRoute(Routename.resetPassword,(BuildContext context, GoRouterState state)=> ForgetPasswordPage(key: state.pageKey,),isSubROught: true),
@@ -390,22 +380,6 @@ class PageControler{
 
   // Scaffold get CircularProgressIndicatore =>  Scaffold(appBar:AppBar(),body: const Center(child: CircularProgressIndicator()),);
 
-  ///A custom builder for this route.
-  /// For example:
-  ///goRoute(Routename.routname,(BuildContext context, GoRouterState state) => FamilyPage(
-  ///     families: Families.family(
-  ///       state.params['id'],
-  ///     ),
-  ///   ),
-  /// )
-
-  static GoRoute goRoute(Routename route,Widget Function(BuildContext context,
-      GoRouterState state) widget,
-      {List<String>? params, List<RouteBase>? routes,bool isSubROught = false}) => GoRoute(name:route.nUri.name,path: "${isSubROught?route.nUri.path.replaceFirst('/', ''):route.nUri.path}${(params??[]).toRequiredParamsString()}",routes:routes??const <RouteBase>[],builder: (BuildContext context, GoRouterState state) {
-    stored.pathParameters = state.pathParameters;
-    print(state.pathParameters);
-    return widget(context,state);
-  });
 }
 final router = GoRouter(
   redirect: (context,state){
@@ -429,90 +403,5 @@ final router = GoRouter(
   },
   initialLocation:"/login",
   debugLogDiagnostics:kDebugMode,
-  routes: PageControler.routs,
+  routes: PageControler().routs,
 );
-
-enum NavigatoreTyp{
-  push,pop,pushReplacment,popUntill,logedout
-}
-class CUri{
-  String uri;
-  CUri(this.uri);
-  String get name => uri;
-  String get path => '/$uri';
-}
-class Navigations {
-
-  push(BuildContext context,{required Routename name,Map<String, dynamic> parms = const <String, dynamic>{}, Map<String, dynamic> qparms = const <String, dynamic>{}}){
-    // if(parms!=null && qparms!=null){
-    //   Map<String,String> qparms1={};
-    //   qparms.forEach((key, value) {
-    //     if(value !=null){
-    //       qparms1.addAll({key:value.toString()});
-    //     }
-    //   });
-    //   context.pushNamed(nUri(name!).name,params: parms,queryParams: qparms1);
-    // }else if(parms!=null){
-    //   context.pushNamed(nUri(name!).name,params: parms);
-    // }else if(qparms!=null){
-    //   Map<String,String> qparms1={};
-    //   qparms.forEach((key, value) {
-    //     if(value !=null){
-    //       qparms1.addAll({key:value.toString()});
-    //     }
-    //   });
-    //   context.pushNamed(nUri(name!).name,queryParams: qparms1);
-    // }else{
-    //   context.pushNamed(nUri(name!).name);
-    // }
-    context.pushNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);
-  }
-
-  String getCurrentRoute(BuildContext context)=>
-      GoRouterState.of(context).uri.toString();
-
-  pushReplace(BuildContext context,{required Routename name,Map<String, dynamic> parms = const <String, dynamic>{}, Map<String, dynamic> qparms = const <String, dynamic>{}})=>
-      context.pushReplacementNamed(name.nUri.name,pathParameters: parms.map((key, value) => MapEntry(key, value.toString())),queryParameters: qparms);
-
-  pop(BuildContext context){
-    if(GoRouter.of(context).canPop()) {
-      router.pop();
-    } else {
-      context.go("/");
-    }
-  }
-
-  popUntill(BuildContext context,{required Routename name,Map<String, dynamic> parms = const <String, dynamic>{}, Map<String, dynamic> qparms = const <String, dynamic>{}}){
-    // if(parms!=null && qparms!=null){
-    //   Map<String,String> qparms1={};
-    //   qparms.forEach((key, value) {
-    //     if(value !=null){
-    //       qparms1.addAll({key:value.toString()});
-    //     }
-    //   });
-    //   context.pushNamed(nUri(name!).name,params: parms,queryParams: qparms1);
-    // }else if(parms!=null){
-    //   context.pushNamed(nUri(name!).name,params: parms);
-    // }else if(qparms!=null){
-    //   Map<String,String> qparms1={};
-    //   qparms.forEach((key, value) {
-    //     if(value !=null){
-    //       qparms1.addAll({key:value.toString()});
-    //     }
-    //   });
-    //   context.pushNamed(nUri(name!).name,queryParams: qparms1);
-    // }else{
-    //   context.pushNamed(nUri(name!).name);
-    // }
-    context.goNamed(name.nUri.name,pathParameters: parms.map((key, value) =>
-        MapEntry(key, value.toString())),queryParameters: qparms);
-  }
-
-  refresh(BuildContext context)=>
-      WidgetsBinding.instance.addPostFrameCallback((_) { context.go("/"); });
-
-  String toPath(Routename route)=>
-      route.nUri.path;
-
-}
-final navigate = Navigations();

@@ -117,74 +117,7 @@ class _ProjectScafoldState extends State<ProjectScafold> {
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         body: CustomNotifier(
             child: FlutterSizer(builder: (context , oriantation , type ) {
-              return Stack(
-                // mainAxisSize: MainAxisSize.max,
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      width: double.infinity,
-                      height: 300,
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors:/*MediaQuery.of(context).platformBrightness== Brightness.light? [
-                            FlutterFlowTheme.of(context).primary,
-                            FlutterFlowTheme.of(context).primary,
-                            FlutterFlowTheme.of(context).secondaryBackground
-                          ]:*/[],
-                          stops: [0, 0.5, 1],
-                          begin: AlignmentDirectional(-0.1, -1),
-                          end: AlignmentDirectional(0.1, 1),
-                        ),
-                      ),
-                      child:Container(
-                        width: 100,
-                        height: 100,
-                        decoration:  const BoxDecoration(
-                          color:/*MediaQuery.of(context).platformBrightness== Brightness.light?const Color(0xD914181B):*/
-                          Color(0xBECEFDE8),
-                        ),
-                        child:  widget.displayLogoHead?Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0x00616161),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.asset(
-                                  'assets/logo/logo.png',
-                                  width: 200,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ).animateOnPageLoad(
-                                ProjectScafold.animationsMap['containerOnPageLoadAnimation']!),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                              child: Text(
-                                'Member Sign Up',
-                                style: FlutterFlowTheme.of(context).headlineSmall,
-                              ).animateOnPageLoad(ProjectScafold.animationsMap['textOnPageLoadAnimation1']!),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                              child: Text(
-                                'Use the account below to sign in.',
-                                style: FlutterFlowTheme.of(context).labelMedium,
-                              ).animateOnPageLoad(ProjectScafold.animationsMap['textOnPageLoadAnimation2']!),
-                            ),
-                          ],
-                        ):SafeArea(child: Container()),
-                      ),
-                    ),
-                  ),
-                  CustomNotifier(child: Align(heightFactor:widget.displayLogoHead?300:1,child: SafeArea(child:  widget.child))),
-                ],
-              );
+              return CustomNotifier(child: SafeArea(child:  widget.child));
             })));
   }
 }

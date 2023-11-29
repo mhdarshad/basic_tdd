@@ -1,2 +1,2 @@
-abstract class GetUserInterference{
+mixin  class GetUserInterference{
 }
